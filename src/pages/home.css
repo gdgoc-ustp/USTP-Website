@@ -98,15 +98,16 @@ html {
 }
 
 .banner button {
-    padding: 1vh 1.5vh;
-    border: none;
+    padding: 1.5vh 2.5vh;
+    border: 1px solid transparent;
     border-radius: 3vh;
-    background-color: rgba(255, 255, 255, 0.4);
+    background: linear-gradient(white, white) padding-box,
+                linear-gradient(to right,blue, red, orange, yellow, green) border-box; /* GDoC Colors Border*/
     color: #498CF6;
     cursor: pointer;
     font-weight: 700;
     transition: background-color 0.35s;
-    margin-top: 1.5vh;
+    margin-top: 1.7vh;
     font-size: 2vh;
 }
 
@@ -256,16 +257,90 @@ html {
     font-weight: 700;
 }
 
-.wtsup {
+/* What's Up? Section */
+.wtsup-wrapper {
     display: flex;
-    height: auto;
-    min-height: 100vh; 
-    background-color: #DB4437;
     justify-content: center;
-    align-items: center;
-    color: #ffffff; 
-    margin: 0px 0;
-    padding: 20px 0;
+    padding: 3vh 2vw;
+}
+
+.wtsup-section {
+    background-color: #f0f5ff;
+    padding: 5vh;
+    border-radius: 5.5vh;
+    width: 100%;
+    text-align: center;
+}
+
+.wtsup-heading {
+    font-size: 5vh;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 4vh;
+}
+
+.wtsup-container {
+    display: flex;
+    justify-content: center;
+    gap: 3vw;
+    flex-wrap: wrap;
+}
+
+.wtsup-card {
+    background: white;
+    border-radius: 1.5vh;
+    padding: 2vh;
+    max-width: 80vh;
+    text-align: left;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.wtsup-image {
+    width: 100%;
+    height: auto;
+    border-radius: 1.5vh;
+    margin-bottom: 1.5vh;
+}
+
+.wtsup-title {
+    font-size: 2.5vh;
+    font-weight: bold;
+    color: #333;
+    margin: 1vh 0;
+}
+
+.wtsup-time {
+    font-size: 1.8vh;
+    color: #333333;
+    margin-bottom: 1vh;
+}
+
+.wtsup-description {
+    font-size: 2vh;
+    color: #333333;
+    line-height: 1.6;
+}
+
+.wtsup-button-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 4vh;
+}
+
+.wtsup-button {
+    padding: 1.5vh 3vh;
+    background-color: #498CF6;
+    color: white;
+    border: none;
+    border-radius: 2.5vh;
+    font-size: 2vh;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.wtsup-button:hover {
+    background-color: #3a72c6;
 }
 
 .cta {
@@ -312,15 +387,14 @@ html {
     justify-content: center;
     align-items: center;
     width: 90%;
-
 }
 
 .trusted-logos img {
-    width: 30vh;
-    height: 30vh;
+    width: 15vh;
+    height: 15vh;
     border-radius: 50%;
     object-fit: cover; 
-    margin: 10vh;
+    margin: 7vh;
     transition: transform 0.3s ease;
 }
 

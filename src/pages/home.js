@@ -64,6 +64,14 @@ export default function Home() {
                         <img src={require('../assets/picturetest.jpg')} alt="pic 2" />
                         <img src={require('../assets/picturetest.jpg')} alt="pic 3" />
                         <img src={require('../assets/picturetest.jpg')} alt="pic 4" />
+                        <img src={require('../assets/picturetest.jpg')} alt="pic 5" />
+                        <img src={require('../assets/picturetest.jpg')} alt="pic 6" />
+                        <img src={require('../assets/picturetest.jpg')} alt="pic 7" />
+                        <img src={require('../assets/picturetest.jpg')} alt="pic 8" />
+                        <img src={require('../assets/picturetest.jpg')} alt="pic 9" />
+                        <img src={require('../assets/picturetest.jpg')} alt="pic 10" />
+                        <img src={require('../assets/picturetest.jpg')} alt="pic 11" />
+                        <img src={require('../assets/picturetest.jpg')} alt="pic 12" />
                     </div>
                 </section>
 
@@ -78,10 +86,34 @@ export default function Home() {
                     </div>
                 </section>
 
-
-                <section className="wtsup" data-aos="fade-up">
-                    <h1>What's up?</h1>
+                <section className="wtsup-wrapper">
+                    <div className="wtsup-section">
+                        <h1 className="wtsup-heading">What’s Up?</h1>
+                        <div className="wtsup-container">
+                            <div className="wtsup-card">
+                                <img src={About} alt="Silhouette" className="wtsup-image" />
+                                <h2 className="wtsup-title">Lorem ipsum dolor sit amet</h2>
+                                <p className="wtsup-time">An hour ago</p>
+                                <p className="wtsup-description">
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus, ut interdum tellus elit sed risus.
+                                </p>
+                            </div>
+                            <div className="wtsup-card">
+                                <img src={About} alt="Night sky" className="wtsup-image" />
+                                <h2 className="wtsup-title">Lorem ipsum dolor sit amet</h2>
+                                <p className="wtsup-time">An hour ago</p>
+                                <p className="wtsup-description">
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus, ut interdum tellus elit sed risus.
+                                </p>
+                            </div>
+                        </div>
+                        <div className="wtsup-button-container">
+                            <button className="wtsup-button">Show More ↓</button>
+                        </div>
+                    </div>
                 </section>
+
+
 
                 <section className="cta" data-aos="fade-up">
                     <h1>CTA</h1>
