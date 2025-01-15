@@ -53,6 +53,272 @@ html {
 /* Style for Banner */
 .banner {
     display: flex;
+    height: 100vh;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: white;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Add specific styling for mobile view */
+@media screen and (max-width: 768px) {
+    .banner {
+        height: auto;
+        min-height: 100vh;
+        padding: 60px 0;
+    }
+}
+
+/* Animated circles for the hero background */
+.circle {
+    position: absolute;
+    border-radius: 50%;
+    z-index: 0;
+}
+
+.circle1 {
+    width: 380px;
+    height: 380px;
+    background-color: #498CF6;
+    top: -5%;
+    left: -5%;
+    animation: float1 15s infinite ease-in-out;
+}
+
+.circle2 {
+    width: 300px;
+    height: 300px;
+    background-color: #EB483B;
+    bottom: -5%;
+    left: 30%;
+    animation: float2 15s infinite ease-in-out;
+}
+
+.circle3 {
+    width: 270px;
+    height: 270px;
+    background-color: #FBC10E;
+    top: 20%;
+    right: 10%;
+    animation: float3 15s infinite ease-in-out;
+}
+
+.circle4 {
+    width: 320px;
+    height: 320px;
+    background-color: #4EA865;
+    bottom: -10%;
+    right: -5%;
+    animation: float4 15s infinite ease-in-out;
+}
+
+.gray-circle {
+    position: absolute;
+    border-radius: 50%;
+    background-color: rgba(217, 217, 217, 0.3);
+    z-index: 0;
+}
+
+.gray-circle1 {
+    width: 120px;
+    height: 120px;
+    top: 15%;
+    right: 25%;
+    animation: float5 15s infinite ease-in-out;
+}
+
+.gray-circle2 {
+    width: 80px;
+    height: 80px;
+    top: 40%;
+    left: 20%;
+    animation: float6 15s infinite ease-in-out;
+}
+
+.gray-circle3 {
+    width: 100px;
+    height: 100px;
+    bottom: 30%;
+    right: 40%;
+    animation: float7 15s infinite ease-in-out;
+}
+
+.banner-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    padding: 0 20px;
+    text-align: center;
+    max-width: 800px;
+    position: relative;
+}
+
+.banner-title {
+    color: #383838;
+    font-size: 64px;
+    line-height: 1.2;
+    font-weight: bold;
+    font-family: "Google-Sans";
+    margin-bottom: 20px;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.color-text {
+    display: inline;
+    background: linear-gradient(
+        90deg,
+        #4EA865 0%,
+        #FBC10E 44%,
+        #EB483B 71%,
+        #498CF6 100%
+    );
+    background-size: 200% auto;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    animation: gradient-shift 15s infinite ease-in-out;
+}
+
+@keyframes gradient-shift {
+    0%, 100% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+/* Remove individual letter colors since we're using gradient now */
+.color-t, .color-o, .color-g, .color-e, .color-t2, 
+.color-h, .color-e2, .color-r, .color-excl {
+    color: transparent;
+}
+
+.banner p {
+    font-size: 26px;
+    margin-bottom: 40px;
+    font-family: "Google-Sans";
+    color: #383838;
+    max-width: 600px;
+}
+
+.banner-button {
+    padding: 18px 42px;
+    border-radius: 100px;
+    background-color: rgba(255, 255, 255, 0.4);
+    color: #498CF6;
+    font-weight: 700;
+    font-size: 20px;
+    cursor: pointer;
+    border: none;
+    position: relative;
+    z-index: 1;
+    font-family: "Google-Sans";
+}
+
+.banner-button::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 100px;
+    padding: 2px;
+    background: linear-gradient(90deg, 
+        #498CF6 0%, 
+        #EB483B 27.6%, 
+        #FBC10E 63.54%, 
+        #4EA865 100%);
+    -webkit-mask: 
+        linear-gradient(#fff 0 0) content-box, 
+        linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    z-index: -1;
+}
+
+.banner-button:hover {
+    background-color: rgba(255, 255, 255, 0.6);
+}
+
+/* Media queries for mobile responsiveness */
+@media screen and (max-width: 1200px) {
+    .banner-title {
+        font-size: 54px;
+        white-space: normal;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .banner-title {
+        font-size: 48px;
+        white-space: normal;
+    }
+
+    .banner p {
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
+    
+    .circle1 {
+        width: 280px;
+        height: 280px;
+    }
+    
+    .circle2 {
+        width: 220px;
+        height: 220px;
+    }
+    
+    .circle3 {
+        width: 200px;
+        height: 200px;
+    }
+    
+    .circle4 {
+        width: 240px;
+        height: 240px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .banner-title {
+        font-size: 42px;
+    }
+
+    .banner p {
+        font-size: 18px;
+        margin-bottom: 20px;
+    }
+    
+    .circle1 {
+        width: 200px;
+        height: 200px;
+    }
+    
+    .circle2 {
+        width: 180px;
+        height: 180px;
+    }
+    
+    .circle3 {
+        width: 150px;
+        height: 150px;
+    }
+    
+    .circle4 {
+        width: 180px;
+        height: 180px;
+    }
+}
+
+/* Original banner styles to keep for the second section */
+.original-banner {
+    display: flex;
     height: 102vh;
     align-items: center;
     justify-content: center;
@@ -62,7 +328,7 @@ html {
     background-size: cover;
 }
 
-.banner h1 {
+.original-banner h1 {
     color: #383838;
     font-size: 8vh;
     font-weight: bold;
@@ -76,7 +342,7 @@ html {
     padding: 0 20px;
 }
 
-.banner h1 #gradient {
+.original-banner h1 #gradient {
     background: linear-gradient(90deg, 
         #4EA865 25%,   /* 25% for green */
         #FBC10E 50%,   /* 50% for yellow */
@@ -92,12 +358,12 @@ html {
     white-space: nowrap;
 }
 
-.banner p {
+.original-banner p {
     font-size: 3vh;
     padding-top: 12px;
 }
 
-.banner button {
+.original-banner button {
     padding: 1.5vh 2.5vh;
     border: 1px solid transparent;
     border-radius: 3vh;
@@ -111,14 +377,15 @@ html {
     font-size: 2vh;
 }
 
-.banner button:hover {
+.original-banner button:hover {
     background-color: #ffffff;
 }
 
+.hero-hidden {
+    display: none;
+}
+
 /* Style for section one which covers the about us description and team description */
-
-
-
 .section-1-container {
     display: flex;
     flex-direction: column;
@@ -212,7 +479,6 @@ html {
     text-align: right;
 }
 
-
 .team-left h2 {
     font-size: 5.5vh; 
     font-weight: bold;
@@ -236,7 +502,6 @@ html {
     height: auto;
     border-radius: 1.5vh;
 }
-
 
 .partners {
     display: flex;
@@ -401,7 +666,6 @@ html {
 }
 
 /* Inspiring Members Section */
-
 .gallery {
     display: flex;
     height: auto; 
@@ -457,58 +721,62 @@ html {
     display: inline-block;
 }
 
-/* Add media queries for mobile responsiveness */
+/* Define the animations for the floating circles */
+@keyframes float1 {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(20px, 20px); }
+}
+
+@keyframes float2 {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(-20px, 15px); }
+}
+
+@keyframes float3 {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(-15px, -20px); }
+}
+
+@keyframes float4 {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(15px, -15px); }
+}
+
+@keyframes float5 {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(-10px, 10px); }
+}
+
+@keyframes float6 {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(12px, -8px); }
+}
+
+@keyframes float7 {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(-8px, -12px); }
+}
+
+/* Hidden content styling */
+.hidden-content {
+    position: absolute;
+    visibility: hidden;
+    height: 0;
+    overflow: hidden;
+}
+
 @media screen and (max-width: 768px) {
-    .banner h1 {
-        font-size: 6vh;
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    .banner h1 #gradient {
-        font-size: 6vh;
-    }
-
-    .banner p {
-        font-size: 2.5vh;
-        text-align: center;
-        padding: 12px 20px;
+    .hidden-content {
+        position: relative;
+        visibility: visible;
+        height: auto;
+        overflow: visible;
     }
 }
 
-@media screen and (max-width: 480px) {
-    .banner h1 {
-        font-size: 5vh;
-    }
-
-    .banner h1 #gradient {
-        font-size: 5vh;
-    }
+.section-1 {
+    position: relative;
+    z-index: 3;
+    background-color: white;
 }
-
-
-/* Style for the animated circle */
-.animated-shape {
-    width: 100px;
-    height: 100px;
-    background-color: blue;
-    border-radius: 50%;
-    animation: shapeAnimation 3s infinite alternate;
-  }
-  
-  /* Define the animation for the shape */
-  @keyframes shapeAnimation {
-    0% {
-      transform: scale(1);
-      background-color: blue;
-    }
-    50% {
-      transform: scale(1.5);
-      background-color: red;
-    }
-    100% {
-      transform: scale(1);
-      background-color: green;
-    }
-  }
   

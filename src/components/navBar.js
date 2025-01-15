@@ -1,115 +1,95 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './navBar.css'
 import { NavLink } from 'react-router-dom'
-import Logo from '../assets/logo.png'
+import Logo from '../assets/logo.svg'
 
 export default function NavigationBar() {
-    const [navbar, setNavbar] = useState(false)
-    const [isOpen, setIsOpen] = useState(false)
-
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    
     const toggleMenu = () => {
-        setIsOpen(!isOpen)
-    }
-
-    const changeBackground = () => {
-        if (window.scrollY >= 300) {
-            setNavbar(true)
+        setIsMenuOpen(!isMenuOpen);
+        if (!isMenuOpen) {
+            document.body.classList.add('menu-open');
         } else {
-            setNavbar(false)
+            document.body.classList.remove('menu-open');
         }
     }
-
-    window.addEventListener('scroll', changeBackground)
-
-    const NavLinkStyle = ({ isActive }) => ({
-        color: isActive ? '#ffffffff' : '#000000',
-        fontWeight: isActive ? 'medium' : 'bold',
-        backgroundColor: isActive ? '#498CF6' : null,
-        paddingTop: isActive ? 5 : null,
-        paddingBottom: isActive ? 5 : null,
-        paddingRight: isActive ? 12 : null,
-        paddingLeft: isActive ? 12 : null,
-        borderRadius: isActive ? 20 : null,
-    })
-
-    const NavLinkStyleTwo = ({ isActive }) => ({
-        color: isActive ? '#ffffffff' : '#000000',
-        fontWeight: isActive ? 'medium' : 'bold',
-        backgroundColor: isActive ? '#EB483B' : null,
-        paddingTop: isActive ? 5 : null,
-        paddingBottom: isActive ? 5 : null,
-        paddingRight: isActive ? 12 : null,
-        paddingLeft: isActive ? 12 : null,
-        borderRadius: isActive ? 20 : null,
-    })
-
-    const NavLinkStyleThree = ({ isActive }) => ({
-        color: isActive ? '#ffffffff' : '#000000',
-        fontWeight: isActive ? 'medium' : 'bold',
-        backgroundColor: isActive ? '#4EA865' : null,
-        paddingTop: isActive ? 5 : null,
-        paddingBottom: isActive ? 5 : null,
-        paddingRight: isActive ? 12 : null,
-        paddingLeft: isActive ? 12 : null,
-        borderRadius: isActive ? 20 : null,
-    })
-
-    const NavLinkStyleFour = ({ isActive }) => ({
-        color: isActive ? '#ffffffff' : '#000000',
-        fontWeight: isActive ? 'medium' : 'bold',
-        backgroundColor: isActive ? '#ffce44' : null,
-        paddingTop: isActive ? 5 : null,
-        paddingBottom: isActive ? 5 : null,
-        paddingRight: isActive ? 12 : null,
-        paddingLeft: isActive ? 12 : null,
-        borderRadius: isActive ? 20 : null,
-    })
+    
+    const closeMenu = () => {
+        setIsMenuOpen(false);
+        document.body.classList.remove('menu-open');
+    }
+    
+    // Close menu when window is resized to desktop size
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth > 768 && isMenuOpen) {
+                closeMenu();
+            }
+        }
+        
+        window.addEventListener('resize', handleResize);
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        }
+    }, [isMenuOpen]);
 
     return (
-        <nav className={navbar ? "nav-bar" : "nav-bar active"}>
-            <div className='top-left'>
-                <NavLink to="/" onClick={() => window.scrollTo(0, 0)}>
-                    <img src={Logo} alt='GDSC' />
-                </NavLink>
-            </div>
-
-            <div className="hamburger" onClick={toggleMenu}>
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-
-            <div className={`top-center ${isOpen ? 'mobile-menu-active' : ''}`}>
-                <ul>
-                    <li>
-                        <NavLink style={NavLinkStyle} to="/" className='items' onClick={() => setIsOpen(false)}>Home</NavLink>
-                    </li>
-
+        <>
+            <div className="navbar-container">
+                <div className="navbar-content">
+                    <NavLink to="/">
+                        <img src={Logo} className="navbar-logo" alt="GDSC Logo" />
+                    </NavLink>
                     
-
-                    <li>
-                        <NavLink style={NavLinkStyleThree} to="/news" className='items' onClick={() => setIsOpen(false)}>News</NavLink>
-                    </li>
-
-                    <li>
-                        <NavLink style={NavLinkStyleFour} to="/events" className='items' onClick={() => setIsOpen(false)}>Events</NavLink>
-                    </li>
-                    <li>
-                        <NavLink style={NavLinkStyleTwo} to="/aboutus" className='items' onClick={() => setIsOpen(false)}>About us</NavLink>
-                    </li>
-                    <li className="mobile-register">
-                        <button className={navbar ? "reg-btn active" : "reg-btn"}>
+                    <div className={`hamburger ${isMenuOpen ? 'open' : ''}`} onClick={toggleMenu}>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                    
+                    <nav className={`navbar-links ${isMenuOpen ? 'mobile-menu-active' : ''}`}>
+                        <NavLink
+                            to="/"
+                            className={({isActive}) => isActive ? "nav-link active" : "nav-link"}
+                            onClick={closeMenu}
+                        >
+                            Home
+                        </NavLink>
+                        <NavLink
+                            to="/news"
+                            className={({isActive}) => isActive ? "nav-link active" : "nav-link"}
+                            onClick={closeMenu}
+                        >
+                            News
+                        </NavLink>
+                        <NavLink
+                            to="/events"
+                            className={({isActive}) => isActive ? "nav-link active" : "nav-link"}
+                            onClick={closeMenu}
+                        >
+                            Events
+                        </NavLink>
+                        <NavLink
+                            to="/aboutus"
+                            className={({isActive}) => isActive ? "nav-link active" : "nav-link"}
+                            onClick={closeMenu}
+                        >
+                            About Us
+                        </NavLink>
+                        <button className="register-button mobile-register" onClick={closeMenu}>
                             Register Now
                         </button>
-                    </li>
-                </ul>
+                    </nav>
+                    
+                    <button className="register-button desktop-register">
+                        Register Now
+                    </button>
+                </div>
             </div>
-
-            <div className='top-right'>
-                <button className={navbar ? "reg-btn active" : "reg-btn"}>
-                    Register Now
-                </button>
-            </div>
-        </nav>
-    )
+            
+            {/* Overlay for mobile menu */}
+            <div className={`menu-overlay ${isMenuOpen ? 'active' : ''}`} onClick={closeMenu}></div>
+        </>
+    );
 }
