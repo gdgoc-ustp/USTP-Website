@@ -1,0 +1,129 @@
+.admin-login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f0f2f5;
+    padding: 20px;
+}
+
+.admin-loading {
+    font-size: 18px;
+    color: #666;
+    text-align: center;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.admin-login-card {
+    background-color: #f8f9fe;
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.admin-logo {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 16px;
+}
+
+.admin-title {
+    font-size: 24px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 32px;
+}
+
+.admin-error-message {
+    background-color: #fee2e2;
+    color: #dc2626;
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin-bottom: 24px;
+    text-align: center;
+}
+
+.admin-login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.admin-form-group {
+    position: relative;
+}
+
+.admin-input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 16px;
+    color: #1a1a1a;
+    background-color: #ffffff;
+    transition: border-color 0.2s ease;
+}
+
+.admin-input:focus {
+    outline: none;
+    border-color: #4285f4;
+}
+
+.admin-input::placeholder {
+    color: #9e9e9e;
+}
+
+.admin-remember-me {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
+}
+
+.admin-checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #666;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.admin-checkbox {
+    width: 16px;
+    height: 16px;
+    border: 2px solid #9e9e9e;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.admin-login-button {
+    background-color: #4285f4;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.admin-login-button:hover {
+    background-color: #3367d6;
+}
+
+.admin-login-button:active {
+    background-color: #2850a7;
+}
+
+.admin-login-button:disabled {
+    background-color: #e0e0e0;
+    cursor: not-allowed;
+} 
