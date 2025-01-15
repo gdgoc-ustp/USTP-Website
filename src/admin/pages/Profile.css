@@ -1,0 +1,280 @@
+.profile-container {
+    padding: 24px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.profile-header {
+    margin-bottom: 32px;
+}
+
+.profile-header h1 {
+    font-size: 28px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin: 0;
+}
+
+.profile-content {
+    background-color: white;
+    border-radius: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.profile-section {
+    padding: 32px;
+    border-bottom: 1px solid #eee;
+}
+
+.profile-section:last-child {
+    border-bottom: none;
+}
+
+.profile-section h2 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin: 0 0 24px 0;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.section-header h2 {
+    margin: 0;
+}
+
+.info-group {
+    margin-bottom: 16px;
+}
+
+.info-group:last-child {
+    margin-bottom: 0;
+}
+
+.info-group label {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    color: #666;
+    margin-bottom: 4px;
+}
+
+.info-group p {
+    font-size: 16px;
+    color: #1a1a1a;
+    margin: 0;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    color: #666;
+    margin-bottom: 8px;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: border-color 0.2s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #4285f4;
+}
+
+.form-group input:disabled {
+    background-color: #f5f5f5;
+    cursor: not-allowed;
+}
+
+.update-button,
+.add-user-button {
+    padding: 12px 24px;
+    background-color: #4285f4;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.update-button:hover,
+.add-user-button:hover {
+    background-color: #3367d6;
+}
+
+.update-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.users-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 24px;
+}
+
+.user-card {
+    background-color: white;
+    border: 1px solid #eee;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.user-content {
+    padding: 20px;
+}
+
+.user-content h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin: 0 0 4px 0;
+}
+
+.user-email {
+    font-size: 14px;
+    color: #666;
+    margin: 0 0 8px 0;
+}
+
+.user-permission {
+    display: inline-block;
+    padding: 4px 12px;
+    background-color: #e8f0fe;
+    color: #4285f4;
+    border-radius: 16px;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 16px;
+}
+
+.user-metadata {
+    margin-bottom: 16px;
+}
+
+.user-dates {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 14px;
+    color: #666;
+}
+
+.user-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.user-actions button {
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.user-actions button:first-child {
+    background-color: transparent;
+    border: 1px solid #4285f4;
+    color: #4285f4;
+}
+
+.user-actions button:first-child:hover {
+    background-color: rgba(66, 133, 244, 0.1);
+}
+
+.user-actions button:last-child {
+    background-color: transparent;
+    border: 1px solid #ea4335;
+    color: #ea4335;
+}
+
+.user-actions button:last-child:hover {
+    background-color: rgba(234, 67, 53, 0.1);
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: white;
+    border-radius: 16px;
+    padding: 32px;
+    width: 90%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.modal-content h2 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin: 0 0 24px 0;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.modal-actions button {
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.modal-actions button[type="submit"] {
+    background-color: #4285f4;
+    color: white;
+    border: none;
+}
+
+.modal-actions button[type="submit"]:hover {
+    background-color: #3367d6;
+}
+
+.modal-actions button[type="button"] {
+    background-color: transparent;
+    border: 1px solid #ddd;
+    color: #666;
+}
+
+.modal-actions button[type="button"]:hover {
+    background-color: #f5f5f5;
+} 
