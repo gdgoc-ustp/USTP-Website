@@ -5,6 +5,7 @@ import Login from '../pages/Login';
 import Setup from '../pages/Setup';
 import Dashboard from '../pages/Dashboard';
 import Events from '../pages/Events';
+import BlogPosts from '../pages/BlogPosts';
 import AdminLayout from '../components/AdminLayout';
 
 // Protected route wrapper
@@ -22,8 +23,7 @@ const ProtectedRoute = ({ children }) => {
     return <AdminLayout>{children}</AdminLayout>;
 };
 
-// Placeholder components for admin pages
-const BlogPosts = () => <div>Blog Posts Management</div>;
+// Placeholder component for profile
 const Profile = () => <div>User Profile</div>;
 
 export default function AdminRoutes() {
