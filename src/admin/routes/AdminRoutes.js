@@ -1,12 +1,14 @@
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
-import Login from '../pages/Login';
-import Setup from '../pages/Setup';
 import Dashboard from '../pages/Dashboard';
 import Events from '../pages/Events';
 import BlogPosts from '../pages/BlogPosts';
+import Profile from '../pages/Profile';
 import AdminLayout from '../components/AdminLayout';
+import Login from '../pages/Login';
+import Setup from '../pages/Setup';
+import Users from '../pages/Users';
 
 // Protected route wrapper
 const ProtectedRoute = ({ children }) => {
@@ -22,9 +24,6 @@ const ProtectedRoute = ({ children }) => {
     
     return <AdminLayout>{children}</AdminLayout>;
 };
-
-// Placeholder component for profile
-const Profile = () => <div>User Profile</div>;
 
 export default function AdminRoutes() {
     return (
@@ -56,6 +55,15 @@ export default function AdminRoutes() {
                 element={
                     <ProtectedRoute>
                         <BlogPosts />
+                    </ProtectedRoute>
+                }
+            />
+
+            <Route
+                path="users"
+                element={
+                    <ProtectedRoute>
+                        <Users />
                     </ProtectedRoute>
                 }
             />
