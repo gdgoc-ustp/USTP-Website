@@ -13,12 +13,213 @@
     background-color: #0F9D58;
 }
 
-.carousel {
+
+.card-container {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.card {
+    display: flex;
+    flex: 1;
+    width: 100%;
+    max-width: none;
+    background-color: transparent;
+    gap: 32px;
+}
+
+.card img {
+    width: 50%;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    border-radius: 24px;
+}
+
+.card-content {
+    flex: 1;
+    padding: 16px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.card-title {
+    font-size: 32px;
+    font-weight: 600;
+    color: #000;
+    margin-bottom: 8px;
+    line-height: 1.2;
+}
+
+.card-registration {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 16px;
+}
+
+.card-description {
+    font-size: 16px;
+    line-height: 1.5;
+    color: #333;
+    margin-bottom: 24px;
+}
+
+.card-button {
+    display: inline-block;
+    width: fit-content;
+    padding: 8px 24px;
+    font-size: 16px;
+    color: #ff4d4d;
+    border: 1.5px solid #ff4d4d;
+    border-radius: 100px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.card-button:hover {
+    background-color: #ff4d4d;
+    color: white;
+}
+
+
+/* Accomodate 768px resolutions for smaller screens */
+@media (max-width: 768px) {
+    .card {
+        flex-direction: column;
+    }
+    
+    .card img {
+        width: 100%;
+        aspect-ratio: 4/3;
+    }
+    
+    .card-content {
+        padding: 24px;
+    }
+}
+
+/* Add these new styles */
+.section-1-container {
+    position: relative;
+    padding-bottom: 80px; /* Make space for the show more button */
+}
+
+.show-more-button {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    background-color: #ff4d4d;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 100px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.show-more-button:hover {
+    background-color: #ff3333;
+}
+
+.show-more-button svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+}
+
+/* Add these new styles for the hero card */
+.hero-card {
+    padding: 2rem;
+    margin: 2rem 0;
+}
+
+.hero-card-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: #f5e6d3;
+    border-radius: 24px;
+    display: flex;
+    min-height: 400px;
+    overflow: hidden;
+}
+
+.hero-card-image {
+    flex: 1;
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-direction: column;
-    height: 50%;
+    padding: 48px;
+}
+
+.hero-card-image img {
     width: 100%;
-    background-color: aqua;
+    height: 100%;
+    object-fit: cover;
+}
+
+.hero-card-content {
+    flex: 1;
+    padding: 48px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.hero-card-content h2 {
+    font-size: 48px;
+    font-weight: 600;
+    color: #000;
+    margin-bottom: 16px;
+    line-height: 1.2;
+}
+
+.hero-card-content p {
+    font-size: 18px;
+    color: #666;
+    margin-bottom: 24px;
+}
+
+.hero-card-button {
+    display: inline-block;
+    width: fit-content;
+    padding: 12px 24px;
+    font-size: 16px;
+    color: #000;
+    border: 1.5px solid #000;
+    border-radius: 100px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.hero-card-button:hover {
+    background-color: #000;
+    color: white;
+}
+
+/* Add responsive styles */
+@media (max-width: 768px) {
+    .hero-card-container {
+        flex-direction: column;
+    }
+    
+    .hero-card-image {
+        padding: 24px;
+    }
+    
+    .hero-card-content {
+        padding: 24px;
+    }
+    
+    .hero-card-content h2 {
+        font-size: 32px;
+    }
 }
