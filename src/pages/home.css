@@ -160,7 +160,6 @@ html {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding-left: 3vh;
 }
 
 .about-right h2 {
@@ -211,7 +210,6 @@ html {
     flex-direction: column;
     justify-content: center;
     text-align: right;
-    padding-right: 3vh; 
 }
 
 
@@ -489,3 +487,28 @@ html {
 }
 
 
+/* Style for the animated circle */
+.animated-shape {
+    width: 100px;
+    height: 100px;
+    background-color: blue;
+    border-radius: 50%;
+    animation: shapeAnimation 3s infinite alternate;
+  }
+  
+  /* Define the animation for the shape */
+  @keyframes shapeAnimation {
+    0% {
+      transform: scale(1);
+      background-color: blue;
+    }
+    50% {
+      transform: scale(1.5);
+      background-color: red;
+    }
+    100% {
+      transform: scale(1);
+      background-color: green;
+    }
+  }
+  

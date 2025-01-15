@@ -7,17 +7,39 @@ import About from '../assets/sample.png';
 import { Link } from "react-router-dom";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import { useSpring, animated } from 'react-spring';
 
 export default function Home() {
-    useEffect(() => {
-        AOS.init();
-    }, []);
+    // useEffect(() => {
+    //     AOS.init();
+    // }, []);
+
+    // const props = useSpring({
+    //     loop: { reverse: true },
+    //     to: [
+    //       { transform: 'scale(1)', backgroundColor: 'blue' },
+    //       { transform: 'scale(1.5)', backgroundColor: 'red' },
+    //       { transform: 'scale(1)', backgroundColor: 'green' }
+    //     ],
+    //     from: { transform: 'scale(1)', backgroundColor: 'blue' }
+    //   });
 
     return (
         <>
+         
             <NavigationBar />
             <main>
                 <header className="banner">
+                          {/* Use animated div for applying the spring animation */}
+                    {/* <animated.div
+                        style={{
+                        width: '100px',
+                        height: '100px',
+                        borderRadius: '50%',
+                        ...props
+                        }}
+                    ></animated.div> */}
+
                     <h1>
                         <span>Building Good Things, </span>
                         <span id="gradient">&nbsp;Together!</span>
