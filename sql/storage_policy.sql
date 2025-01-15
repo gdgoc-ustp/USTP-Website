@@ -1,7 +1,3 @@
--- Drop the existing policies if they exist
-DROP POLICY IF EXISTS "Allow authenticated users to upload images" ON storage.objects;
-DROP POLICY IF EXISTS "Allow public to view images" ON storage.objects;
-
 -- Enable RLS for storage.objects
 ALTER TABLE storage.objects ENABLE ROW LEVEL SECURITY;
 
