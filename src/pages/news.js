@@ -4,6 +4,7 @@ import './main.css'
 
 import './news.css';
 import { Link } from "react-router-dom";
+import Sample from '../assets/sample.png';
 
 export default function News() {
     return (
