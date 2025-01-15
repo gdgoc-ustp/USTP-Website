@@ -11,7 +11,6 @@ const Profile = () => {
     const [selectedUser, setSelectedUser] = useState(null);
     const [formData, setFormData] = useState({
         email: '',
-        name: '',
         currentPassword: '',
         newPassword: '',
         confirmPassword: '',
@@ -41,8 +40,7 @@ const Profile = () => {
             setUser({ ...user, ...profile });
             setFormData(prev => ({
                 ...prev,
-                email: user.email,
-                name: profile.name || ''
+                email: user.email
             }));
         } catch (error) {
             setError('Failed to fetch profile');
@@ -101,47 +99,11 @@ const Profile = () => {
         }
     };
 
-    const handleProfileUpdate = async (e) => {
-        e.preventDefault();
-        setError(null);
-
-        try {
-            const { error } = await supabase
-                .from('users')
-                .update({
-                    name: formData.name,
-                    updated_at: new Date().toISOString()
-                })
-                .eq('id', user.id);
-
-            if (error) throw error;
-            await fetchProfile();
-            alert('Profile updated successfully');
-        } catch (error) {
-            setError('Failed to update profile');
-            console.error('Error:', error);
-        }
-    };
-
     const handleUserEdit = (user) => {
         setSelectedUser(user);
         setFormData({
-            email: user.email,
-            name: user.name || '',
-            permission: user.permission,
-            currentPassword: '',
-            newPassword: '',
-            confirmPassword: ''
-        });
-        setShowModal(true);
-    };
-
-    const handleAddUser = () => {
-        setSelectedUser(null);
-        setFormData({
-            email: '',
-            name: '',
-            permission: 'VIEWER',
+            email: user?.email || '',
+            permission: user?.permission || 'VIEWER',
             currentPassword: '',
             newPassword: '',
             confirmPassword: ''
@@ -159,7 +121,6 @@ const Profile = () => {
                 const { error } = await supabase
                     .from('users')
                     .update({
-                        name: formData.name,
                         permission: formData.permission,
                         updated_at: new Date().toISOString()
                     })
@@ -168,25 +129,30 @@ const Profile = () => {
                 if (error) throw error;
             } else {
                 // Create new user
-                const { data, error: signUpError } = await supabase.auth.signUp({
+                const tempPassword = Math.random().toString(36).slice(-8);
+                
+                // Create auth user
+                const { data: authData, error: signUpError } = await supabase.auth.signUp({
                     email: formData.email,
-                    password: formData.newPassword || generateTemporaryPassword()
+                    password: tempPassword
                 });
 
                 if (signUpError) throw signUpError;
 
+                // Create user profile
                 const { error: profileError } = await supabase
                     .from('users')
                     .insert([{
-                        id: data.user.id,
+                        id: authData.user.id,
                         email: formData.email,
-                        name: formData.name,
                         permission: formData.permission,
                         created_at: new Date().toISOString(),
                         updated_at: new Date().toISOString()
                     }]);
 
                 if (profileError) throw profileError;
+
+                alert(`User created successfully! Temporary password: ${tempPassword}`);
             }
 
             await fetchUsers();
@@ -194,14 +160,13 @@ const Profile = () => {
             setSelectedUser(null);
             setFormData({
                 email: '',
-                name: '',
                 permission: 'VIEWER',
                 currentPassword: '',
                 newPassword: '',
                 confirmPassword: ''
             });
         } catch (error) {
-            setError(selectedUser ? 'Failed to update user' : 'Failed to create user');
+            setError('Failed to save user');
             console.error('Error:', error);
         }
     };
@@ -223,11 +188,6 @@ const Profile = () => {
         }
     };
 
-    // Helper function to generate a temporary password
-    const generateTemporaryPassword = () => {
-        return Math.random().toString(36).slice(-8);
-    };
-
     if (loading) return <div className="admin-loading">Loading profile...</div>;
 
     return (
@@ -241,33 +201,18 @@ const Profile = () => {
             <div className="profile-content">
                 <div className="profile-section">
                     <h2>Account Information</h2>
-                    <form onSubmit={handleProfileUpdate}>
-                        <div className="info-group">
-                            <label>Email</label>
-                            <p>{user?.email}</p>
-                        </div>
-                        <div className="form-group">
-                            <label>Name</label>
-                            <input
-                                type="text"
-                                name="name"
-                                value={formData.name}
-                                onChange={handleInputChange}
-                                required
-                            />
-                        </div>
-                        <div className="info-group">
-                            <label>Permission Level</label>
-                            <p>{user?.permission}</p>
-                        </div>
-                        <div className="info-group">
-                            <label>Account Created</label>
-                            <p>{new Date(user?.created_at).toLocaleDateString()}</p>
-                        </div>
-                        <button type="submit" className="update-button">
-                            Update Profile
-                        </button>
-                    </form>
+                    <div className="info-group">
+                        <label>Email</label>
+                        <p>{user?.email}</p>
+                    </div>
+                    <div className="info-group">
+                        <label>Permission Level</label>
+                        <p>{user?.permission}</p>
+                    </div>
+                    <div className="info-group">
+                        <label>Account Created</label>
+                        <p>{new Date(user?.created_at).toLocaleDateString()}</p>
+                    </div>
                 </div>
 
                 <div className="profile-section">
@@ -305,7 +250,7 @@ const Profile = () => {
                     <div className="profile-section">
                         <div className="section-header">
                             <h2>User Management</h2>
-                            <button onClick={handleAddUser} className="add-user-button">
+                            <button onClick={() => handleUserEdit(null)} className="add-user-button">
                                 Add New User
                             </button>
                         </div>
@@ -313,8 +258,7 @@ const Profile = () => {
                             {users.map(u => (
                                 <div key={u.id} className="user-card">
                                     <div className="user-content">
-                                        <h3>{u.name || u.email}</h3>
-                                        <p className="user-email">{u.email}</p>
+                                        <h3>{u.email}</h3>
                                         <p className="user-permission">{u.permission}</p>
                                         <div className="user-metadata">
                                             <div className="user-dates">
@@ -348,32 +292,10 @@ const Profile = () => {
                                     name="email"
                                     value={formData.email}
                                     onChange={handleInputChange}
-                                    required
                                     disabled={selectedUser}
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label>Name</label>
-                                <input
-                                    type="text"
-                                    name="name"
-                                    value={formData.name}
-                                    onChange={handleInputChange}
                                     required
                                 />
                             </div>
-                            {!selectedUser && (
-                                <div className="form-group">
-                                    <label>Password</label>
-                                    <input
-                                        type="password"
-                                        name="newPassword"
-                                        value={formData.newPassword}
-                                        onChange={handleInputChange}
-                                        placeholder="Leave blank for auto-generated password"
-                                    />
-                                </div>
-                            )}
                             <div className="form-group">
                                 <label>Permission Level</label>
                                 <select
@@ -390,7 +312,17 @@ const Profile = () => {
                             </div>
                             <div className="modal-actions">
                                 <button type="submit">{selectedUser ? 'Update' : 'Create'}</button>
-                                <button type="button" onClick={() => setShowModal(false)}>Cancel</button>
+                                <button type="button" onClick={() => {
+                                    setShowModal(false);
+                                    setSelectedUser(null);
+                                    setFormData({
+                                        email: '',
+                                        permission: 'VIEWER',
+                                        currentPassword: '',
+                                        newPassword: '',
+                                        confirmPassword: ''
+                                    });
+                                }}>Cancel</button>
                             </div>
                         </form>
                     </div>

@@ -35,17 +35,6 @@
     font-size: 20px;
     font-weight: 600;
     color: #1a1a1a;
-    margin: 0 0 24px 0;
-}
-
-.section-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 24px;
-}
-
-.section-header h2 {
     margin: 0;
 }
 
@@ -83,8 +72,7 @@
     margin-bottom: 8px;
 }
 
-.form-group input,
-.form-group select {
+.form-group input {
     width: 100%;
     padding: 12px;
     border: 1px solid #ddd;
@@ -93,19 +81,12 @@
     transition: border-color 0.2s ease;
 }
 
-.form-group input:focus,
-.form-group select:focus {
+.form-group input:focus {
     outline: none;
     border-color: #4285f4;
 }
 
-.form-group input:disabled {
-    background-color: #f5f5f5;
-    cursor: not-allowed;
-}
-
-.update-button,
-.add-user-button {
+.update-button {
     padding: 12px 24px;
     background-color: #4285f4;
     color: white;
@@ -117,8 +98,7 @@
     transition: background-color 0.2s ease;
 }
 
-.update-button:hover,
-.add-user-button:hover {
+.update-button:hover {
     background-color: #3367d6;
 }
 
@@ -127,154 +107,29 @@
     cursor: not-allowed;
 }
 
-.users-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 24px;
-}
-
-.user-card {
-    background-color: white;
-    border: 1px solid #eee;
-    border-radius: 12px;
-    overflow: hidden;
-}
-
-.user-content {
-    padding: 20px;
-}
-
-.user-content h3 {
-    font-size: 18px;
-    font-weight: 600;
-    color: #1a1a1a;
-    margin: 0 0 4px 0;
-}
-
-.user-email {
-    font-size: 14px;
-    color: #666;
-    margin: 0 0 8px 0;
-}
-
-.user-permission {
-    display: inline-block;
-    padding: 4px 12px;
-    background-color: #e8f0fe;
-    color: #4285f4;
-    border-radius: 16px;
-    font-size: 14px;
-    font-weight: 500;
-    margin-bottom: 16px;
-}
-
-.user-metadata {
-    margin-bottom: 16px;
-}
-
-.user-dates {
+.section-header {
     display: flex;
-    flex-direction: column;
-    gap: 4px;
-    font-size: 14px;
-    color: #666;
-}
-
-.user-actions {
-    display: flex;
-    gap: 8px;
-}
-
-.user-actions button {
-    padding: 8px 16px;
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.user-actions button:first-child {
-    background-color: transparent;
-    border: 1px solid #4285f4;
-    color: #4285f4;
-}
-
-.user-actions button:first-child:hover {
-    background-color: rgba(66, 133, 244, 0.1);
-}
-
-.user-actions button:last-child {
-    background-color: transparent;
-    border: 1px solid #ea4335;
-    color: #ea4335;
-}
-
-.user-actions button:last-child:hover {
-    background-color: rgba(234, 67, 53, 0.1);
-}
-
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    z-index: 1000;
+    margin-bottom: 24px;
 }
 
-.modal-content {
-    background-color: white;
-    border-radius: 16px;
-    padding: 32px;
-    width: 90%;
-    max-width: 500px;
-    max-height: 90vh;
-    overflow-y: auto;
+.section-header h2 {
+    margin: 0;
 }
 
-.modal-content h2 {
-    font-size: 24px;
-    font-weight: 600;
-    color: #1a1a1a;
-    margin: 0 0 24px 0;
-}
-
-.modal-actions {
-    display: flex;
-    gap: 12px;
-    margin-top: 24px;
-}
-
-.modal-actions button {
-    padding: 12px 24px;
-    border-radius: 8px;
-    font-size: 16px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.modal-actions button[type="submit"] {
+.add-user-button {
+    padding: 8px 16px;
     background-color: #4285f4;
     color: white;
     border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
 }
 
-.modal-actions button[type="submit"]:hover {
+.add-user-button:hover {
     background-color: #3367d6;
-}
-
-.modal-actions button[type="button"] {
-    background-color: transparent;
-    border: 1px solid #ddd;
-    color: #666;
-}
-
-.modal-actions button[type="button"]:hover {
-    background-color: #f5f5f5;
 } 
