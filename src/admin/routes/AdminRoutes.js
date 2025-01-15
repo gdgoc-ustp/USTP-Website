@@ -3,6 +3,8 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import Login from '../pages/Login';
 import Setup from '../pages/Setup';
+import Dashboard from '../pages/Dashboard';
+import Events from '../pages/Events';
 import AdminLayout from '../components/AdminLayout';
 
 // Protected route wrapper
@@ -21,8 +23,6 @@ const ProtectedRoute = ({ children }) => {
 };
 
 // Placeholder components for admin pages
-const Dashboard = () => <div>Dashboard Content</div>;
-const Events = () => <div>Events Management</div>;
 const BlogPosts = () => <div>Blog Posts Management</div>;
 const Profile = () => <div>User Profile</div>;
 
