@@ -10,8 +10,11 @@ This is the official **GDGOC USTP (Google Developer Groups on Campus - Universit
 - **Announcements Section**: Stay updated with the latest news and developments from the GDSC USTP community.
 - **Team Information**: The "About Us" section provides details about the club, its mission, vision, and members.
 - **Public API**: RESTful API for accessing events and blog posts
+<<<<<<< HEAD
 - **Admin Dashboard**: Secure admin interface for managing content
 - **Blog System**: Rich text editor for creating and managing blog posts
+=======
+>>>>>>> 3bb3076 (Update README to include Public API documentation and remove obsolete SQL schema files)
 
 ## Pages
 
@@ -114,3 +117,84 @@ Please refer to the official tracker for additional resources.
 ## License
 
 This project is licensed under the Attribution-NonCommercial 4.0 International License. See the [LICENSE](LICENSE) file for more details.
+<<<<<<< HEAD
+=======
+
+## API Documentation
+
+### Public Endpoints
+
+#### Events
+
+1. **Get All Events**
+   - Endpoint: `GET /api/events`
+   - Query Parameters:
+     - `status` (optional): Filter by status (Upcoming, Ongoing, Past)
+     - `limit` (optional): Number of events to return
+     - `offset` (optional): Number of events to skip
+     - `order` (optional): Order by field (e.g., created_at.desc)
+   - Response:
+     ```json
+     [
+       {
+         "id": "uuid",
+         "heading": "Event Title",
+         "tagline": "Event Tagline",
+         "description": "HTML content",
+         "image_url": "URL to image",
+         "status": "Upcoming",
+         "created_at": "timestamp",
+         "updated_at": "timestamp"
+       }
+     ]
+     ```
+
+2. **Get Event by ID**
+   - Endpoint: `GET /api/events/:id`
+   - Response: Single event object
+
+3. **Get Upcoming Events**
+   - Endpoint: `GET /api/events?status=Upcoming&order=created_at.desc`
+   - Response: Array of upcoming events
+
+#### Blog Posts
+
+1. **Get All Blog Posts**
+   - Endpoint: `GET /api/blog-posts`
+   - Query Parameters:
+     - `limit` (optional): Number of posts to return
+     - `offset` (optional): Number of posts to skip
+     - `order` (optional): Order by field
+   - Response:
+     ```json
+     [
+       {
+         "id": "uuid",
+         "heading": "Post Title",
+         "tagline": "Post Tagline",
+         "description": "HTML content",
+         "image_url": "URL to image",
+         "author_id": "uuid",
+         "created_at": "timestamp",
+         "updated_at": "timestamp"
+       }
+     ]
+     ```
+
+2. **Get Blog Post by ID**
+   - Endpoint: `GET /api/blog-posts/:id`
+   - Response: Single blog post object
+
+3. **Get Recent Blog Posts**
+   - Endpoint: `GET /api/blog-posts?limit=5&order=created_at.desc`
+   - Response: Array of 5 most recent blog posts
+
+### Testing the API
+
+A Postman collection is available in the repository (`postman_collection.json`). To use it:
+
+1. Import the collection into Postman
+2. Set up an environment with the variable `base_url`
+3. Start making requests to test the API endpoints
+
+>>>>>>> 3bb3076 (Update README to include Public API documentation and remove obsolete SQL schema files)
