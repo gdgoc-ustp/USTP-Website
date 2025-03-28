@@ -82,7 +82,7 @@ html {
 .circle1 {
     width: 380px;
     height: 380px;
-    background-color: #498CF6;
+    background: linear-gradient(135deg, #498CF6 0%, #236AD1 100%);
     top: -5%;
     left: -5%;
     animation: float1 15s infinite ease-in-out;
@@ -91,7 +91,7 @@ html {
 .circle2 {
     width: 300px;
     height: 300px;
-    background-color: #EB483B;
+    background: linear-gradient(135deg, #EB483B 0%, #B41F19 100%);
     bottom: 10%;
     left: 14%;
     animation: float2 15s infinite ease-in-out;
@@ -100,7 +100,7 @@ html {
 .circle3 {
     width: 270px;
     height: 270px;
-    background-color: #FBC10E;
+    background: linear-gradient(135deg, #FBC10E 0%, #EB8C05 100%);
     top: 10%;
     right: 4%;
     animation: float3 15s infinite ease-in-out;
@@ -109,7 +109,7 @@ html {
 .circle4 {
     width: 320px;
     height: 320px;
-    background-color: #4EA865;
+    background: linear-gradient(135deg, #4EA865 0%, #1C793A 100%);
     bottom: -10%;
     right: -5%;
     animation: float4 15s infinite ease-in-out;
@@ -118,7 +118,8 @@ html {
 .gray-circle {
     position: absolute;
     border-radius: 50%;
-    background-color: rgba(217, 217, 217, 0.3);
+    background: linear-gradient(135deg, #D9D9D9 0%, #B0B0B0 100%);
+    opacity: 0.6;
     z-index: 0;
 }
 
@@ -251,6 +252,26 @@ html {
         font-size: 54px;
         white-space: normal;
     }
+    
+    .circle1 {
+        width: 300px;
+        height: 300px;
+    }
+    
+    .circle2 {
+        width: 250px;
+        height: 250px;
+    }
+    
+    .circle3 {
+        width: 230px;
+        height: 230px;
+    }
+    
+    .circle4 {
+        width: 270px;
+        height: 270px;
+    }
 }
 
 @media screen and (max-width: 768px) {
@@ -258,61 +279,83 @@ html {
         font-size: 48px;
         white-space: normal;
     }
-
+    
     .banner p {
-        font-size: 20px;
-        margin-bottom: 20px;
+        font-size: 22px;
     }
     
     .circle1 {
-        width: 280px;
-        height: 280px;
+        width: 250px;
+        height: 250px;
+        top: -2%;
+        left: -3%;
     }
     
     .circle2 {
-        width: 220px;
-        height: 220px;
+        width: 200px;
+        height: 200px;
+        bottom: 12%;
+        left: 2%;
     }
     
     .circle3 {
-        width: 200px;
-        height: 200px;
+        width: 180px;
+        height: 180px;
+        top: 12%;
+        right: 0;
     }
     
     .circle4 {
-        width: 240px;
-        height: 240px;
+        width: 220px;
+        height: 220px;
+        bottom: -5%;
+        right: -3%;
+    }
+    
+    .gray-circle1, .gray-circle2 {
+        display: none;
     }
 }
 
 @media screen and (max-width: 480px) {
     .banner-title {
-        font-size: 42px;
+        font-size: 36px;
     }
-
+    
     .banner p {
         font-size: 18px;
-        margin-bottom: 20px;
     }
     
     .circle1 {
         width: 200px;
         height: 200px;
+        top: 0;
+        left: -10%;
     }
     
     .circle2 {
-        width: 180px;
-        height: 180px;
+        width: 150px;
+        height: 150px;
+        bottom: 15%;
+        left: 0;
     }
     
     .circle3 {
-        width: 150px;
-        height: 150px;
+        width: 130px;
+        height: 130px;
+        top: 15%;
+        right: -2%;
     }
     
     .circle4 {
         width: 180px;
         height: 180px;
+        bottom: 0;
+        right: -5%;
+    }
+    
+    .gray-circle3 {
+        display: none;
     }
 }
 

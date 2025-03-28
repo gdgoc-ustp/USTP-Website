@@ -18,6 +18,11 @@ const HeroSection = ({ title, theme }) => {
       primary: "#FBC10E",
       secondary: "#EB8C05",
       accent: { primary: "#EB483B", secondary: "#B41F19" }
+    },
+    home: {
+      primary: "#498CF6",
+      secondary: "#236AD1",
+      accent: { primary: "#EB483B", secondary: "#B41F19" }
     }
   };
 
