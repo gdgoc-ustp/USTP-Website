@@ -11,10 +11,15 @@ This is the official **GDGOC USTP (Google Developer Groups on Campus - Universit
 - **Team Information**: The "About Us" section provides details about the club, its mission, vision, and members.
 - **Public API**: RESTful API for accessing events and blog posts
 <<<<<<< HEAD
+<<<<<<< HEAD
 - **Admin Dashboard**: Secure admin interface for managing content
 - **Blog System**: Rich text editor for creating and managing blog posts
 =======
 >>>>>>> 3bb3076 (Update README to include Public API documentation and remove obsolete SQL schema files)
+=======
+- **Admin Dashboard**: Secure admin interface for managing content
+- **Blog System**: Rich text editor for creating and managing blog posts
+>>>>>>> 04bee5b (adjust footer for mobile resolutions)
 
 ## Pages
 
@@ -44,10 +49,18 @@ cd USTP-Website
 npm install
 ```
 
+<<<<<<< HEAD
 Rename `.env.sample` to `.env` and fill with the appropriate values. Please contact me for this.
 
 However, If you want to create your own supabase instance, copy and execute all .sql files on `/sql` directory to supabase sql editor to setup RLS and table policies.
 
+=======
+Create a `.env` file in the root directory with the following variables:
+```
+REACT_APP_SUPABASE_URL=your_supabase_url
+REACT_APP_SUPABASE_ANON_KEY=your_supabase_anon_key
+```
+>>>>>>> 04bee5b (adjust footer for mobile resolutions)
 
 ## Usage
 
@@ -69,8 +82,11 @@ This creates a production-ready version of the website in the `build` folder.
 
 ## CMS Development
 
+<<<<<<< HEAD
 CMS Admin interface is accessible in `/admin` endpoint. [HERE](https://gdsc-ustp.vercel.app/admin/login)
 
+=======
+>>>>>>> 04bee5b (adjust footer for mobile resolutions)
 The CMS provides a secure admin interface for managing content:
 - Event Management: Create, update, and delete events
 - Blog Posts: Rich text editor with image upload support
@@ -100,6 +116,50 @@ src/
 ```
 
 ## API Documentation
+<<<<<<< HEAD
+=======
+
+### Public Endpoints
+
+#### Events
+
+- **Get All Events**
+  ```
+  GET /rest/v1/events
+  ```
+  Query Parameters:
+  - `select`: Fields to return
+  - `order`: Sort order (e.g., created_at.desc)
+  - `status`: Filter by status (Upcoming, Completed, Cancelled)
+
+- **Get Event by ID**
+  ```
+  GET /rest/v1/events?id=eq.{event_id}
+  ```
+
+#### Blog Posts
+
+- **Get All Blog Posts**
+  ```
+  GET /rest/v1/blog_posts
+  ```
+  Query Parameters:
+  - `select`: Fields to return
+  - `order`: Sort order (e.g., created_at.desc)
+
+- **Get Blog Post by ID**
+  ```
+  GET /rest/v1/blog_posts?id=eq.{post_id}
+  ```
+
+### Authentication
+
+All requests must include:
+```
+apikey: your_anon_key
+```
+
+>>>>>>> 04bee5b (adjust footer for mobile resolutions)
 For detailed API documentation and examples, visit our [Postman Collection](https://documenter.getpostman.com/view/41094364/2sAYQZGX13).
 
 ## Contributing
@@ -119,9 +179,6 @@ Please refer to the official tracker for additional resources.
 This project is licensed under the Attribution-NonCommercial 4.0 International License. See the [LICENSE](LICENSE) file for more details.
 <<<<<<< HEAD
 =======
-
-## API Documentation
-You can view the API documentation [here.](https://documenter.getpostman.com/view/41094364/2sAYQZGX13)
 
 
 

@@ -1,6 +1,7 @@
 * {
-    margin: 0px;
-    padding: 0px;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
     font-family: 'Google-Sans', 'Open sans', sans-serif, Arial;
 }
 
@@ -10,8 +11,9 @@ h1 {
     font-weight: 450;
 }
 body {
-    font-family: 'Google-Sans';
-    color: #383838;
+    font-family: 'Google-Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    line-height: 1.6;
+    color: #333;
     font-weight: 500;
 }
 
@@ -54,8 +56,6 @@ html {
     font-style: italic; 
 }
 
-
-
 /* Section-1 container */
 /* White background */
 .section-1 {
@@ -68,8 +68,6 @@ html {
     border: none;
     margin-top: -20px;
     box-shadow: 10px 10px 20px 5px rgba(0, 0, 0, 0.3);
-
-
 }
 /* Light green On going events container */
 .section-1-container {
@@ -81,4 +79,180 @@ html {
     max-width: 100%;
     box-sizing: border-box;
     justify-content: space-between; /* Add this to make sure the cards space out evenly */
+}
+
+/* Base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+main {
+    min-height: calc(100vh - 96px);
+    width: 100%;
+    overflow-x: hidden;
+}
+
+/* Container styles */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+/* Section spacing */
+section {
+    padding: 4rem 1rem;
+}
+
+/* Typography */
+h2 {
+    font-size: 2rem;
+    line-height: 1.3;
+    margin-bottom: 1rem;
+}
+
+p {
+    margin-bottom: 1rem;
+}
+
+/* Button styles */
+button {
+    padding: 0.75rem 1.5rem;
+    border-radius: 50px;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+/* Image styles */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Grid system */
+.grid {
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+/* Responsive breakpoints */
+@media screen and (max-width: 1024px) {
+    h1 {
+        font-size: 2rem;
+    }
+
+    h2 {
+        font-size: 1.75rem;
+    }
+
+    section {
+        padding: 3rem 1rem;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    h1 {
+        font-size: 1.75rem;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    section {
+        padding: 2rem 1rem;
+    }
+
+    .grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    h2 {
+        font-size: 1.25rem;
+    }
+
+    section {
+        padding: 1.5rem 1rem;
+    }
+
+    button {
+        width: 100%;
+        padding: 0.875rem 1rem;
+    }
+}
+
+/* Utility classes */
+.text-center {
+    text-align: center;
+}
+
+.flex {
+    display: flex;
+}
+
+.flex-col {
+    flex-direction: column;
+}
+
+.items-center {
+    align-items: center;
+}
+
+.justify-center {
+    justify-content: center;
+}
+
+.gap-1 {
+    gap: 1rem;
+}
+
+.gap-2 {
+    gap: 2rem;
+}
+
+.w-full {
+    width: 100%;
+}
+
+.hidden {
+    display: none;
+}
+
+@media screen and (max-width: 768px) {
+    .md\:flex-col {
+        flex-direction: column;
+    }
+
+    .md\:hidden {
+        display: none;
+    }
+
+    .md\:block {
+        display: block;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .sm\:flex-col {
+        flex-direction: column;
+    }
+
+    .sm\:hidden {
+        display: none;
+    }
+
+    .sm\:block {
+        display: block;
+    }
 }
