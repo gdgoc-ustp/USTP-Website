@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './footer.css';
-import Logo from '../assets/logo.svg'
+import Logo from '../assets/vector.svg'
 
 export default function Footer() {
     return (
@@ -12,15 +12,8 @@ export default function Footer() {
                         src={Logo}
                         className="footer-logo"
                         alt="GDSC Logo"
+                        style={{ width: "100%", maxWidth: "200px", height: "auto" }}
                     />
-                    <div className="footer-logo-text">
-                        <div className="footer-title">
-                            Google Developer Groups on Campus
-                        </div>
-                        <div className="footer-subtitle">
-                            University of Science and Technology of Southern Philippines
-                        </div>
-                    </div>
                 </div>
                 <div className="footer-links-container">
                     <div className="footer-links-column">

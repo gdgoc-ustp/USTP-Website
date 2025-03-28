@@ -103,7 +103,7 @@ export default function Home() {
                     </div>
                 </header>
 
-                {/* Page content and footer (revealed after clicking Learn More on desktop, or visible immediately on mobile) */}
+                {/* Page content (revealed after clicking Learn More on desktop, or visible immediately on mobile) */}
                 <animated.div 
                     style={{
                         ...contentProps,
@@ -202,7 +202,6 @@ export default function Home() {
                     </section>
                 </animated.div>
             </main>
-            {/* Only show footer when content is visible */}
             {(showPageContent || isMobile) && <Footer />}
         </>
     );
