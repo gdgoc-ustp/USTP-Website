@@ -20,9 +20,9 @@
 }
 
 .footer-logo {
-    width: 100%;
-    max-width: 200%;
-    height: auto;
+    width: 65px;
+    height: 32px;
+    object-fit: contain;
 }
 
 .footer-logo-text {

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import NavigationBar from "../components/navBar";
 import Footer from "../components/footer";
+import HeroSection from "../components/HeroSection";
 import './events.css'; 
 import './main.css'
 import Sample from '../assets/sample.png';
@@ -124,9 +125,7 @@ export default function Events() {
             <title>Events</title>
             <NavigationBar />
             <main>
-                <section className="events">
-                    <h1>Events</h1>
-                </section>
+                <HeroSection title="Events" theme="events" />
 
                 <section className="events-container">
                     {loading ? (

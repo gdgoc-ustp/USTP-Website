@@ -59,6 +59,19 @@
   background-color: #498CF6;
 }
 
+/* Custom active states for specific links */
+a[href="/news"].active {
+  background-color: #EB483B;
+}
+
+a[href="/events"].active {
+  background-color: #4EA865;
+}
+
+a[href="/aboutus"].active {
+  background-color: #FBC10E;
+}
+
 /* Register Button */
 .register-button {
   font-size: 16px;
@@ -137,7 +150,11 @@ body.menu-open {
 /* Media Queries for Responsive Design */
 @media (max-width: 768px) {
   .navbar-content {
-    padding: 0 10px;
+    padding: 0 16px;
+  }
+  
+  .navbar-logo {
+    margin-left: 8px;
   }
   
   .navbar-links {
@@ -174,6 +191,14 @@ body.menu-open {
 }
 
 @media (max-width: 480px) {
+  .navbar-content {
+    padding: 0 20px;
+  }
+  
+  .navbar-logo {
+    margin-left: 12px;
+  }
+  
   .navbar-links {
     width: 100%;
     right: -100%;

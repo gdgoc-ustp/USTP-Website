@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './footer.css';
-import Logo from '../assets/vector.svg'
+import Logo from '../assets/logo.svg'
+import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin, FaYoutube } from 'react-icons/fa';
 
 export default function Footer() {
     return (
@@ -12,8 +13,15 @@ export default function Footer() {
                         src={Logo}
                         className="footer-logo"
                         alt="GDSC Logo"
-                        style={{ width: "100%", maxWidth: "200px", height: "auto" }}
                     />
+                    <div className="footer-logo-text">
+                        <div className="footer-title">
+                            Google Developer Groups on Campus
+                        </div>
+                        <div className="footer-subtitle">
+                            University of Science and Technology of Southern Philippines
+                        </div>
+                    </div>
                 </div>
                 <div className="footer-links-container">
                     <div className="footer-links-column">
@@ -71,6 +79,7 @@ export default function Footer() {
                         className="footer-social-link"
                         aria-label="Facebook"
                     >
+                        <FaFacebook size={24} color="#000000" />
                         <span className="sr-only">Facebook</span>
                     </a>
                     <a
@@ -80,6 +89,7 @@ export default function Footer() {
                         className="footer-social-link"
                         aria-label="Twitter"
                     >
+                        <FaTwitter size={24} color="#000000" />
                         <span className="sr-only">Twitter</span>
                     </a>
                     <a
@@ -89,6 +99,7 @@ export default function Footer() {
                         className="footer-social-link"
                         aria-label="Instagram"
                     >
+                        <FaInstagram size={24} color="#000000" />
                         <span className="sr-only">Instagram</span>
                     </a>
                     <a
@@ -98,6 +109,7 @@ export default function Footer() {
                         className="footer-social-link"
                         aria-label="LinkedIn"
                     >
+                        <FaLinkedin size={24} color="#000000" />
                         <span className="sr-only">LinkedIn</span>
                     </a>
                     <a
@@ -107,6 +119,7 @@ export default function Footer() {
                         className="footer-social-link"
                         aria-label="YouTube"
                     >
+                        <FaYoutube size={24} color="#000000" />
                         <span className="sr-only">YouTube</span>
                     </a>
                 </div>

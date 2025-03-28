@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import NavigationBar from "../components/navBar";
 import Footer from "../components/footer";
+import HeroSection from "../components/HeroSection";
 import './news.css';
 import './main.css';
 import Sample from '../assets/sample.png';
@@ -94,9 +95,7 @@ export default function News() {
             <title>News</title>
             <NavigationBar />
             <main>
-                <section className="news-hero">
-                    <h1>News</h1>
-                </section>
+                <HeroSection title="News" theme="news" />
 
                 <section className="news-container">
                     <h2>What's New</h2>
