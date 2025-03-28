@@ -171,7 +171,7 @@ export default function BlogPosts() {
     const [isDragging, setIsDragging] = useState(false);
     const [uploadProgress, setUploadProgress] = useState(0);
     const fileInputRef = useRef(null);
-    
+
     // New state for search, filtering, sorting and pagination
     const [searchTerm, setSearchTerm] = useState('');
     const [sortField, setSortField] = useState('created_at');
@@ -338,18 +338,18 @@ export default function BlogPosts() {
     const uploadImage = async (file) => {
         try {
             // Security checks
-            const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
-            const maxSize = 5 * 1024 * 1024; // 5MB
+        const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+        const maxSize = 5 * 1024 * 1024; // 5MB
 
             // Validate file type
-            if (!allowedTypes.includes(file.type)) {
+        if (!allowedTypes.includes(file.type)) {
                 throw new Error('Invalid file type. Only JPEG, PNG, GIF, and WebP images are allowed.');
-            }
+        }
 
             // Validate file size
-            if (file.size > maxSize) {
+        if (file.size > maxSize) {
                 throw new Error('File is too large. Maximum size is 5MB.');
-            }
+        }
 
             setLoading(true);
             setError('');
@@ -445,21 +445,21 @@ export default function BlogPosts() {
     const handleDelete = async (id) => {
         if (!window.confirm('Are you sure you want to delete this post?')) return;
 
-        try {
+            try {
             setLoading(true);
             setError('');
 
-            const { error } = await supabase
-                .from('blog_posts')
-                .delete()
-                .eq('id', id);
+                const { error } = await supabase
+                    .from('blog_posts')
+                    .delete()
+                    .eq('id', id);
 
-            if (error) throw error;
+                if (error) throw error;
 
-            await fetchPosts();
-        } catch (error) {
+                await fetchPosts();
+            } catch (error) {
             console.error('Error deleting post:', error);
-            setError('Failed to delete blog post');
+                setError('Failed to delete blog post');
         } finally {
             setLoading(false);
         }
@@ -552,8 +552,8 @@ export default function BlogPosts() {
         try {
             const date = new Date(dateString);
             return date.toLocaleDateString('en-US', {
-                year: 'numeric',
-                month: 'short',
+            year: 'numeric',
+            month: 'short',
                 day: 'numeric'
             });
         } catch (e) {
@@ -628,13 +628,13 @@ export default function BlogPosts() {
                         onChange={(e) => setSearchTerm(e.target.value)}
                         className="search-input"
                     />
-                </div>
-            </div>
+                                </div>
+                            </div>
 
             {filteredPosts.length === 0 ? (
                 <div className="no-events-message">
                     <p>No blog posts found matching your criteria.</p>
-                </div>
+                            </div>
             ) : (
                 <>
                     <div className="events-table-container">
@@ -674,7 +674,7 @@ export default function BlogPosts() {
                                                         alt={post.heading}
                                                         className="event-thumbnail"
                                                     />
-                                                </div>
+                        </div>
                                             ) : (
                                                 <div className="no-image">No image</div>
                                             )}
@@ -705,8 +705,8 @@ export default function BlogPosts() {
                                 ))}
                             </tbody>
                         </table>
-                    </div>
-                    
+            </div>
+
                     {renderPagination()}
                 </>
             )}
@@ -855,7 +855,7 @@ export default function BlogPosts() {
 
                             <div className="form-group">
                                 <label>Thumbnail Image</label>
-                                <div 
+                                <div
                                     className={`image-drop-zone ${isDragging ? 'dragging' : ''}`}
                                     onDragEnter={handleDragEnter}
                                     onDragLeave={handleDragLeave}
@@ -866,7 +866,7 @@ export default function BlogPosts() {
                                     {formData.image_url ? (
                                         <div className="image-preview">
                                             <img src={formData.image_url} alt="Preview" />
-                                            <button 
+                                            <button
                                                 type="button"
                                                 className="remove-image"
                                                 onClick={(e) => {

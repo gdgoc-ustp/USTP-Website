@@ -26,13 +26,15 @@ export default function News() {
         fetchBlogPosts();
     }, []);
 
-    const fetchBlogPosts = async () => {
+    const fetchBlogPosts = async (pageNumber = 0) => {
         try {
             setLoading(true);
             setError(null);
             
+            const offset = pageNumber * postsPerPage;
+            
             const response = await fetch(
-                `${process.env.REACT_APP_SUPABASE_URL}/rest/v1/blog_posts?select=*&limit=${postsPerPage}&offset=0&order=created_at.desc`,
+                `${process.env.REACT_APP_SUPABASE_URL}/rest/v1/blog_posts?select=*&limit=${postsPerPage}&offset=${offset}&order=created_at.desc`,
                 {
                     headers: {
                         "apikey": `${process.env.REACT_APP_SUPABASE_ANON_KEY}`,
@@ -51,7 +53,13 @@ export default function News() {
                 setHasMore(false);
             }
 
-            setBlogPosts((prev) => [...prev, ...data]);
+            // If this is the first page, replace the posts array
+            // If it's a subsequent page, append to the existing array
+            if (pageNumber === 0) {
+                setBlogPosts(data);
+            } else {
+                setBlogPosts((prev) => [...prev, ...data]);
+            }
         } catch (err) {
             console.error("Error fetching blog posts:", err);
             setError(err.message);
@@ -86,8 +94,9 @@ export default function News() {
     };
 
     const loadMore = () => {
-        setPage((prevPage) => prevPage + 1);
-        fetchBlogPosts();
+        const nextPage = page + 1;
+        setPage(nextPage);
+        fetchBlogPosts(nextPage);
     };
 
     return (
