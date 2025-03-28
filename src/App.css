@@ -1,5 +1,5 @@
 .App {
-  text-align: center;
+  /* Removed text-align: center to prevent global centering */
 }
 
 .App-logo {

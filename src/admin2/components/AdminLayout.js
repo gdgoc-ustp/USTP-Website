@@ -28,7 +28,7 @@ export default function AdminLayout({ children }) {
             <nav className="admin-sidebar">
                 <div className="admin-sidebar-header">
                     {/* <h2>Admin Panel</h2> */}
-                    <img src={logo} alt="Logo" className="admin-logo" />
+                    <img src={logo} alt="Logo" />
                 </div>
                 
                 <div className="admin-sidebar-menu">

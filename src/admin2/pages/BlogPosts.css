@@ -1,0 +1,414 @@
+.blog-posts-container {
+    padding: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.blog-posts-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
+}
+
+.blog-posts-header h1 {
+    font-size: 28px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin: 0;
+}
+
+.add-post-button {
+    padding: 12px 24px;
+    background-color: #4285f4;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.add-post-button:hover {
+    background-color: #3367d6;
+}
+
+.blog-posts-loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 400px;
+    font-size: 18px;
+    color: #666;
+}
+
+.blog-posts-error {
+    background-color: #fee2e2;
+    color: #dc2626;
+    padding: 16px;
+    border-radius: 8px;
+    margin-bottom: 24px;
+    text-align: center;
+}
+
+.blog-posts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 24px;
+}
+
+.blog-post-card {
+    background-color: white;
+    border-radius: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.post-thumbnail {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.post-content {
+    padding: 24px;
+}
+
+.post-content h3 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 8px;
+}
+
+.post-tagline {
+    color: #666;
+    margin-bottom: 16px;
+    font-size: 16px;
+}
+
+.post-description {
+    color: #333;
+    margin-bottom: 24px;
+    line-height: 1.5;
+}
+
+.post-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.post-actions button {
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.post-actions button:first-child {
+    background-color: transparent;
+    border: 1px solid #4285f4;
+    color: #4285f4;
+}
+
+.post-actions button:first-child:hover {
+    background-color: rgba(66, 133, 244, 0.1);
+}
+
+.post-actions button:last-child {
+    background-color: transparent;
+    border: 1px solid #ea4335;
+    color: #ea4335;
+}
+
+.post-actions button:last-child:hover {
+    background-color: rgba(234, 67, 53, 0.1);
+}
+
+/* Modal styles */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    padding: 16px;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 24px;
+    border-radius: 16px;
+    width: 90%;
+    max-width: 900px;
+    max-height: 90vh;
+    overflow-y: auto;
+    margin: 0;
+    position: relative;
+}
+
+.modal-content h2 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 24px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 24px;
+}
+
+.form-group label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #666;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    padding: 12px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 16px;
+    color: #1a1a1a;
+    transition: border-color 0.2s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #4285f4;
+}
+
+.form-group textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 16px;
+    margin-top: 24px;
+}
+
+.modal-actions button {
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.modal-actions button[type="button"] {
+    background-color: transparent;
+    border: 1px solid #e0e0e0;
+    color: #666;
+}
+
+.modal-actions button[type="button"]:hover {
+    background-color: #f5f5f5;
+}
+
+.modal-actions button[type="submit"] {
+    background-color: #4285f4;
+    border: none;
+    color: white;
+}
+
+.modal-actions button[type="submit"]:hover {
+    background-color: #3367d6;
+}
+
+.modal-actions button:disabled {
+    background-color: #e0e0e0;
+    cursor: not-allowed;
+}
+
+/* Image drop zone styles */
+.image-drop-zone {
+    border: 2px dashed #e0e0e0;
+    border-radius: 8px;
+    padding: 24px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background-color: #f8f9fe;
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.image-drop-zone.dragging {
+    border-color: #4285f4;
+    background-color: rgba(66, 133, 244, 0.1);
+}
+
+.image-drop-zone:hover {
+    border-color: #4285f4;
+}
+
+.drop-zone-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+.drop-zone-content p {
+    color: #666;
+    font-size: 16px;
+    margin: 0;
+}
+
+.image-preview {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.image-preview img {
+    max-width: 100%;
+    max-height: 200px;
+    object-fit: contain;
+}
+
+.remove-image {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background-color: rgba(234, 67, 53, 0.9);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 4px 8px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.remove-image:hover {
+    background-color: #ea4335;
+}
+
+/* Rich text editor styles */
+.tox-tinymce {
+    border-radius: 8px !important;
+    border-color: #e0e0e0 !important;
+    min-height: 400px !important;
+    max-height: calc(70vh - 200px) !important;
+}
+
+.tox-editor-container {
+    background-color: white !important;
+}
+
+.tox .tox-toolbar__primary {
+    background-color: #f8f9fe !important;
+    border-bottom: 1px solid #e0e0e0 !important;
+}
+
+.tox .tox-tbtn {
+    color: #1a1a1a !important;
+}
+
+.tox .tox-tbtn:hover {
+    background-color: rgba(66, 133, 244, 0.1) !important;
+}
+
+.tox .tox-tbtn--enabled,
+.tox .tox-tbtn--enabled:hover {
+    background-color: rgba(66, 133, 244, 0.2) !important;
+}
+
+@media (max-width: 768px) {
+    .blog-posts-container {
+        padding: 16px;
+    }
+
+    .blog-posts-header {
+        flex-direction: column;
+        gap: 16px;
+        align-items: stretch;
+        margin-bottom: 24px;
+    }
+
+    .blog-post-card {
+        flex-direction: column;
+    }
+
+    .post-thumbnail {
+        height: 160px;
+    }
+
+    .post-content {
+        padding: 16px;
+    }
+
+    .post-actions {
+        justify-content: stretch;
+    }
+
+    .post-actions button {
+        flex: 1;
+    }
+
+    .modal-content {
+        width: 95%;
+        padding: 16px;
+        max-height: 85vh;
+    }
+
+    .modal-actions {
+        flex-direction: column;
+    }
+
+    .modal-actions button {
+        width: 100%;
+    }
+
+    .tox.tox-tinymce {
+        min-height: 250px !important;
+        max-height: calc(60vh - 200px) !important;
+    }
+}
+
+.post-metadata {
+    margin: 16px 0;
+    padding-top: 16px;
+    border-top: 1px solid #e0e0e0;
+    font-size: 14px;
+    color: #666;
+}
+
+.post-author {
+    margin-bottom: 8px;
+}
+
+.post-dates {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.post-dates span {
+    color: #666;
+    font-size: 13px;
+} 

@@ -45,7 +45,9 @@ CREATE TABLE IF NOT EXISTS events (
     description TEXT NOT NULL,
     image_url TEXT,
     status event_status NOT NULL DEFAULT 'Upcoming',
-    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+    event_date TIMESTAMPTZ,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
 -- Create blog posts table

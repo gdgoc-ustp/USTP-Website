@@ -12,24 +12,13 @@
     padding: 24px;
 }
 
-
 .admin-sidebar-header {
     margin-bottom: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 .admin-sidebar-header h2 {
     font-size: 24px;
     font-weight: 600;
-}
-
-.admin-sidebar-header img {
-    max-width: 80%;
-    height: auto;
-    max-height: 60px;
-    object-fit: contain;
 }
 
 .admin-sidebar-menu {

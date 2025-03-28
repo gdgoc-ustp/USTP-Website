@@ -7,7 +7,7 @@ import AboutUs from './pages/aboutUs';
 import Error from './pages/error';
 import FaQs from './pages/faq';
 import Article from "./pages/article";
-import AdminRoutes from './admin/AdminRoutes';
+import AdminRoutes from './admin/routes/AdminRoutes';
 
 function App() {
   return (

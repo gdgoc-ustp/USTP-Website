@@ -2,6 +2,7 @@ import { createClient } from '@supabase/supabase-js';
 
 const supabaseUrl = process.env.REACT_APP_SUPABASE_URL;
 const supabaseAnonKey = process.env.REACT_APP_SUPABASE_ANON_KEY;
+const supabaseServiceKey = process.env.REACT_APP_SUPABASE_SERVICE_KEY;
 
 if (!supabaseUrl || !supabaseAnonKey) {
     console.error('Missing Supabase environment variables:', {
@@ -10,10 +11,17 @@ if (!supabaseUrl || !supabaseAnonKey) {
     });
 }
 
+// Regular client with anon key (respects RLS)
 export const supabase = createClient(
     supabaseUrl || 'https://yrvykwljzajfkraytbgr.supabase.co',
     supabaseAnonKey || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inlydnlrd2xqemFqZmtyYXl0YmdyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzY5MjczMjIsImV4cCI6MjA1MjUwMzMyMn0.WzWYdut9GkGSjH5cehOcuc6YzZR5g-XQgZ3Kh9d_6UA'
 );
+
+// Admin client with service key (bypasses RLS) - only use for admin operations
+export const supabaseAdmin = supabaseServiceKey ? createClient(
+    supabaseUrl || 'https://yrvykwljzajfkraytbgr.supabase.co',
+    supabaseServiceKey
+) : null;
 
 // Auth helper functions
 export const signIn = async (email, password) => {
@@ -56,7 +64,9 @@ export const updateUserProfile = async (userId, updates) => {
 export const checkFirstTimeSetup = async () => {
     try {
         console.log('Checking users table...');
-        const { count, error } = await supabase
+        // Use admin client if available to bypass RLS for this check
+        const client = supabaseAdmin || supabase;
+        const { count, error } = await client
             .from('users')
             .select('*', { count: 'exact', head: true });
 

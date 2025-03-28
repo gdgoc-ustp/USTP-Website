@@ -6,6 +6,7 @@ DROP POLICY IF EXISTS "Enable read access for all users" ON users;
 DROP POLICY IF EXISTS "Enable insert access for authenticated users" ON users;
 DROP POLICY IF EXISTS "Enable update access for users based on id" ON users;
 DROP POLICY IF EXISTS "Enable delete access for users based on id" ON users;
+DROP POLICY IF EXISTS "Allow first system admin creation" ON users;
 
 -- Drop policies on events table that depend on users
 DROP POLICY IF EXISTS "Authenticated users with proper permissions can manage events" ON events;
@@ -19,11 +20,14 @@ DROP POLICY IF EXISTS "Admins can manage all posts" ON blog_posts;
 -- Now we can safely drop and recreate the users table
 DROP TABLE IF EXISTS users CASCADE;
 
--- Recreate the users table
+-- Recreate the users table with additional columns needed for admin setup
 CREATE TABLE users (
     id UUID REFERENCES auth.users(id) PRIMARY KEY,
     email TEXT,
     name TEXT,
+    position TEXT,
+    address TEXT,
+    password TEXT, -- Added for compatibility with Setup.js
     permission TEXT DEFAULT 'VIEWER',
     created_at TIMESTAMPTZ DEFAULT NOW(),
     updated_at TIMESTAMPTZ DEFAULT NOW()
@@ -37,10 +41,17 @@ CREATE POLICY "Enable read access for all users"
     ON users FOR SELECT
     USING (true);
 
-CREATE POLICY "Enable insert access for authenticated users"
+-- Special policy for first-time setup
+CREATE POLICY "Allow first system admin creation"
     ON users FOR INSERT
-    WITH CHECK (auth.uid() = id);
+    WITH CHECK (
+        -- Allow insert if table is empty (first time setup)
+        (SELECT count(*) FROM users) = 0
+        -- Or if the authenticated user is the same as the row being inserted
+        OR auth.uid() = id
+    );
 
+-- Standard update/delete policies
 CREATE POLICY "Enable update access for users based on id"
     ON users FOR UPDATE
     USING (auth.uid() = id);

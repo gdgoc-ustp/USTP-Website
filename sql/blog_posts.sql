@@ -22,6 +22,20 @@ CREATE TABLE blog_posts (
 -- Enable RLS
 ALTER TABLE blog_posts ENABLE ROW LEVEL SECURITY;
 
+-- Create function and trigger for automatic updated_at timestamp
+CREATE OR REPLACE FUNCTION update_modified_column()
+RETURNS TRIGGER AS $$
+BEGIN
+    NEW.updated_at = NOW();
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER set_updated_at
+BEFORE UPDATE ON blog_posts
+FOR EACH ROW
+EXECUTE FUNCTION update_modified_column();
+
 -- Drop existing policies if any
 DROP POLICY IF EXISTS "Public can view blog posts" ON blog_posts;
 DROP POLICY IF EXISTS "Service role can manage blog posts" ON blog_posts;
