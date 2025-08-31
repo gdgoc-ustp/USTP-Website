@@ -78,22 +78,6 @@ The CMS provides a secure admin interface for managing content:
 
 The application requires the following environment variables to be set in the `.env` file:
 
-### Security Note
-The Gemini API integration has been updated for security. The API key is now handled server-side only and never exposed to the browser. See `SECURITY_SETUP.md` for detailed migration instructions.
-
-```
-# Supabase Configuration
-REACT_APP_SUPABASE_URL=your-supabase-url
-REACT_APP_SUPABASE_ANON_KEY=your-supabase-anon-key
-REACT_APP_SUPABASE_SERVICE_KEY=your-supabase-service-key
-
-# API Configuration
-REACT_APP_API_URL=your-api-url
-
-# TinyMCE Configuration
-REACT_APP_TINYMCE_API_KEY=your-tinymce-api-key
-```
-
 ### TinyMCE Integration
 
 The application uses TinyMCE for rich text editing in the admin interface. The configuration is centralized in `src/lib/tinymceConfig.js`. 
