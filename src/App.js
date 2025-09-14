@@ -11,6 +11,8 @@ import PersonalityTest from "./pages/personalityTest";
 import PersonalityQuestionnaire from "./pages/personalityQuestionnaire";
 import PersonalityCodeInput from "./pages/personalityCodeInput";
 import AdminRoutes from './admin/routes/AdminRoutes';
+import Policy  from './pages/policy';
+import Terms from './pages/terms';
 
 function App() {
   return (
@@ -22,8 +24,10 @@ function App() {
         <Route path="/news" element={<News/>} />
         <Route path="/aboutus" element={<AboutUs/>} />
         <Route path="/news/article/:id" element={<Article />} />
+        <Route path="/policy" element={<Policy />} />
+        <Route path="/terms" element={<Terms />} />
 
-        {/* Personality Test Routes */}
+        {/* Personality Test Routes */} 
         <Route path="/personality-test" element={<PersonalityQuestionnaire />} />
         <Route path="/personality-test/code" element={<PersonalityCodeInput />} />
         <Route path="/personality-test/:id" element={<PersonalityTest />} />

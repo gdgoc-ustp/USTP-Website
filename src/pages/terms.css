@@ -1,0 +1,21 @@
+* {
+margin: 0;
+padding: 0;
+
+}
+
+.terms-page {
+    padding-top: 80px;
+    height: 200vh;
+}
+
+.terms-page h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: black;
+}
+.terms-page p {
+    text-align: center;
+    margin-bottom: 20px;
+    color: black;
+}

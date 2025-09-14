@@ -58,8 +58,8 @@ export default function Footer() {
                     </div>
                     <div className="footer-policy-links">
                         <div className="footer-dot" />
-                        <Link to="/privacy" className="footer-policy-link">
-                            Privacy Policy
+                        <Link to="/policy" className="footer-policy-link">
+                            Privacy & Policy
                         </Link>
                         <div className="footer-dot" />
                         <Link to="/terms" className="footer-policy-link">

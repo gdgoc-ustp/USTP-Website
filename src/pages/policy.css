@@ -1,0 +1,21 @@
+*{
+margin: 0;
+padding: 0;
+
+}
+
+.policy-page {
+    padding-top: 80px;
+    height: 200vh;
+}
+
+.policy-page h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: black;
+}
+.policy-page p {
+    text-align: center;
+    margin-bottom: 20px;
+    color: black;
+}
