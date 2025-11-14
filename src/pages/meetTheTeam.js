@@ -73,7 +73,7 @@ export default function MeetTheTeam() {
                         
                         <div className="filter-buttons">
                             <button
-                                className={`filter-btn ${selectedGroup === 'All' ? 'active' : ''}`}
+                                className={`filter-btn ${selectedGroup === 'All' ? 'active all-teams-btn-color' : ''}`}
                                 onClick={() => setSelectedGroup('All')}
                                 aria-pressed={selectedGroup === 'All'}
                             >
@@ -82,7 +82,7 @@ export default function MeetTheTeam() {
                             {groups.map(group => (
                                 <button
                                     key={group}
-                                    className={`filter-btn ${selectedGroup === group ? 'active' : ''}`}
+                                    className={`filter-btn ${selectedGroup === group ? `active ${getButtonColorClass(group)}` : ''}`}
                                     onClick={() => setSelectedGroup(group)}
                                     aria-pressed={selectedGroup === group}
                                 >
@@ -152,4 +152,22 @@ export default function MeetTheTeam() {
             <Footer />
         </>
     );
+}
+
+// Helper function to get button color class based on group
+function getButtonColorClass(group) {
+    switch (group) {
+        case 'Executives':
+            return 'executives-btn-color';
+        case 'Operations':
+            return 'operations-btn-color';
+        case 'Technology':
+            return 'technology-btn-color';
+        case 'Communications':
+            return 'communications-btn-color';
+        case 'Community Development':
+            return 'community-development-btn-color';
+        default:
+            return '';
+    }
 }

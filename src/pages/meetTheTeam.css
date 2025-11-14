@@ -103,6 +103,38 @@
     font-weight: 700;
 }
 
+/* Specific active button colors */
+.filter-btn.active.all-teams-btn-color {
+    background-color: #ffffff;
+    color: #333;
+    border: 2px solid #000000;
+}
+
+.filter-btn.active.executives-btn-color {
+    background-color: #ffffff;
+    color: #333;
+}
+
+.filter-btn.active.operations-btn-color {
+    background-color: #498CF6;
+    color: #ffffff;
+}
+
+.filter-btn.active.technology-btn-color {
+    background-color: #EB483B;
+    color: #ffffff;
+}
+
+.filter-btn.active.communications-btn-color {
+    background-color: #FBC10E;
+    color: #ffffff;
+}
+
+.filter-btn.active.community-development-btn-color {
+    background-color: #4EA865;
+    color: #ffffff;
+}
+
 /* Team Group Section */
 .team-group-section {
     width: 100%;
