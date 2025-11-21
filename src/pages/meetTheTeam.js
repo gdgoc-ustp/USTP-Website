@@ -54,7 +54,7 @@ export default function MeetTheTeam() {
             <title>Meet the Team</title>
             <NavigationBar />
             
-            <HeroSection title="About Us" theme="aboutus" />
+            <HeroSection title="About us" theme="aboutus" />
             
             <section className="meet-team-page">
                 <div className="meet-team-container">

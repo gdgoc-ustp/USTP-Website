@@ -456,17 +456,7 @@ html {
 }
 
 /* Style for section one which covers the about us description and team description */
-.section-1-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 95%;
-    border-radius: 3vh;
-    background-color: #498CF61A;
-    padding: 3vh;
-    padding-left: 0px;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-}
+/* Legacy style removed to avoid conflicts */
 
 /* About us container */
 .about-content {
@@ -1549,7 +1539,7 @@ html {
     background-color: rgba(255, 255, 255, 0.95);
     border-radius: 40px;
     box-sizing: border-box;
-    width: 100%;
+    width: 95%;
     max-width: 1600px;
     margin: 0 auto;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.05);
@@ -1805,8 +1795,8 @@ html {
     }
 
     .section-1-container {
-        padding: 25px 15px;
-        border-radius: 30px;
+        padding: 20px 15px;
+        border-radius: 20px;
         gap: 20px;
     }
 
@@ -1964,11 +1954,6 @@ html {
 
 /* Section 1 Mobile Improvements */
 @media (max-width: 480px) {
-    .section-1-container {
-        padding: 20px 15px;
-        border-radius: 20px;
-    }
-
     .home-info-group {
         margin-bottom: 15px;
     }

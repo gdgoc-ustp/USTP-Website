@@ -374,7 +374,7 @@ export default function Home() {
                             }}></div>
                             <div className="text-content">
                                 <div className="quote">"Joining GDG USTP has been a game-changer for my development journey. The workshops and community support helped me land my first tech internship!"</div>
-                                <div className="reviewer">- Ken Tupino and friends</div>
+                                <div className="reviewer">- Ken Tupino and friends (tinuod)</div>
                                 <a href="/team" className="cta-link">Meet Our Amazing Team →</a>
                             </div>
                         </div>
