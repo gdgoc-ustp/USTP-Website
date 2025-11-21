@@ -1,0 +1,319 @@
+/* Sitemap Page Styles */
+.sitemap-page {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 100px 0 50px;
+    background-color: #ffffff;
+}
+
+.sitemap-container {
+    max-width: 1200px;
+    width: 100%;
+    padding: 0 20px;
+}
+
+/* Header Styles */
+.sitemap-header {
+    text-align: center;
+    margin-bottom: 60px;
+    padding-bottom: 40px;
+    border-bottom: 2px solid rgba(73, 140, 246, 0.1);
+}
+
+.sitemap-title {
+    font-family: 'Google Sans', sans-serif;
+    font-size: 48px;
+    font-weight: 700;
+    color: #232527;
+    margin-bottom: 20px;
+    background: linear-gradient(135deg, #498CF6 0%, #EB483B 25%, #FBC10E 50%, #4EA865 75%, #498CF6 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    background-size: 300% 100%;
+    animation: gradientShift 8s ease-in-out infinite;
+}
+
+@keyframes gradientShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+.sitemap-description {
+    font-family: 'Google Sans', sans-serif;
+    font-size: 18px;
+    line-height: 1.6;
+    color: #5f6368;
+    max-width: 600px;
+    margin: 0 auto 30px;
+}
+
+.sitemap-meta {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+
+.last-updated,
+.total-pages {
+    font-family: 'Google Sans', sans-serif;
+    font-size: 14px;
+    color: #8a8a8a;
+    margin: 0;
+    padding: 8px 16px;
+    background-color: rgba(73, 140, 246, 0.05);
+    border-radius: 20px;
+}
+
+/* Content Styles */
+.sitemap-content {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+}
+
+.sitemap-section {
+    background: rgba(73, 140, 246, 0.03);
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    transition: box-shadow 0.3s ease;
+}
+
+.sitemap-section:hover {
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.category-title {
+    font-family: 'Google Sans', sans-serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: #232527;
+    margin-bottom: 30px;
+    position: relative;
+    padding-left: 20px;
+}
+
+.category-title::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 30px;
+    background: linear-gradient(135deg, #498CF6, #EB483B);
+    border-radius: 2px;
+}
+
+.links-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 20px;
+}
+
+.sitemap-link-card {
+    background: #ffffff;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    border: 1px solid rgba(73, 140, 246, 0.1);
+}
+
+.sitemap-link-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(73, 140, 246, 0.15);
+    border-color: rgba(73, 140, 246, 0.3);
+}
+
+.sitemap-link {
+    display: block;
+    text-decoration: none;
+    margin-bottom: 15px;
+}
+
+.link-name {
+    font-family: 'Google Sans', sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: #498CF6;
+    margin: 0 0 8px 0;
+    transition: color 0.3s ease;
+}
+
+.sitemap-link:hover .link-name {
+    color: #EB483B;
+}
+
+.link-url {
+    font-family: 'Google Sans', sans-serif;
+    font-size: 12px;
+    color: #8a8a8a;
+    background-color: rgba(73, 140, 246, 0.05);
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-family: monospace;
+}
+
+.link-description {
+    font-family: 'Google Sans', sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #5f6368;
+    margin: 0;
+}
+
+/* Footer Styles */
+.sitemap-footer {
+    margin-top: 80px;
+    padding: 40px;
+    background: linear-gradient(135deg, rgba(73, 140, 246, 0.05) 0%, rgba(235, 72, 59, 0.05) 100%);
+    border-radius: 20px;
+}
+
+.sitemap-info h3 {
+    font-family: 'Google Sans', sans-serif;
+    font-size: 24px;
+    font-weight: 600;
+    color: #232527;
+    margin-bottom: 15px;
+}
+
+.sitemap-info p {
+    font-family: 'Google Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    color: #5f6368;
+    margin-bottom: 30px;
+}
+
+.sitemap-actions {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.xml-sitemap-link,
+.back-home-link {
+    display: inline-flex;
+    align-items: center;
+    padding: 12px 24px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-family: 'Google Sans', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.xml-sitemap-link {
+    background-color: #498CF6;
+    color: #ffffff;
+}
+
+.xml-sitemap-link:hover {
+    background-color: #3a72c6;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(73, 140, 246, 0.3);
+}
+
+.back-home-link {
+    background-color: transparent;
+    color: #498CF6;
+    border: 2px solid #498CF6;
+}
+
+.back-home-link:hover {
+    background-color: #498CF6;
+    color: #ffffff;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(73, 140, 246, 0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .sitemap-page {
+        padding: 80px 0 30px;
+    }
+
+    .sitemap-container {
+        padding: 0 15px;
+    }
+
+    .sitemap-title {
+        font-size: 36px;
+    }
+
+    .sitemap-description {
+        font-size: 16px;
+    }
+
+    .sitemap-meta {
+        gap: 20px;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .sitemap-section {
+        padding: 25px;
+    }
+
+    .category-title {
+        font-size: 24px;
+        padding-left: 15px;
+    }
+
+    .category-title::before {
+        height: 20px;
+    }
+
+    .links-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .sitemap-link-card {
+        padding: 20px;
+    }
+
+    .link-name {
+        font-size: 18px;
+    }
+
+    .sitemap-actions {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .xml-sitemap-link,
+    .back-home-link {
+        text-align: center;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .sitemap-title {
+        font-size: 28px;
+    }
+
+    .category-title {
+        font-size: 20px;
+    }
+
+    .sitemap-section {
+        padding: 20px;
+    }
+
+    .sitemap-link-card {
+        padding: 15px;
+    }
+
+    .links-grid {
+        grid-template-columns: 1fr;
+    }
+}

@@ -1,5 +1,6 @@
 import './App.css';
 import { Route, Routes } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import Home from './pages/home';
 import Events from './pages/events';
 import News from './pages/news';
@@ -14,8 +15,25 @@ import PersonalityCodeInput from "./pages/personalityCodeInput";
 import AdminRoutes from './admin/routes/AdminRoutes';
 import Policy  from './pages/policy';
 import Terms from './pages/terms';
+import Sitemap from './pages/sitemap';
+import LoadingScreen from './components/LoadingScreen';
 
 function App() {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate loading time or wait for resources
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000); // 2 seconds loading time
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (isLoading) {
+    return <LoadingScreen />;
+  }
+
   return (
     <div className="App">
       <Routes>
@@ -28,6 +46,7 @@ function App() {
         <Route path="/news/article/:id" element={<Article />} />
         <Route path="/policy" element={<Policy />} />
         <Route path="/terms" element={<Terms />} />
+        <Route path="/sitemap" element={<Sitemap />} />
 
         {/* Personality Test Routes */} 
         <Route path="/personality-test" element={<PersonalityQuestionnaire />} />
