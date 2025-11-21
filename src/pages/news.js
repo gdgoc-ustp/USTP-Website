@@ -46,44 +46,32 @@ export default function News() {
     // Define animation variants for the red circle
     const circleVariants = {
         fromEvents: {
-            right: '2%',
+            // From circle-8 position (right: 2%, top: 86%)
+            left: '98%',
             top: '86%',
-            left: 'auto',
-            bottom: 'auto',
             width: `${Math.min(windowSize.width, windowSize.height) * 0.082}px`,
             height: `${Math.min(windowSize.width, windowSize.height) * 0.082}px`,
-            x: '0%',
-            y: '0%'
         },
         fromHero: {
-            top: '50%',
+            // Already at center position
             left: '50%',
-            right: 'auto',
-            bottom: 'auto',
+            top: '50%',
             width: `${targetSize}px`,
             height: `${targetSize}px`,
-            x: '-50%',
-            y: '-50%'
         },
         fromHome: {
-            bottom: '10%',
+            // From circle2 position (bottom: 10%, left: 14%)
             left: '14%',
-            top: 'auto',
-            right: 'auto',
+            top: '90%',
             width: '300px',
             height: '300px',
-            x: '0%',
-            y: '0%'
         },
         final: {
-            top: '50%',
+            // Final center position
             left: '50%',
-            right: 'auto',
-            bottom: 'auto',
+            top: '50%',
             width: `${targetSize}px`,
             height: `${targetSize}px`,
-            x: '-50%',
-            y: '-50%'
         }
     };
 
@@ -128,10 +116,10 @@ export default function News() {
 
     useEffect(() => {
         if (!comingFromHeroPage) {
-            // Animate height reduction after component mounts
+            // Animate height reduction after component mounts, coordinated with circle animation
             const timer = setTimeout(() => {
                 setBannerHeight('clamp(360px, 60svh, 720px)');
-            }, 100);
+            }, 300); // Delay to let circle start moving first
             return () => clearTimeout(timer);
         }
     }, [comingFromHeroPage]);
@@ -290,24 +278,26 @@ export default function News() {
                     transition: comingFromHeroPage ? 'none' : 'height 0.8s ease-in-out' 
                 }}>
 
-                    {/* Initial Banner Circles - Wrapped to preserve positioning context */}
-                    <motion.div 
-                        variants={bannerContentVariants}
-                        initial="visible"
-                        animate={comingFromHeroPage ? "hidden" : "visible"}
-                        style={{ position: 'absolute', inset: 0, zIndex: 0 }}
-                    >
-                        <div className="circle circle1"></div>
-                        <div className="circle circle3"></div>
-                        <div className="circle circle4"></div>
+                    {/* Conditional Banner Circles - Only show initial circles when coming from non-hero pages */}
+                    {!comingFromHeroPage && (
+                        <motion.div 
+                            variants={bannerContentVariants}
+                            initial="visible"
+                            animate="hidden"
+                            style={{ position: 'absolute', inset: 0, zIndex: 0 }}
+                        >
+                            <div className="circle circle1"></div>
+                            <div className="circle circle3"></div>
+                            <div className="circle circle4"></div>
 
-                        {/* Gray accent circles */}
-                        <div className="gray-circle gray-circle1"></div>
-                        <div className="gray-circle gray-circle2"></div>
-                        <div className="gray-circle gray-circle3"></div>
-                    </motion.div>
+                            {/* Gray accent circles */}
+                            <div className="gray-circle gray-circle1"></div>
+                            <div className="gray-circle gray-circle2"></div>
+                            <div className="gray-circle gray-circle3"></div>
+                        </motion.div>
+                    )}
 
-                    {/* New Hero Circles (Fade in) - Placed before circle2 so circle2 is on top */}
+                    {/* Hero Circles - Always present for news page */}
                     <motion.div 
                         className="hero-circles" 
                         variants={heroElementsVariants}
@@ -321,7 +311,7 @@ export default function News() {
                         <div className="circle circle-4"></div>
                         <div className="circle circle-5"></div>
                         <div className="circle circle-6"></div>
-                        {/* circle-7 is the red circle animated below */}
+                        {/* circle-8 (green circle) */}
                         <div
                             className="circle circle-8"
                             style={{
@@ -330,18 +320,22 @@ export default function News() {
                         ></div>
                     </motion.div>
 
-                    {/* Red Circle (circle2 - Transitions between states) */}
+                    {/* Red Circle (circle-7 - Main transitioning circle) */}
                     <motion.div 
-                        className="circle" 
                         variants={circleVariants}
                         initial={getInitialVariant()}
                         animate="final"
-                        transition={{ duration: 1.2, ease: "easeInOut" }}
+                        transition={{ 
+                            duration: 1.2, 
+                            ease: [0.25, 0.46, 0.45, 0.94], // Custom easing for smooth motion
+                            type: "tween" 
+                        }}
                         style={{
                             position: 'absolute',
                             borderRadius: '50%',
                             background: 'linear-gradient(135deg, #EB483B 0%, #B41F19 100%)',
-                            zIndex: 1
+                            zIndex: 2,
+                            transform: 'translate(-50%, -50%)' // Center the circle on its position
                         }}
                     ></motion.div>
 
