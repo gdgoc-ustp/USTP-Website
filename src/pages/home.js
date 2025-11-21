@@ -2,7 +2,9 @@ import React, { useEffect, useState, useRef } from 'react';
 import NavigationBar from "../components/navBar";
 import Footer from "../components/footer";
 import './home.css';
-import './main.css'
+import './main.css';
+import './news.css';
+import '../components/HeroSection.css';
 import About from '../assets/sample.png';
 import { Link } from "react-router-dom";
 import AOS from 'aos';
@@ -14,6 +16,7 @@ import * as Sentry from '@sentry/react';
 export default function Home() {
     const [showPageContent, setShowPageContent] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
+    const [isHeroVisible, setIsHeroVisible] = useState(false);
     const [windowSize, setWindowSize] = useState({
         width: window.innerWidth,
         height: window.innerHeight
@@ -21,7 +24,7 @@ export default function Home() {
 
     // Create a ref for scrolling to content
     const contentRef = useRef(null);
-    // Kind
+
     // Check if mobile on initial load and window resize
     useEffect(() => {
         const checkIsMobile = () => {
@@ -58,16 +61,62 @@ export default function Home() {
         config: { tension: 280, friction: 60 }
     });
 
-    const handleLearnMore = () => {
-        // Show the rest of the page content
-        setShowPageContent(true);
+    // Animation for the blue circle (circle1)
+    const circleSpring = useSpring({
+        to: isHeroVisible ? {
+            top: '50%',
+            left: '50%',
+            width: 'clamp(240px, 90vmin, 1100px)',
+            height: 'clamp(240px, 90vmin, 1100px)',
+            transform: 'translate(-50%, -50%)',
+            borderRadius: '50%',
+            position: 'absolute'
+        } : {
+            top: '-5%',
+            left: '-5%',
+            width: '380px',
+            height: '380px',
+            // Remove transform here to let CSS animation take over
+            // transform: 'translate(0%, 0%)', 
+            borderRadius: '50%',
+            position: 'absolute'
+        },
+        config: config.molasses
+    });
 
-        // Scroll to the content section after a small delay
+    // Animation for fading out initial banner content
+    const bannerContentSpring = useSpring({
+        opacity: isHeroVisible ? 0 : 1,
+        transform: isHeroVisible ? 'translateY(-20px)' : 'translateY(0px)',
+        pointerEvents: isHeroVisible ? 'none' : 'auto',
+        config: config.molasses
+    });
+
+    // Animation for fading in new hero title
+    const heroTitleSpring = useSpring({
+        opacity: isHeroVisible ? 1 : 0,
+        transform: isHeroVisible ? 'translateY(0px)' : 'translateY(20px)',
+        delay: 200,
+        config: config.molasses
+    });
+
+    // Animation for new hero circles
+    const heroCirclesSpring = useSpring({
+        opacity: isHeroVisible ? 1 : 0,
+        config: config.molasses
+    });
+
+    const handleLearnMore = () => {
+        setIsHeroVisible(true);
+
+        // Show the rest of the page content after transition
         setTimeout(() => {
+            setShowPageContent(true);
+            // Scroll to the content section after a small delay
             if (contentRef.current) {
                 contentRef.current.scrollIntoView({ behavior: 'smooth' });
             }
-        }, 100);
+        }, 800);
     };
 
     return (
@@ -75,35 +124,59 @@ export default function Home() {
             <NavigationBar />
             <main>
                 {/* Hero Section (always visible) */}
-                <header className="banner">
-                    {/* Colored circles */}
-                    <div className="circle circle1"></div>
-                    <div className="circle circle2"></div>
-                    <div className="circle circle3"></div>
-                    <div className="circle circle4"></div>
+                <header className="banner" style={{ height: isHeroVisible ? 'clamp(360px, 60svh, 720px)' : '100vh', transition: 'height 0.8s ease-in-out' }}>
 
-                    {/* Gray accent circles */}
-                    <div className="gray-circle gray-circle1"></div>
-                    <div className="gray-circle gray-circle2"></div>
-                    <div className="gray-circle gray-circle3"></div>
+                    {/* Initial Banner Circles - Wrapped to preserve positioning context */}
+                    <animated.div style={{ ...bannerContentSpring, position: 'absolute', inset: 0, zIndex: 0 }}>
+                        <div className="circle circle2"></div>
+                        <div className="circle circle3"></div>
+                        <div className="circle circle4"></div>
 
-                    <div className="banner-content">
-                        <h1 className="banner-title">
-                            Building Good Things, <span className="color-text">Together!</span>
-                        </h1>
-                        <p>
-                            Google Developer Groups on Campus - USTP
-                        </p>
-                        {!isMobile && (
-                            <button
-                                className="banner-button"
-                                onClick={handleLearnMore}
-                            >
-                                Learn More
-                            </button>
-                        )}
+                        {/* Gray accent circles */}
+                        <div className="gray-circle gray-circle1"></div>
+                        <div className="gray-circle gray-circle2"></div>
+                        <div className="gray-circle gray-circle3"></div>
+                    </animated.div>
 
-                    </div>
+                    {/* Blue Circle (Transitions between states) */}
+                    <animated.div className="circle circle1" style={circleSpring}></animated.div>
+
+                    {/* New Hero Circles (Fade in) */}
+                    <animated.div className="hero-circles" style={{ ...heroCirclesSpring, position: 'absolute', inset: 0, zIndex: 0 }}>
+                        <div className="circle circle-1"></div>
+                        <div className="circle circle-2"></div>
+                        <div className="circle circle-3"></div>
+                        <div className="circle circle-4"></div>
+                        <div className="circle circle-5"></div>
+                        <div className="circle circle-6"></div>
+                        {/* circle-7 is the blue circle animated above */}
+                        <div className="circle circle-8"></div>
+                    </animated.div>
+
+                    {/* Banner Content (Text/Button) */}
+                    <animated.div style={{ ...bannerContentSpring, zIndex: 2, position: 'relative' }}>
+                        <div className="banner-content">
+                            <h1 className="banner-title">
+                                Building Good Things, <span className="color-text">Together!</span>
+                            </h1>
+                            <p>
+                                Google Developer Groups on Campus - USTP
+                            </p>
+                            {!isMobile && (
+                                <button
+                                    className="banner-button"
+                                    onClick={handleLearnMore}
+                                >
+                                    Learn More
+                                </button>
+                            )}
+                        </div>
+                    </animated.div>
+
+                    {/* New Hero Title "Home" */}
+                    <animated.div style={{ ...heroTitleSpring, position: 'absolute', zIndex: 10 }}>
+                        <h1 style={{ color: 'white', fontSize: '5rem', fontWeight: '700', margin: 0 }}>Home</h1>
+                    </animated.div>
                 </header>
 
                 {/* Page content (revealed after clicking Learn More on desktop, or visible immediately on mobile) */}
@@ -116,60 +189,118 @@ export default function Home() {
                     }}
                     ref={contentRef}
                 >
-                    <section className="section-1">
-                        <div className="section-1-container">
-                            <div className="home-info-group top-group">
-                                <div className="home-image-box left-image" style={{
-                                    backgroundImage: `url(${About})`,
-                                    backgroundPosition: 'center',
-                                    backgroundSize: 'cover',
-                                    backgroundRepeat: 'no-repeat'
-                                }}>
-                                    <img
-                                        src={About}
-                                        alt="About us"
-                                        style={{
-                                            width: '1px',
-                                            height: '1px',
-                                            opacity: 0
-                                        }}
-                                    />
+                    {/* Replaced section-1 with news-container style content if hero is visible */}
+                    {isHeroVisible ? (
+                        <section className="news-container" style={{ paddingTop: '50px' }}>
+                            <div className="section-1-container" style={{ background: 'none', boxShadow: 'none', width: '100%', padding: 0 }}>
+                                <div className="home-info-group top-group">
+                                    <div className="home-image-box left-image" style={{
+                                        backgroundImage: `url(${About})`,
+                                        backgroundPosition: 'center',
+                                        backgroundSize: 'cover',
+                                        backgroundRepeat: 'no-repeat'
+                                    }}>
+                                        <img
+                                            src={About}
+                                            alt="About us"
+                                            style={{
+                                                width: '1px',
+                                                height: '1px',
+                                                opacity: 0
+                                            }}
+                                        />
+                                    </div>
+                                    <div className="home-text-container">
+                                        <h2 className="home-info-title">Lorem ipsum dolor sit amet</h2>
+                                        <p className="home-info-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan.</p>
+                                        <Link to="/about-us" style={{ textDecoration: 'none' }}>
+                                            <button className="home-learn-more-button">
+                                                <span className="home-learn-more-text">Learn More</span>
+                                            </button>
+                                        </Link>
+                                    </div>
                                 </div>
-                                <div className="home-text-container">
-                                    <h2 className="home-info-title">Lorem ipsum dolor sit amet</h2>
-                                    <p className="home-info-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan.</p>
-                                    <Link to="/about-us" style={{ textDecoration: 'none' }}>
-                                        <button className="home-learn-more-button">
-                                            <span className="home-learn-more-text">Learn More</span>
-                                        </button>
-                                    </Link>
-                                </div>
-                            </div>
 
-                            <div className="home-info-group bottom-group">
-                                <div className="home-text-container right-aligned">
-                                    <h2 className="home-info-title">Lorem ipsum dolor sit amet</h2>
-                                    <p className="home-info-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan.</p>
-                                </div>
-                                <div className="home-image-box right-image" style={{
-                                    backgroundImage: `url(${About})`,
-                                    backgroundPosition: 'center',
-                                    backgroundSize: 'cover',
-                                    backgroundRepeat: 'no-repeat'
-                                }}>
-                                    <img
-                                        src={About}
-                                        alt="About us"
-                                        style={{
-                                            width: '1px',
-                                            height: '1px',
-                                            opacity: 0
-                                        }}
-                                    />
+                                <div className="home-info-group bottom-group">
+                                    <div className="home-text-container right-aligned">
+                                        <h2 className="home-info-title">Lorem ipsum dolor sit amet</h2>
+                                        <p className="home-info-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan.</p>
+                                    </div>
+                                    <div className="home-image-box right-image" style={{
+                                        backgroundImage: `url(${About})`,
+                                        backgroundPosition: 'center',
+                                        backgroundSize: 'cover',
+                                        backgroundRepeat: 'no-repeat'
+                                    }}>
+                                        <img
+                                            src={About}
+                                            alt="About us"
+                                            style={{
+                                                width: '1px',
+                                                height: '1px',
+                                                opacity: 0
+                                            }}
+                                        />
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </section>
+                        </section>
+                    ) : (
+                        <section className="section-1">
+                            <div className="section-1-container">
+                                <div className="home-info-group top-group">
+                                    <div className="home-image-box left-image" style={{
+                                        backgroundImage: `url(${About})`,
+                                        backgroundPosition: 'center',
+                                        backgroundSize: 'cover',
+                                        backgroundRepeat: 'no-repeat'
+                                    }}>
+                                        <img
+                                            src={About}
+                                            alt="About us"
+                                            style={{
+                                                width: '1px',
+                                                height: '1px',
+                                                opacity: 0
+                                            }}
+                                        />
+                                    </div>
+                                    <div className="home-text-container">
+                                        <h2 className="home-info-title">Lorem ipsum dolor sit amet</h2>
+                                        <p className="home-info-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan.</p>
+                                        <Link to="/about-us" style={{ textDecoration: 'none' }}>
+                                            <button className="home-learn-more-button">
+                                                <span className="home-learn-more-text">Learn More</span>
+                                            </button>
+                                        </Link>
+                                    </div>
+                                </div>
+
+                                <div className="home-info-group bottom-group">
+                                    <div className="home-text-container right-aligned">
+                                        <h2 className="home-info-title">Lorem ipsum dolor sit amet</h2>
+                                        <p className="home-info-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan.</p>
+                                    </div>
+                                    <div className="home-image-box right-image" style={{
+                                        backgroundImage: `url(${About})`,
+                                        backgroundPosition: 'center',
+                                        backgroundSize: 'cover',
+                                        backgroundRepeat: 'no-repeat'
+                                    }}>
+                                        <img
+                                            src={About}
+                                            alt="About us"
+                                            style={{
+                                                width: '1px',
+                                                height: '1px',
+                                                opacity: 0
+                                            }}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    )}
 
                     <section className="trusted" data-aos="fade-up">
                         <h1>Trusted by People</h1>
