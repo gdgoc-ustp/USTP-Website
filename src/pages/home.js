@@ -10,7 +10,6 @@ import { Link } from "react-router-dom";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { useSpring, animated, config } from 'react-spring';
-import * as Sentry from '@sentry/react';
 
 
 export default function Home() {
@@ -233,14 +232,14 @@ export default function Home() {
                             <div className="section-1-container" style={{ background: 'none', boxShadow: 'none', width: '100%', padding: 0 }}>
                                 <div className="home-info-group top-group">
                                     <div className="home-image-box left-image" style={{
-                                        backgroundImage: `url(${About})`,
+                                        backgroundImage: `url(/photos/1.jpg)`,
                                         backgroundPosition: 'center',
                                         backgroundSize: 'cover',
                                         backgroundRepeat: 'no-repeat'
                                     }}>
                                         <img
-                                            src={About}
-                                            alt="About us"
+                                            src="/photos/1.jpg"
+                                            alt="GDG USTP Community"
                                             style={{
                                                 width: '1px',
                                                 height: '1px',
@@ -249,8 +248,8 @@ export default function Home() {
                                         />
                                     </div>
                                     <div className="home-text-container">
-                                        <h2 className="home-info-title">Lorem ipsum dolor sit amet</h2>
-                                        <p className="home-info-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan.</p>
+                                        <h2 className="home-info-title">Fostering Innovation & Learning</h2>
+                                        <p className="home-info-text">Google Developer Groups on Campus USTP is a vibrant community of passionate developers at the University of Science and Technology of Southern Philippines. We organize events, workshops, and learning opportunities to help students grow their skills and build innovative solutions using Google's developer technologies.</p>
                                         <Link to="/about-us" style={{ textDecoration: 'none' }}>
                                             <button className="home-learn-more-button">
                                                 <span className="home-learn-more-text">Learn More</span>
@@ -261,18 +260,18 @@ export default function Home() {
 
                                 <div className="home-info-group bottom-group">
                                     <div className="home-text-container right-aligned">
-                                        <h2 className="home-info-title">Lorem ipsum dolor sit amet</h2>
-                                        <p className="home-info-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan.</p>
+                                        <h2 className="home-info-title">Building Tomorrow's Developers</h2>
+                                        <p className="home-info-text">Our mission is to create a thriving ecosystem where USTP students can connect, learn, and collaborate on cutting-edge technologies. Through tech talks, hands-on workshops, hackathons, and coding sessions, we provide platforms for knowledge sharing and professional growth in the rapidly evolving tech industry.</p>
                                     </div>
                                     <div className="home-image-box right-image" style={{
-                                        backgroundImage: `url(${About})`,
+                                        backgroundImage: `url(/photos/2.jpg)`,
                                         backgroundPosition: 'center',
                                         backgroundSize: 'cover',
                                         backgroundRepeat: 'no-repeat'
                                     }}>
                                         <img
-                                            src={About}
-                                            alt="About us"
+                                            src="/photos/2.jpg"
+                                            alt="GDG USTP Events"
                                             style={{
                                                 width: '1px',
                                                 height: '1px',
@@ -288,14 +287,14 @@ export default function Home() {
                             <div className="section-1-container">
                                 <div className="home-info-group top-group">
                                     <div className="home-image-box left-image" style={{
-                                        backgroundImage: `url(${About})`,
+                                        backgroundImage: `url(/photos/1.jpg)`,
                                         backgroundPosition: 'center',
                                         backgroundSize: 'cover',
                                         backgroundRepeat: 'no-repeat'
                                     }}>
                                         <img
-                                            src={About}
-                                            alt="About us"
+                                            src="/photos/1.jpg"
+                                            alt="GDG USTP Community"
                                             style={{
                                                 width: '1px',
                                                 height: '1px',
@@ -304,8 +303,8 @@ export default function Home() {
                                         />
                                     </div>
                                     <div className="home-text-container">
-                                        <h2 className="home-info-title">Lorem ipsum dolor sit amet</h2>
-                                        <p className="home-info-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan.</p>
+                                        <h2 className="home-info-title">Fostering Innovation & Learning</h2>
+                                        <p className="home-info-text">Google Developer Groups on Campus USTP is a vibrant community of passionate developers at the University of Science and Technology of Southern Philippines. We organize events, workshops, and learning opportunities to help students grow their skills and build innovative solutions using Google's developer technologies.</p>
                                         <Link to="/about-us" style={{ textDecoration: 'none' }}>
                                             <button className="home-learn-more-button">
                                                 <span className="home-learn-more-text">Learn More</span>
@@ -316,18 +315,18 @@ export default function Home() {
 
                                 <div className="home-info-group bottom-group">
                                     <div className="home-text-container right-aligned">
-                                        <h2 className="home-info-title">Lorem ipsum dolor sit amet</h2>
-                                        <p className="home-info-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan.</p>
+                                        <h2 className="home-info-title">Building Tomorrow's Developers</h2>
+                                        <p className="home-info-text">Our mission is to create a thriving ecosystem where USTP students can connect, learn, and collaborate on cutting-edge technologies. Through tech talks, hands-on workshops, hackathons, and coding sessions, we provide platforms for knowledge sharing and professional growth in the rapidly evolving tech industry.</p>
                                     </div>
                                     <div className="home-image-box right-image" style={{
-                                        backgroundImage: `url(${About})`,
+                                        backgroundImage: `url(/photos/2.jpg)`,
                                         backgroundPosition: 'center',
                                         backgroundSize: 'cover',
                                         backgroundRepeat: 'no-repeat'
                                     }}>
                                         <img
-                                            src={About}
-                                            alt="About us"
+                                            src="/photos/2.jpg"
+                                            alt="GDG USTP Events"
                                             style={{
                                                 width: '1px',
                                                 height: '1px',
@@ -363,10 +362,20 @@ export default function Home() {
                     <section className="gallery" data-aos="fade-up">
                         <h1>Inspiring Members</h1>
                         <div className="gallery-container">
+                            <div className="gallery-image" style={{
+                                backgroundImage: `url(/photos/3.jpg)`,
+                                backgroundPosition: 'center',
+                                backgroundSize: 'cover',
+                                backgroundRepeat: 'no-repeat',
+                                borderRadius: '12px',
+                                minHeight: '300px',
+                                width: '100%',
+                                marginBottom: '20px'
+                            }}></div>
                             <div className="text-content">
-                                <div className="quote">"GDG revolutionized the way I work with its innovative and user-friendly products."</div>
-                                <div className="reviewer">- Some Random Review</div>
-                                <a href="#" className="cta-link">See More of Stranger's Story →</a>
+                                <div className="quote">"Joining GDG USTP has been a game-changer for my development journey. The workshops and community support helped me land my first tech internship!"</div>
+                                <div className="reviewer">- Ken Tupino and friends</div>
+                                <a href="/team" className="cta-link">Meet Our Amazing Team →</a>
                             </div>
                         </div>
                     </section>
@@ -387,7 +396,7 @@ export default function Home() {
                                                 src={post.image_url 
                                                     ? (post.image_url.startsWith('http') 
                                                         ? post.image_url 
-                                                        : `${process.env.REACT_APP_SUPABASE_URL}/storage/v1/object/public/blog-images/${post.image_url}`)
+                                                        : `https://yrvykwljzajfkraytbgr.supabase.co/storage/v1/object/public/blog-images/${post.image_url}`)
                                                     : About
                                                 } 
                                                 alt={post.heading} 
@@ -431,7 +440,7 @@ export default function Home() {
                                     ))
                                 ) : (
                                     <div className="wtsup-card">
-                                        <img src={About} alt="Placeholder" className="wtsup-image" />
+                                        <img src="/photos/5.jpg" alt="Placeholder" className="wtsup-image" />
                                         <div className="wtsup-content">
                                             <div className="wtsup-header">
                                                 <h2 className="wtsup-title">No news available</h2>
