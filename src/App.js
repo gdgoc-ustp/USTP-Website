@@ -15,6 +15,7 @@ import PersonalityCodeInput from "./pages/personalityCodeInput";
 import AdminRoutes from './admin/routes/AdminRoutes';
 import Policy  from './pages/policy';
 import Terms from './pages/terms';
+import Sitemap from './pages/sitemap';
 import LoadingScreen from './components/LoadingScreen';
 
 function App() {
@@ -45,6 +46,7 @@ function App() {
         <Route path="/news/article/:id" element={<Article />} />
         <Route path="/policy" element={<Policy />} />
         <Route path="/terms" element={<Terms />} />
+        <Route path="/sitemap" element={<Sitemap />} />
 
         {/* Personality Test Routes */} 
         <Route path="/personality-test" element={<PersonalityQuestionnaire />} />

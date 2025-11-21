@@ -61,25 +61,32 @@ export default function Home() {
         config: { tension: 280, friction: 60 }
     });
 
+    // Calculate target size for the circle based on window size to match CSS clamp(240px, 90vmin, 1100px)
+    const vmin = Math.min(windowSize.width, windowSize.height);
+    const targetSize = Math.min(Math.max(240, vmin * 0.9), 1100);
+
     // Animation for the blue circle (circle1)
     const circleSpring = useSpring({
         to: isHeroVisible ? {
             top: '50%',
             left: '50%',
-            width: 'clamp(240px, 90vmin, 1100px)',
-            height: 'clamp(240px, 90vmin, 1100px)',
+            width: `${targetSize}px`,
+            height: `${targetSize}px`,
             transform: 'translate(-50%, -50%)',
             borderRadius: '50%',
-            position: 'absolute'
+            position: 'absolute',
+            animation: 'none', // Disable CSS float animation to prevent conflict
+            zIndex: 1
         } : {
             top: '-5%',
             left: '-5%',
             width: '380px',
             height: '380px',
-            // Remove transform here to let CSS animation take over
-            // transform: 'translate(0%, 0%)', 
+            transform: 'translate(0%, 0%)',
             borderRadius: '50%',
-            position: 'absolute'
+            position: 'absolute',
+            animation: 'float1 15s infinite ease-in-out', // Re-enable animation
+            zIndex: 1
         },
         config: config.molasses
     });
@@ -138,10 +145,7 @@ export default function Home() {
                         <div className="gray-circle gray-circle3"></div>
                     </animated.div>
 
-                    {/* Blue Circle (Transitions between states) */}
-                    <animated.div className="circle circle1" style={circleSpring}></animated.div>
-
-                    {/* New Hero Circles (Fade in) */}
+                    {/* New Hero Circles (Fade in) - Placed before circle1 so circle1 is on top */}
                     <animated.div className="hero-circles" style={{ ...heroCirclesSpring, position: 'absolute', inset: 0, zIndex: 0 }}>
                         <div className="circle circle-1"></div>
                         <div className="circle circle-2"></div>
@@ -149,9 +153,12 @@ export default function Home() {
                         <div className="circle circle-4"></div>
                         <div className="circle circle-5"></div>
                         <div className="circle circle-6"></div>
-                        {/* circle-7 is the blue circle animated above */}
+                        {/* circle-7 is the blue circle animated below */}
                         <div className="circle circle-8"></div>
                     </animated.div>
+
+                    {/* Blue Circle (Transitions between states) */}
+                    <animated.div className="circle circle1" style={circleSpring}></animated.div>
 
                     {/* Banner Content (Text/Button) */}
                     <animated.div style={{ ...bannerContentSpring, zIndex: 2, position: 'relative' }}>
