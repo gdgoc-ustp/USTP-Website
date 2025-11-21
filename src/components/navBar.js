@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react'
 import './navBar.css'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useLocation, useNavigate } from 'react-router-dom'
 import Logo from '../assets/logo.svg'
 
 export default function NavigationBar() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const location = useLocation();
+    const navigate = useNavigate();
 
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
@@ -20,9 +22,12 @@ export default function NavigationBar() {
         document.body.classList.remove('menu-open');
     }
 
-    const handleNavClick = () => {
+    const handleNavClick = (to) => (e) => {
+        e.preventDefault();
         window.scrollTo({ top: 0, behavior: 'smooth' });
         closeMenu();
+        // Navigate with state containing the current path
+        navigate(to, { state: { from: location.pathname } });
     }
 
     useEffect(() => {
@@ -56,21 +61,21 @@ export default function NavigationBar() {
                         <NavLink
                             to="/"
                             className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}
-                            onClick={handleNavClick}
+                            onClick={handleNavClick('/')}
                         >
                             Home
                         </NavLink>
                         <NavLink
                             to="/news"
                             className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}
-                            onClick={handleNavClick}
+                            onClick={handleNavClick('/news')}
                         >
                             News
                         </NavLink>
                         <NavLink
                             to="/events"
                             className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}
-                            onClick={handleNavClick}
+                            onClick={handleNavClick('/events')}
                         >
                             Events
                         </NavLink>
@@ -78,7 +83,7 @@ export default function NavigationBar() {
                             <NavLink
                                 to="/about-us"
                                 className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}
-                                onClick={handleNavClick}
+                                onClick={handleNavClick('/about-us')}
                             >
                                 About Us
                             </NavLink>
@@ -86,13 +91,13 @@ export default function NavigationBar() {
                                 <NavLink
                                     to="/team"
                                     className="dropdown-link"
-                                    onClick={handleNavClick}
+                                    onClick={handleNavClick('/team')}
                                 >
                                     Meet the Team
                                 </NavLink>
                             </div>
                         </div>
-                        <button className="register-button mobile-register" onClick={handleNavClick}>
+                        <button className="register-button mobile-register" onClick={closeMenu}>
                             Register Now
                         </button>
                     </nav>
