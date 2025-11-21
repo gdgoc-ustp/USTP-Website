@@ -38,7 +38,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "server": "node --max-http-header-size=32768 server.js",
-    "dev": "npm run build && npm run server",
+    "dev": "react-scripts dev",
     "start:prod": "npm run build && npm run server",
     "vercel-build": "npm run build:vercel",
     "build:vercel": "cross-env CI=false DISABLE_ESLINT_PLUGIN=true react-scripts build"
