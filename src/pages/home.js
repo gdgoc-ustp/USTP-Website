@@ -21,6 +21,8 @@ export default function Home() {
         width: window.innerWidth,
         height: window.innerHeight
     });
+    const [latestNews, setLatestNews] = useState([]);
+    const [newsLoading, setNewsLoading] = useState(true);
 
     // Create a ref for scrolling to content
     const contentRef = useRef(null);
@@ -52,6 +54,35 @@ export default function Home() {
 
     useEffect(() => {
         AOS.init();
+    }, []);
+
+    // Fetch latest news posts
+    useEffect(() => {
+        const fetchLatestNews = async () => {
+            try {
+                setNewsLoading(true);
+                const response = await fetch(
+                    `${process.env.REACT_APP_SUPABASE_URL}/rest/v1/blog_posts?select=*&limit=2&order=created_at.desc`,
+                    {
+                        headers: {
+                            "apikey": `${process.env.REACT_APP_SUPABASE_ANON_KEY}`,
+                            "Content-Type": "application/json"
+                        }
+                    }
+                );
+
+                if (response.ok) {
+                    const data = await response.json();
+                    setLatestNews(data);
+                }
+            } catch (err) {
+                console.error("Error fetching latest news:", err);
+            } finally {
+                setNewsLoading(false);
+            }
+        };
+
+        fetchLatestNews();
     }, []);
 
     // Content reveal spring animation
@@ -344,30 +375,74 @@ export default function Home() {
                         <div className="wtsup-section">
                             <h1 className="wtsup-heading">What's Up?</h1>
                             <div className="wtsup-container">
-                                <div className="wtsup-card">
-                                    <img src={About} alt="Silhouette" className="wtsup-image" />
-                                    <div className="wtsup-content">
-                                        <div className="wtsup-header">
-                                            <h2 className="wtsup-title">Lorem ipsum dolor sit amet</h2>
-                                            <p className="wtsup-time">An hour ago</p>
-                                        </div>
-                                        <p className="wtsup-description">
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus, ut interdum tellus elit sed risus. Maecenas eget condimentum velit, sit amet feugiat lectus.
-                                        </p>
+                                {newsLoading ? (
+                                    <div className="loading-container">
+                                        <div className="loading-spinner"></div>
+                                        <p>Loading latest news...</p>
                                     </div>
-                                </div>
-                                <div className="wtsup-card">
-                                    <img src={About} alt="Night sky" className="wtsup-image" />
-                                    <div className="wtsup-content">
-                                        <div className="wtsup-header">
-                                            <h2 className="wtsup-title">Lorem ipsum dolor sit amet</h2>
-                                            <p className="wtsup-time">An hour ago</p>
+                                ) : latestNews.length > 0 ? (
+                                    latestNews.map((post) => (
+                                        <div key={post.id} className="wtsup-card">
+                                            <img 
+                                                src={post.image_url 
+                                                    ? (post.image_url.startsWith('http') 
+                                                        ? post.image_url 
+                                                        : `https://yrvykwljzajfkraytbgr.supabase.co/storage/v1/object/public/blog-images/${post.image_url}`)
+                                                    : About
+                                                } 
+                                                alt={post.heading} 
+                                                className="wtsup-image" 
+                                            />
+                                            <div className="wtsup-content">
+                                                <div className="wtsup-header">
+                                                    <h2 className="wtsup-title">{post.heading}</h2>
+                                                    <p className="wtsup-time">
+                                                        {(() => {
+                                                            const date = new Date(post.created_at);
+                                                            const now = new Date();
+                                                            const diffTime = Math.abs(now - date);
+                                                            const diffHours = Math.floor(diffTime / (1000 * 60 * 60));
+                                                            const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+                                                            
+                                                            if (diffDays < 1) {
+                                                                if (diffHours < 1) {
+                                                                    const diffMinutes = Math.floor(diffTime / (1000 * 60));
+                                                                    return `${diffMinutes} minute${diffMinutes !== 1 ? 's' : ''} ago`;
+                                                                }
+                                                                return `${diffHours} hour${diffHours !== 1 ? 's' : ''} ago`;
+                                                            } else if (diffDays === 1) {
+                                                                return 'Yesterday';
+                                                            } else if (diffDays < 7) {
+                                                                return `${diffDays} days ago`;
+                                                            }
+                                                            return date.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
+                                                        })()}
+                                                    </p>
+                                                </div>
+                                                <p className="wtsup-description">
+                                                    {post.tagline || (() => {
+                                                        const doc = new DOMParser().parseFromString(post.description, "text/html");
+                                                        const text = doc.body.textContent || "";
+                                                        return text.length > 200 ? text.slice(0, 200) + "..." : text;
+                                                    })()}
+                                                </p>
+                                            </div>
                                         </div>
-                                        <p className="wtsup-description">
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus, ut interdum tellus elit sed risus. Maecenas eget condimentum velit, sit amet feugiat lectus.
-                                        </p>
+                                    ))
+                                ) : (
+                                    <div className="wtsup-card">
+                                        <img src={About} alt="Placeholder" className="wtsup-image" />
+                                        <div className="wtsup-content">
+                                            <div className="wtsup-header">
+                                                <h2 className="wtsup-title">No news available</h2>
+                                                <p className="wtsup-time">Just now</p>
+                                            </div>
+                                            <p className="wtsup-description">
+                                                Check back soon for the latest updates and news from our community.
+                                            </p>
+                                        </div>
                                     </div>
-                                </div>
+                                )}
                             </div>
                             <div className="wtsup-button-container">
                                 <Link to="/news" className="wtsup-button">Show More</Link>
