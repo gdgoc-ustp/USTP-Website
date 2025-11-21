@@ -5,7 +5,7 @@ import Logo from '../assets/logo.svg'
 
 export default function NavigationBar() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    
+
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
         if (!isMenuOpen) {
@@ -14,7 +14,7 @@ export default function NavigationBar() {
             document.body.classList.remove('menu-open');
         }
     }
-    
+
     const closeMenu = () => {
         setIsMenuOpen(false);
         document.body.classList.remove('menu-open');
@@ -24,14 +24,14 @@ export default function NavigationBar() {
         window.scrollTo({ top: 0, behavior: 'smooth' });
         closeMenu();
     }
-    
+
     useEffect(() => {
         const handleResize = () => {
             if (window.innerWidth > 768 && isMenuOpen) {
                 closeMenu();
             }
         }
-        
+
         window.addEventListener('resize', handleResize);
         return () => {
             window.removeEventListener('resize', handleResize);
@@ -45,31 +45,31 @@ export default function NavigationBar() {
                     <NavLink to="/">
                         <img src={Logo} className="navbar-logo" alt="GDG Logo" />
                     </NavLink>
-                    
+
                     <div className={`hamburger ${isMenuOpen ? 'open' : ''}`} onClick={toggleMenu}>
                         <span></span>
                         <span></span>
                         <span></span>
                     </div>
-                    
+
                     <nav className={`navbar-links ${isMenuOpen ? 'mobile-menu-active' : ''}`}>
                         <NavLink
                             to="/"
-                            className={({isActive}) => isActive ? "nav-link active" : "nav-link"}
+                            className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}
                             onClick={handleNavClick}
                         >
                             Home
                         </NavLink>
                         <NavLink
                             to="/news"
-                            className={({isActive}) => isActive ? "nav-link active" : "nav-link"}
+                            className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}
                             onClick={handleNavClick}
                         >
                             News
                         </NavLink>
                         <NavLink
                             to="/events"
-                            className={({isActive}) => isActive ? "nav-link active" : "nav-link"}
+                            className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}
                             onClick={handleNavClick}
                         >
                             Events
@@ -77,7 +77,7 @@ export default function NavigationBar() {
                         <div className="nav-dropdown">
                             <NavLink
                                 to="/about-us"
-                                className={({isActive}) => isActive ? "nav-link active" : "nav-link"}
+                                className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}
                                 onClick={handleNavClick}
                             >
                                 About Us
@@ -96,13 +96,13 @@ export default function NavigationBar() {
                             Register Now
                         </button>
                     </nav>
-                    
+
                     <button className="register-button desktop-register">
                         Register Now
                     </button>
                 </div>
             </div>
-            
+
             <div className={`menu-overlay ${isMenuOpen ? 'active' : ''}`} onClick={closeMenu}></div>
         </>
     );
