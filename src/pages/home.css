@@ -456,17 +456,7 @@ html {
 }
 
 /* Style for section one which covers the about us description and team description */
-.section-1-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 95%;
-    border-radius: 3vh;
-    background-color: #498CF61A;
-    padding: 3vh;
-    padding-left: 0px;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-}
+/* Legacy style removed to avoid conflicts */
 
 /* About us container */
 .about-content {
@@ -1542,14 +1532,19 @@ html {
 
 .section-1-container {
     display: flex;
-    flex-wrap: wrap;
-    gap: 2rem;
-    padding: 2rem;
-    background-color: #f0fdf4;
-    /* max-width: 90%; */
+    flex-direction: column;
+    align-items: center;
+    gap: 60px;
+    padding: 60px;
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: 40px;
     box-sizing: border-box;
-    justify-content: space-between;
-    width: calc(100% - 4vw);
+    width: 95%;
+    max-width: 1600px;
+    margin: 0 auto;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.05);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
 }
 
 .home-info-group {
@@ -1560,8 +1555,9 @@ html {
     gap: 60px;
     width: 100%;
     max-width: 1520px;
-    height: 500px;
-    margin-bottom: 40px;
+    height: auto;
+    min-height: 500px;
+    margin-bottom: 0;
 }
 
 .home-image-box {
@@ -1581,11 +1577,20 @@ html {
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    padding: 0px;
-    gap: 48px;
+    padding: 20px;
+    gap: 32px;
     width: 730px;
     height: auto;
     flex: 1;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+.home-text-container:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
 }
 
 .right-aligned {
@@ -1599,8 +1604,10 @@ html {
     font-style: normal;
     font-weight: 700;
     font-size: 56px;
-    line-height: 100%;
+    line-height: 110%;
     color: #232527;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
 }
 
 .home-info-text {
@@ -1610,8 +1617,10 @@ html {
     font-style: normal;
     font-weight: 400;
     font-size: 26px;
-    line-height: 140%;
-    color: #232527;
+    line-height: 150%;
+    color: #4a5568;
+    margin-bottom: 16px;
+    text-align: justify;
 }
 
 .home-learn-more-button {
@@ -1627,13 +1636,22 @@ html {
     height: 65px;
     border: 2px solid #498CF6;
     border-radius: 100px;
-    background-color: transparent;
+    background-color: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
     cursor: pointer;
     transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(73, 140, 246, 0.2);
+    margin-top: 8px;
 }
 
 .home-learn-more-button:hover {
-    background-color: rgba(73, 140, 246, 0.1);
+    background-color: #498CF6;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 25px rgba(73, 140, 246, 0.3);
+}
+
+.home-learn-more-button:hover .home-learn-more-text {
+    color: #FFFFFF;
 }
 
 .home-learn-more-text {
@@ -1699,7 +1717,9 @@ html {
 
     .home-text-container {
         height: auto;
-        gap: 30px;
+        gap: 24px;
+        padding: 24px;
+        border-radius: 16px;
     }
 
     .right-aligned {
@@ -1740,6 +1760,22 @@ html {
 
     .home-text-container {
         gap: 20px;
+        padding: 20px;
+        border-radius: 16px;
+        margin-bottom: 8px;
+    }
+
+    .home-info-title {
+        font-size: 32px;
+        line-height: 120%;
+        margin-bottom: 6px;
+    }
+
+    .home-info-text {
+        font-size: 18px;
+        line-height: 160%;
+        margin-bottom: 12px;
+        text-align: left;
     }
 
     .home-learn-more-button {
@@ -1759,8 +1795,8 @@ html {
     }
 
     .section-1-container {
-        padding: 25px 15px;
-        border-radius: 30px;
+        padding: 20px 15px;
+        border-radius: 20px;
         gap: 20px;
     }
 
@@ -1786,17 +1822,22 @@ html {
     }
 
     .home-text-container {
-        gap: 15px;
+        gap: 16px;
+        padding: 16px;
+        border-radius: 12px;
     }
 
-    .home-learn-more-button {
-        padding: 10px 20px;
-        width: auto;
-        height: 45px;
+    .home-info-title {
+        font-size: 24px;
+        line-height: 125%;
+        margin-bottom: 4px;
+        letter-spacing: -0.3px;
     }
 
-    .home-learn-more-text {
+    .home-info-text {
         font-size: 16px;
+        line-height: 165%;
+        margin-bottom: 8px;
     }
 }
 
@@ -1913,11 +1954,6 @@ html {
 
 /* Section 1 Mobile Improvements */
 @media (max-width: 480px) {
-    .section-1-container {
-        padding: 20px 15px;
-        border-radius: 20px;
-    }
-
     .home-info-group {
         margin-bottom: 15px;
     }
