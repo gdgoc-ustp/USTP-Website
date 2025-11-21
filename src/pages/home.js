@@ -51,8 +51,6 @@ export default function Home() {
         AOS.init();
     }, []);
 
-    const [isAnimating, setIsAnimating] = useState(false);
-
     // Content reveal spring animation
     const contentProps = useSpring({
         opacity: showPageContent ? 1 : 0,
@@ -60,176 +58,16 @@ export default function Home() {
         config: { tension: 280, friction: 60 }
     });
 
-    // Circle animations
-    // Circle 1 (Blue) -> Moves to Center (Hero Circle 7)
-    const circle1Props = useSpring({
-        to: isAnimating ? {
-            width: 'clamp(240px, 90vmin, 1100px)',
-            height: 'clamp(240px, 90vmin, 1100px)',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            borderRadius: '50%',
-            background: 'linear-gradient(135deg, #498CF6 0%, #236AD1 100%)'
-        } : {
-            width: '380px',
-            height: '380px',
-            top: '-5%',
-            left: '-5%',
-            transform: 'translate(0%, 0%)',
-            borderRadius: '50%',
-            background: 'linear-gradient(135deg, #498CF6 0%, #236AD1 100%)'
-        },
-        config: { tension: 120, friction: 14 }
-    });
-
-    // Circle 2 (Red) -> Moves to Bottom Right (Hero Circle 8)
-    const circle2Props = useSpring({
-        to: isAnimating ? {
-            width: '8.2vw',
-            height: '8.2vw',
-            top: '86%',
-            left: 'auto',
-            right: '2%',
-            bottom: 'auto',
-            opacity: 1
-        } : {
-            width: '300px',
-            height: '300px',
-            top: 'auto',
-            left: '14%',
-            right: 'auto',
-            bottom: '10%',
-            opacity: 1
-        },
-        config: { tension: 120, friction: 14 }
-    });
-
-    // Circle 3 (Yellow) -> Moves to Right Top (Hero Circle 5)
-    const circle3Props = useSpring({
-        to: isAnimating ? {
-            width: '12.6vw',
-            height: '12.6vw',
-            top: '23%',
-            left: 'auto',
-            right: '0%',
-            opacity: 0.8,
-            background: 'linear-gradient(135deg, #D9D9D9 0%, #B0B0B0 100%)'
-        } : {
-            width: '270px',
-            height: '270px',
-            top: '10%',
-            left: 'auto',
-            right: '4%',
-            opacity: 1,
-            background: 'linear-gradient(135deg, #FBC10E 0%, #EB8C05 100%)'
-        },
-        config: { tension: 120, friction: 14 }
-    });
-
-    // Circle 4 (Green) -> Moves to Left Bottom (Hero Circle 1)
-    const circle4Props = useSpring({
-        to: isAnimating ? {
-            width: '4vw',
-            height: '4vw',
-            top: '90%',
-            left: '17%',
-            right: 'auto',
-            bottom: 'auto',
-            opacity: 0.6,
-            background: 'linear-gradient(135deg, #D9D9D9 0%, #B0B0B0 100%)'
-        } : {
-            width: '320px',
-            height: '320px',
-            top: 'auto',
-            left: 'auto',
-            right: '-5%',
-            bottom: '-10%',
-            opacity: 1,
-            background: 'linear-gradient(135deg, #4EA865 0%, #1C793A 100%)'
-        },
-        config: { tension: 120, friction: 14 }
-    });
-
-    // Gray Circle 1 -> Moves to Top Left Center (Hero Circle 6)
-    const grayCircle1Props = useSpring({
-        to: isAnimating ? {
-            width: '9vw',
-            height: '9vw',
-            top: '8%',
-            left: '45.5%',
-            right: 'auto',
-            opacity: 0.7
-        } : {
-            width: '120px',
-            height: '120px',
-            top: '15%',
-            left: 'auto',
-            right: '25%',
-            opacity: 0.6
-        },
-        config: { tension: 120, friction: 14 }
-    });
-
-    // Gray Circle 2 -> Moves to Left Center (Hero Circle 4)
-    const grayCircle2Props = useSpring({
-        to: isAnimating ? {
-            width: '6.3vw',
-            height: '6.3vw',
-            top: '23%',
-            left: '16%',
-            opacity: 0.6
-        } : {
-            width: '80px',
-            height: '80px',
-            top: '40%',
-            left: '20%',
-            opacity: 0.6
-        },
-        config: { tension: 120, friction: 14 }
-    });
-
-    // Gray Circle 3 -> Moves to Center Left (Hero Circle 3)
-    const grayCircle3Props = useSpring({
-        to: isAnimating ? {
-            width: '4.2vw',
-            height: '4.2vw',
-            top: '61%',
-            left: '38%',
-            right: 'auto',
-            bottom: 'auto',
-            opacity: 0.6
-        } : {
-            width: '100px',
-            height: '100px',
-            top: 'auto',
-            left: 'auto',
-            right: '40%',
-            bottom: '30%',
-            opacity: 0.6
-        },
-        config: { tension: 120, friction: 14 }
-    });
-
-    // Fade out content
-    const headerContentProps = useSpring({
-        opacity: isAnimating ? 0 : 1,
-        config: { duration: 300 }
-    });
-
     const handleLearnMore = () => {
-        setIsAnimating(true);
+        // Show the rest of the page content
+        setShowPageContent(true);
 
-        // Show the rest of the page content after animation
+        // Scroll to the content section after a small delay
         setTimeout(() => {
-            setShowPageContent(true);
-            // Scroll to the content section after a small delay
-            setTimeout(() => {
-                if (contentRef.current) {
-                    contentRef.current.scrollIntoView({ behavior: 'smooth' });
-                }
-            }, 100);
-        }, 800); // Wait for animation to mostly finish
+            if (contentRef.current) {
+                contentRef.current.scrollIntoView({ behavior: 'smooth' });
+            }
+        }, 100);
     };
 
     return (
@@ -237,19 +75,19 @@ export default function Home() {
             <NavigationBar />
             <main>
                 {/* Hero Section (always visible) */}
-                <header className="banner" style={{ position: 'relative', overflow: 'hidden' }}>
+                <header className="banner">
                     {/* Colored circles */}
-                    <animated.div className="circle" style={{ ...circle1Props, position: 'absolute', zIndex: 0 }}></animated.div>
-                    <animated.div className="circle" style={{ ...circle2Props, position: 'absolute', zIndex: 0 }}></animated.div>
-                    <animated.div className="circle" style={{ ...circle3Props, position: 'absolute', zIndex: 0 }}></animated.div>
-                    <animated.div className="circle" style={{ ...circle4Props, position: 'absolute', zIndex: 0 }}></animated.div>
+                    <div className="circle circle1"></div>
+                    <div className="circle circle2"></div>
+                    <div className="circle circle3"></div>
+                    <div className="circle circle4"></div>
 
                     {/* Gray accent circles */}
-                    <animated.div className="gray-circle" style={{ ...grayCircle1Props, position: 'absolute', zIndex: 0 }}></animated.div>
-                    <animated.div className="gray-circle" style={{ ...grayCircle2Props, position: 'absolute', zIndex: 0 }}></animated.div>
-                    <animated.div className="gray-circle" style={{ ...grayCircle3Props, position: 'absolute', zIndex: 0 }}></animated.div>
+                    <div className="gray-circle gray-circle1"></div>
+                    <div className="gray-circle gray-circle2"></div>
+                    <div className="gray-circle gray-circle3"></div>
 
-                    <animated.div className="banner-content" style={headerContentProps}>
+                    <div className="banner-content">
                         <h1 className="banner-title">
                             Building Good Things, <span className="color-text">Together!</span>
                         </h1>
@@ -265,7 +103,7 @@ export default function Home() {
                             </button>
                         )}
 
-                    </animated.div>
+                    </div>
                 </header>
 
                 {/* Page content (revealed after clicking Learn More on desktop, or visible immediately on mobile) */}
