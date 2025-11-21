@@ -200,13 +200,13 @@ export default function AboutUs() {
                                     style={{ borderColor: groupColor }}
                                 >
                                     <div className="team-member-image" style={{ 
-                                        backgroundImage: `url(${member.image})`,
+                                        backgroundImage: `url(${encodeURI(member.image)})`,
                                         backgroundPosition: 'center',
                                         backgroundSize: 'cover',
                                         backgroundRepeat: 'no-repeat'
                                     }}>
                                         <img 
-                                            src={member.image} 
+                                            src={encodeURI(member.image)} 
                                             alt={member.alt}
                                             loading="lazy"
                                             style={{ 

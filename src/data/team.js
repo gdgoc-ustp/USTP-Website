@@ -591,7 +591,7 @@ export const teamMembers = [
         name: 'Eilkim Jasper Dela Cuesta',
         role: 'Community Formations Ambassador',
         title: 'Community Development',
-        image: '/output/Community Development/elkim-dela cuesta.JPG',
+        image: '/output/Community Development/elkim-dela-cuesta.JPG',
         group: 'Community Development',
         order: 10,
         featured: false,

@@ -109,7 +109,7 @@ export default function MeetTheTeam() {
                                                 <div 
                                                     className="team-card-image"
                                                     style={{
-                                                        backgroundImage: `url(${member.image})`,
+                                                        backgroundImage: `url(${encodeURI(member.image)})`,
                                                         backgroundPosition: 'center',
                                                         backgroundSize: 'cover',
                                                         backgroundRepeat: 'no-repeat'
@@ -118,7 +118,7 @@ export default function MeetTheTeam() {
                                                     aria-label={member.alt}
                                                 >
                                                     <img 
-                                                        src={member.image} 
+                                                        src={encodeURI(member.image)} 
                                                         alt={member.alt}
                                                         loading="lazy"
                                                         style={{ 

@@ -52,9 +52,9 @@ export default function Sitemap() {
             <div className="sitemap-page">
                 <div className="sitemap-container">
                     <header className="sitemap-header">
-                        <h1 className="sitemap-title">Website Sitemap</h1>
+                        <h1 className="sitemap-title">GDG-USTP Sitemap</h1>
                         <p className="sitemap-description">
-                            Complete navigation guide to all pages and resources on the GDG USTP website. 
+                            Sitemap to all pages and resources on the GDG USTP website. 
                             Find everything you need quickly and easily.
                         </p>
                         <div className="sitemap-meta">
