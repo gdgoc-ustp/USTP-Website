@@ -183,7 +183,7 @@
 .team-card-image {
     width: 100%;
     height: 320px;
-    background-position: center;
+    background-position: center top;
     background-size: cover;
     background-repeat: no-repeat;
     background-color: #EDD0B0;
@@ -251,6 +251,12 @@
     
     .team-card-image {
         height: 300px;
+        background-position: center top;
+    }
+    
+    .team-card-image {
+        height: 300px;
+        background-position: center top;
     }
     
     .team-card-name {
@@ -285,6 +291,12 @@
     
     .team-card-image {
         height: 280px;
+        background-position: center top;
+    }
+    
+    .team-card-image {
+        height: 280px;
+        background-position: center top;
     }
     
     .team-card-info {
@@ -354,6 +366,7 @@
     
     .team-card-image {
         height: 240px;
+        background-position: center top;
     }
     
     .team-card-info {
@@ -418,6 +431,7 @@
     
     .team-card-image {
         height: 220px;
+        background-position: center top;
     }
     
     .team-card-info {
