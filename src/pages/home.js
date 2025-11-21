@@ -310,23 +310,21 @@ export default function Home() {
                     )}
 
                     <section className="trusted" data-aos="fade-up">
-                        <h1>Trusted by People</h1>
+                        <h1>Trusted by Organizations</h1>
                         <div className="trusted-container">
                             <div className="trusted-row">
-                                <img src={require('../assets/picturetest.jpg')} alt="Profile 1" className="profile-image" />
-                                <img src={require('../assets/picturetest.jpg')} alt="Profile 2" className="profile-image" />
-                                <img src={require('../assets/picturetest.jpg')} alt="Profile 3" className="profile-image" />
-                                <img src={require('../assets/picturetest.jpg')} alt="Profile 4" className="profile-image" />
-                                <img src={require('../assets/picturetest.jpg')} alt="Profile 5" className="profile-image" />
-                                <img src={require('../assets/picturetest.jpg')} alt="Profile 6" className="profile-image" />
-                            </div>
-                            <div className="trusted-row">
-                                <img src={require('../assets/picturetest.jpg')} alt="Profile 7" className="profile-image" />
-                                <img src={require('../assets/picturetest.jpg')} alt="Profile 8" className="profile-image" />
-                                <img src={require('../assets/picturetest.jpg')} alt="Profile 9" className="profile-image" />
-                                <img src={require('../assets/picturetest.jpg')} alt="Profile 10" className="profile-image" />
-                                <img src={require('../assets/picturetest.jpg')} alt="Profile 11" className="profile-image" />
-                                <img src={require('../assets/picturetest.jpg')} alt="Profile 12" className="profile-image" />
+                                <div className="partner-item">
+                                    <img src="/partners/xu.jpg" alt="GDG - XU" className="partner-logo" />
+                                    <p className="partner-name">GDG - XU</p>
+                                </div>
+                                <div className="partner-item">
+                                    <img src="/partners/gdg-usls.jpg" alt="GDG - USLS" className="partner-logo" />
+                                    <p className="partner-name">GDG - USLS</p>
+                                </div>
+                                <div className="partner-item">
+                                    <img src="/partners/DICT.png" alt="DICT Region X" className="partner-logo" />
+                                    <p className="partner-name">DICT Region X</p>
+                                </div>
                             </div>
                         </div>
                     </section>

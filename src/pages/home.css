@@ -1216,7 +1216,7 @@ html {
     }
 }
 
-/* Trusted by People Section */
+/* Trusted by Organizations Section */
 .trusted {
     display: flex;
     flex-direction: column;
@@ -1252,23 +1252,38 @@ html {
     justify-content: center;
     align-items: center;
     padding: 0px;
-    gap: 97px;
+    gap: 80px;
     width: 100%;
-    max-width: 1520px;
-    height: 128px;
+    flex-wrap: wrap;
 }
 
-.profile-image {
+.partner-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    transition: transform 0.3s ease;
+}
+
+.partner-item:hover {
+    transform: scale(1.05);
+}
+
+.partner-logo {
     width: 128px;
     height: 128px;
     border-radius: 50%;
     object-fit: cover;
     flex: none;
-    transition: transform 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.profile-image:hover {
-    transform: scale(1.1);
+.partner-name {
+    font-size: 18px;
+    font-weight: 600;
+    color: #383838;
+    text-align: center;
+    margin: 0;
 }
 
 /* Responsive styles for Trusted section */
