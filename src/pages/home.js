@@ -387,7 +387,7 @@ export default function Home() {
                                                 src={post.image_url 
                                                     ? (post.image_url.startsWith('http') 
                                                         ? post.image_url 
-                                                        : `https://yrvykwljzajfkraytbgr.supabase.co/storage/v1/object/public/blog-images/${post.image_url}`)
+                                                        : `${process.env.REACT_APP_SUPABASE_URL}/storage/v1/object/public/blog-images/${post.image_url}`)
                                                     : About
                                                 } 
                                                 alt={post.heading} 
