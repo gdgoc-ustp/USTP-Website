@@ -34,7 +34,7 @@ export default function TermsOfUse() {
                 </p>
 
 
-                <h1>1. Acceptance of Terms</h1>
+                <h2>1. Acceptance of Terms</h2>
                 <p>
                     By accessing our website or joining our events, you confirm that you have read, understood, and agreed to these Terms of Use. If you do not agree, please discontinue use of our services.
                 </p>
