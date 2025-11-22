@@ -27,7 +27,7 @@ export default function TermsOfUse() {
             <div className="policy-container">
             <div className="policy-page">
                 
-                <h1>Terms of Use</h1>
+                <h3>Terms of Use</h3>
                 <p>Effective Date: January 1, 2025</p>
                 <p className="policy-hero">
                     These Terms of Use outline the rules and guidelines for accessing and using the Google Developers Group on Campus (GDG on Campus) website, online platforms, and community services. By using our site or participating in our activities, you agree to follow all terms stated here.
