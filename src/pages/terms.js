@@ -18,7 +18,7 @@ export default function TermsOfUse() {
     }, []);
 
     return (
-        <body>
+        
         <div className="page-transition">
 
             <NavigationBar />
@@ -140,6 +140,6 @@ export default function TermsOfUse() {
             <Footer />
             
         </div>
-        </body>
+      
     );
 }
