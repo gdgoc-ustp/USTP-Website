@@ -1,10 +1,15 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import './footer.css';
 import Logo from '../assets/logo.svg'
 import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin, FaYoutube } from 'react-icons/fa';
 
+
+
+
+
 export default function Footer() {
+    
     return (
         <footer className="footer">
             <div className="footer-top">
@@ -58,15 +63,42 @@ export default function Footer() {
                     </div>
                     <div className="footer-policy-links">
                         <div className="footer-dot" />
-                        <Link to="/policy" className="footer-policy-link">
-                            Privacy & Policy
+                        <Link
+                            to="/policy"
+                            className="footer-policy-link"
+                            onClick={(e) => {
+                                if (window.location.pathname === "/policy") {
+                                    e.preventDefault(); 
+                                    window.scrollTo({ top: 0, behavior: "smooth" });
+                                }
+                            }}
+                        >
+                            Privacy Policy
                         </Link>
                         <div className="footer-dot" />
-                        <Link to="/terms" className="footer-policy-link">
-                            Terms of Use
+                        <Link
+                            to="/terms"
+                            className="footer-policy-link"
+                            onClick={(e) => {
+                                if (window.location.pathname === "/terms") {
+                                    e.preventDefault(); 
+                                    window.scrollTo({ top: 0, behavior: "smooth" });
+                                }
+                            }}
+                        >
+                            Terms Of Use
                         </Link>
                         <div className="footer-dot" />
-                        <Link to="/sitemap" className="footer-policy-link">
+                        <Link
+                            to="/sitemap"
+                            className="footer-policy-link"
+                            onClick={(e) => {
+                                if (window.location.pathname === "/sitemap") {
+                                    e.preventDefault(); 
+                                    window.scrollTo({ top: 0, behavior: "smooth" }); 
+                                }
+                            }}
+                        >
                             Sitemap
                         </Link>
                     </div>
