@@ -127,7 +127,7 @@ export default function TermsOfUse() {
                 <p>If you have questions or concerns about these Terms of Use, you may contact us:</p>
                 <p>Email us at: 📧 <a href="mailto:gdsc@ustp.edu.ph">gdsc@ustp.edu.ph</a></p>
                 <p>Message us at: 
-                    <a href="https://www.facebook.com/dscustp" target="_blank" rel="noopener">
+                    <a href="https://www.facebook.com/dscustp" target="_blank" rel="noopener noreferrer">
                         <i className="fab fa-facebook"></i> Facebook
                     </a>
                 </p>
