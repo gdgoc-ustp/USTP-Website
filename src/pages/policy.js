@@ -1,12 +1,25 @@
-import NavigationBar from "../components/navBar";
+ import NavigationBar from "../components/navBar";
 import Footer from "../components/footer";
 import './policy.css'
+import { useEffect } from "react";
 
 export default function Policy() {
+
+    useEffect(() => {
+
+        window.scrollTo({ top: 0, behavior: "instant" });
+
+    
+        const el = document.querySelector(".page-transition");
+        if (el) {
+            el.classList.add("show");
+        }
+    }, []);
+
     return (
         
      
-        <div>
+        <div className="page-transition">
             <NavigationBar />
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"></link>
 

@@ -3,8 +3,22 @@ import { Link } from 'react-router-dom';
 import NavigationBar from '../components/navBar';
 import Footer from '../components/footer';
 import './sitemap.css';
+import { useEffect } from 'react';
 
 export default function Sitemap() {
+
+    useEffect(() => {
+        
+        window.scrollTo({ top: 0, behavior: "instant" });
+
+      
+        const el = document.querySelector(".page-transition");
+        if (el) {
+            el.classList.add("show");
+        }
+    }, []);
+
+
     const sitemapData = [
         {
             category: 'Main Pages',
@@ -41,7 +55,7 @@ export default function Sitemap() {
     });
 
     return (
-        <>
+        <div className="page-transition">
             <title>Sitemap - GDG USTP | Site Navigation</title>
             <meta name="description" content="Complete sitemap of GDG USTP website. Find all pages, tools, and resources in one organized location." />
             <meta name="keywords" content="sitemap, navigation, GDG USTP, site map, website structure" />
@@ -104,6 +118,6 @@ export default function Sitemap() {
             </div>
             
             <Footer />
-        </>
+        </div>
     );
 }
