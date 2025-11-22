@@ -73,7 +73,7 @@ export default function Footer() {
                                 }
                             }}
                         >
-                            Privacy Policy
+                            Privacy & Policy
                         </Link>
                         <div className="footer-dot" />
                         <Link
