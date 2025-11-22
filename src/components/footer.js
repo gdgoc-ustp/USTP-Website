@@ -9,7 +9,7 @@ import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin, FaYoutube } from 'react
 
 
 export default function Footer() {
-    
+    const location = useLocation();
     return (
         <footer className="footer">
             <div className="footer-top">
