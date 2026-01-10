@@ -16,8 +16,8 @@ export default function Register() {
 
           <form className="register-form">
             <div className="form-group">
-              <label>Full Name</label>
-              <input type="text" placeholder="Enter your full name" required />
+              <label htmlFor="fullName">Full Name</label>
+              <input id="fullName" name="fullName" type="text" placeholder="Enter your full name" required />
             </div>
 
             <div className="form-group">
