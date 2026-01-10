@@ -97,12 +97,12 @@ export default function NavigationBar() {
                                 </NavLink>
                             </div>
                         </div>
-                        <button className="register-button mobile-register" onClick={closeMenu}>
+                        <button className="register-button mobile-register" onClick={handleNavClick('/register')}>
                             Register Now
                         </button>
                     </nav>
 
-                    <button className="register-button desktop-register">
+                    <button className="register-button desktop-register" onClick={handleNavClick('/register')}>
                         Register Now
                     </button>
                 </div>

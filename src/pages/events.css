@@ -26,7 +26,7 @@
     background-color: rgba(228, 244, 228, 0.8); /* Lighter mint green background */
     border-radius: 90px;
     padding: 75px 100px;
-    margin: 40px 0;
+    margin: 30px 45px;
     width: 100%;
 }
 
@@ -87,7 +87,7 @@
     flex-direction: column;
     align-items: flex-start;
     padding: 0;
-    gap: 40px;
+    gap: 10px;
     width: 100%;
 }
 
@@ -107,10 +107,10 @@
     flex-direction: row;
     align-items: center;
     padding: 0;
-    gap: 10px;
+    gap: 20px;
     width: auto;
     height: 26px;
-    margin: 5px 0 0;
+    margin: 10px 0 0;
 }
 
 .public-event-date .dot {
@@ -318,12 +318,13 @@
 @media (max-width: 768px) {
     .public-events-container {
         padding: 15px;
+    
     }
     
     .public-events-section {
         padding: 30px 20px;
         border-radius: 30px;
-        margin: 25px 5px;
+        margin: 25px 10px;
     }
     
     .public-events-section h2 {
@@ -364,9 +365,9 @@
     }
     
     .public-events-section {
-        padding: 25px 15px;
+        padding: 25px 25px;
         border-radius: 20px;
-        margin: 20px 5px;
+        margin: 20px 18px;
     }
     
     .public-events-section h2 {

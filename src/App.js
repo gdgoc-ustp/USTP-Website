@@ -17,6 +17,7 @@ import Policy  from './pages/policy';
 import Terms from './pages/terms';
 import Sitemap from './pages/sitemap';
 import LoadingScreen from './components/LoadingScreen';
+import Register from './pages/register';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -47,6 +48,9 @@ function App() {
         <Route path="/policy" element={<Policy />} />
         <Route path="/terms" element={<Terms />} />
         <Route path="/sitemap" element={<Sitemap />} />
+        <Route path="/register" element={<Register />} />
+        
+      
 
         {/* Personality Test Routes */} 
         <Route path="/personality-test" element={<PersonalityQuestionnaire />} />
