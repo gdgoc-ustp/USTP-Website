@@ -305,7 +305,7 @@ export const teamMembers = [
         group: 'Technology',
         order: 12,
         featured: false,
-        alt: 'Wayne Llacuna - Electronics Engineering Ambassador'
+        alt: 'Wayne Obial - Electronics Engineering Ambassador'
     },
     {
         id: 'tech-13',

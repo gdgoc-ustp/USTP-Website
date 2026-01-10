@@ -588,7 +588,7 @@ html {
     justify-content: center;
     padding: 0;
     width: 100%;
-    max-width: 1920px;
+    max-width: 1280px;
     margin: 0 auto;
 }
 
@@ -1359,59 +1359,61 @@ html {
 
 /* Inspiring Members Section */
 .gallery {
-    display: flex;
-    height: auto;
-    min-height: 100vh;
-    background-color: #ffffff;
-    justify-content: center;
-    align-items: center;
-    margin: 0px 0;
-    padding: 20px 0;
-    flex-direction: column;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffffff;
+  margin: 0;
+  padding: 2rem 0; /* Fixed rem instead of % */
+  flex-direction: column;
+  min-height: 60vh; /* Reduced from 120vh; use auto if possible */
+  height: auto;
+  margin-top: -70px;
 }
 
 .gallery h1 {
-    font-size: 8vh;
-    font-weight: 700;
-    margin-bottom: 20px;
+  font-size: clamp(28px, 8vh, 64px);
+  font-weight: 700;
+  margin-bottom: 1.5rem;
 }
 
 .gallery-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: linear-gradient(to right, #f5a623, #d07b3a);
-    border-radius: 15px;
-    color: white;
-    padding: 5vh;
-    width: 80vw;
-    height: auto;
-    min-height: 70vh;
-    flex-direction: row;
+  display: flex;
+  align-items: center;
+  background: linear-gradient(to right, #f5a623, #d07b3a);
+  border-radius: 15px;
+  color: white;
+  padding: clamp(2rem, 5vh, 4rem) clamp(2rem, 5vw, 1rem);
+  width: min(100vw, 1100px); /* Caps max width */
+  max-width: 100%;
+  height: auto;
+  flex-direction: row;
+  gap: clamp(1rem, 4vw, 3rem);
+  box-sizing: border-box;
 }
 
 .text-content {
-    max-width: 60%;
-    margin-left: 100px;
+ /* Flexible instead of fixed max-width */
+  margin-left: 0px;
 }
 
 .quote {
-    font-size: 5vh;
-    font-weight: bold;
-    line-height: 1.5;
+  font-size: clamp(20px, 5vh, 48px);
+  font-weight: bold;
+  line-height: 1.5;
 }
 
 .reviewer {
-    font-size: 3.5vh;
-    margin-top: 10px;
+  font-size: clamp(16px, 3.5vh, 28px);
+  margin-top: 0.75rem;
 }
 
 .cta-link {
-    font-size: 2.6vh;
-    color: white;
-    margin-top: 20px;
-    text-decoration: underline;
-    display: inline-block;
+  font-size: clamp(14px, 2.6vh, 22px);
+  color: white;
+  margin-top: 1.25rem;
+  text-decoration: underline;
+  display: inline-block;
 }
 
 /* Define the animations for the floating circles */
@@ -1850,24 +1852,6 @@ html {
 /* Improved Mobile Compatibility */
 
 /* Gallery Section Mobile Improvements */
-.gallery-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: linear-gradient(to right, #f5a623, #d07b3a);
-    border-radius: 15px;
-    color: white;
-    padding: 5vh;
-    width: 80vw;
-    height: auto;
-    min-height: 70vh;
-    flex-direction: row;
-}
-
-.text-content {
-    max-width: 60%;
-    margin-left: 100px;
-}
 
 @media (max-width: 992px) {
     .gallery h1 {
