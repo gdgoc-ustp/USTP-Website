@@ -248,7 +248,8 @@ export default function Home() {
                                         />
                                     </div>
                                     <div className="home-text-container">
-                                        <h2 className="home-info-title">Fostering Innovation & Learning</h2>
+                                        <h2 className="home-info-title">Fostering Innovation & Learning                           
+                                        </h2>
                                         <p className="home-info-text">Google Developer Groups on Campus USTP is a vibrant community of passionate developers at the University of Science and Technology of Southern Philippines. We organize events, workshops, and learning opportunities to help students grow their skills and build innovative solutions using Google's developer technologies.</p>
                                         <Link to="/about-us" style={{ textDecoration: 'none' }}>
                                             <button className="home-learn-more-button">
