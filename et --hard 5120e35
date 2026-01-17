@@ -1,0 +1,124 @@
+[33ma7def26[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m fixed some feedback from gemini
+[33m5120e35[m added some content block sysytem and other feature, commented out the usage for future...
+[33m423ea5e[m Fix some misalignment on components and improve responsiveness and added (#51)
+[33md7dc9f3[m Fix the footer pages bugs and added simple animation (#50)
+[33m1297c5b[m Populated home components (#49)
+[33mc62ba48[m style: clean up legacy styles in home.css and update reviewer text in home.js
+[33m1ec233e[m style: enhance layout and responsiveness of section-1-container and home components
+[33m650e0cc[m New UI, Animations, Codebase Refactor, and Content Updates for About, Team, and News Pages (#48)
+[33m4cd19e0[m Update src/pages/home.js
+[33m696ed1c[m Update package.json
+[33mc1c1921[m i love framer motion (fixed circle svg animation between /home - /news)
+[33m2f29778[m refactor: change animation library from react spring to framer (i'm losing it)
+[33m4cbaa84[m feat: added dynamic news fetching on home
+[33me5f61d4[m added trusted by organizations
+[33m7720ca4[m feat: Add a new responsive navigation bar React component.
+[33mc5df4e5[m fix: assets not showing on community development in /team
+[33m4ce6607[m feat: added react spring animation for home, added sitemap
+[33m51f9e8c[m fix: adjusted images in card in /team
+[33m79fe34a[m feat: added react spring animation to banner to hero transition, added core team src
+[33m4feeceb[m feat: added loading animation
+[33mb51be78[m changed default to port 3000
+[33mf60c97e[m fix: center align containers in aboutUs.css
+[33mab87c4c[m feat: Enhance Meet the Team filter buttons with dynamic active styling (#47)
+[33m5287d41[m changed about us button to yellow, added meet the team button, fixed font on /team (#46)
+[33m862b584[m changed about us button to yellow, added meet the team button, fixed font on /team
+[33m2a1d95d[m feat: added meet the team page (#45)
+[33m73a7bd1[m feat: added meet the team page, minor adjustment to css
+[33me8539f5[m added team pages
+[33mce3912e[m added custom scroll bar
+[33mede962c[m Merge pull request #44 from kntjspr/main
+[33ma21d3eb[m Merge branch 'main' into main
+[33m9864708[m Add .gitattributes to enforce consistent line endings causing abnormal insertions and deletions in commit code diffs
+[33ma45ccee[m Normalize line endings
+[33mcdc6fba[m feat: added sentry.io for bug tracking & css refactors
+[33m5aeb5c4[m Fixed issue 'Does not reset to the top of the page
+[33me788bb0[m Footer: Added Privacy & policy page content and for Terms Content is missing (#42)
+[33m97f2d5b[m Fixed issue 'Does not reset to the top of the page #43
+[33m99ad7c4[m Fixed issue 'Does not reset to the top of the page
+[33mf4560ce[m Footer: Added Privacy & policy page content and for Terms Content is missing (#42)
+[33m6b3edba[m Merge pull request #41 from wynnee0110/main
+[33m55786ae[m Fix UI Buttons: fixed the "Join now" button not visible
+[33m6c14bef[m Update README.md (#39)
+[33m37e6486[m Fix Vercel build: Add cross-env and CI=false to disable ESLint errors (#38)
+[33m23b3d17[m Fix Vercel build: Add cross-env and CI=false to disable ESLint errors
+[33m551f2e6[m Fix color mismatch and optimize prompts (#37)
+[33mbec9ab0[m optimized prompts, fixed color mismatch for operations
+[33m931fe2f[m Merge branch 'feat-personality-test' of https://github.com/gdgoc-ustp/USTP-Website into feat-personality-test
+[33mac0c5f5[m Change branding from GDSC to GDG
+[33me750c65[m Merge pull request #36 from gdgoc-ustp/feat-personality-test
+[33m9c05b9b[m Merge pull request #35 from gdgoc-ustp/main
+[33ma35d8d9[m fix linter error
+[33mc848287[m Fix linter errors
+[33m7cb7c3a[m added more catch errors (#34)
+[33m416fb06[m added more catch errors
+[33m84f7ba0[m fix 431 Request Header Fields Too Large (#33)
+[33m7fec955[m fix 431 Request Header Fields Too Large
+[33m2bbafc0[m Security improvements (#32)
+[33m31fe90f[m feat: Update .env.sample with example values for Supabase and API keys
+[33m051653a[m Implement comprehensive security fixes for admin operations and TinyMCE configuration, and updating frontend code to utilize these endpoints.
+[33mdf38b3a[m Merge pull request #31 from gdgoc-ustp/feat-personality-test-optimize
+[33md9cec84[m feat: Refactor personality code validation and remove redundant file
+[33m8016e36[m Feat personality test (#30)
+[33mfa2020c[m feat: Enhance article page with reading progress tracking, social sharing options, and improved layout
+[33m72057b6[m Add personality code input and questionnaire pages with styles and functionality
+[33m0f27d11[m feat: Add Personality Test feature with AI integration
+[33m52494e3[m Finished about page, homepage and improved events page (#28)
+[33m1f5e934[m Merge branch 'gdgoc-ustp:main' into main
+[33m84dad63[m Finished about page, homepage and improved events page (#27)
+[33md0cfd3d[m Update styles in aboutUs.css and events.css for improved layout and responsiveness; enhance date formatting in events.js for better user clarity.
+[33m5bca97c[m Refactor CSS and JavaScript for Events and Home component, Improved Homepage and Events Page
+[33m8a587ec[m Finished about-us page
+[33md45b4bc[m Merge pull request #26 from kntjspr/main
+[33m27477c7[m Merge pull request #1 from gdgoc-ustp/main
+[33m64cf856[m Backend changes #2 (#25)
+[33m9db380d[m Backend changes and news page (#24)
+[33m0dac33f[m Add RSVP link to events table and update event editor
+[33mf28af18[m Refactor CSS and JavaScript for News component and styles
+[33m3b50487[m Major changes (#23)
+[33mfbf4d0d[m Update README.md
+[33m29e5013[m Update README.md
+[33mc3ebbec[m Update README.md
+[33m362e85d[m Update README.md (#22)
+[33mf44a801[m Finalized backend + api documentation (#21)
+[33m310219e[m Fix bugs and deployment (#20)
+[33me878297[m Added blog posts functionality (#19)
+[33me24eb0e[m Implement Admin Authentication System and Initial Setup Flow and bunch of backend infrastructure (#18)
+[33mb0c07e9[m Update News Page, Add Animation Support and Package Updates (#17)
+[33m2216cd9[m What's Up? Section Update, and Minor Changes (#16)
+[33m9cd8b12[m Merge pull request #15 from gdgoc-ustp/pr/13
+[33m4fbdf4e[m Update home.css
+[33mdc4c985[m Merge branch 'main' into pr/13
+[33mf0e3d6c[m Reintroduce About Us page and update navigation
+[33m3b06bb4[m Update deploy.yml (#14)
+[33m1dd7383[m Draft for gallery section, adjusted scale for better responsiveness (#13)
+[33m79a0b6e[m added mobile navigation menu and bunch of fixes and optimizations
+[33m44a1da4[m Fixed cards alignments
+[33m2cd0ee1[m Added cards on event page
+[33mc456547[m header logo css adjustment
+[33ma18e21c[m readjust heading, home css
+[33mad038cb[m Draft for gallery section, adjusted scale for better responsiveness
+[33mb962242[m Dev -> Main (#12)
+[33md7d0e42[m Merge pull request #11 from iRyllB/main
+[33m961f6d4[m Update home.css
+[33m786bf30[m Resolved merge conflicts
+[33m7ad7a02[m Updated section 1 and unfinished footer
+[33mdd564f8[m Merge branch 'gdscustp:main' into main
+[33md1436d7[m Merge pull request #10 from gdscustp/dev
+[33m6a7c717[m Updated .gitignore
+[33m4e8bfc9[m Merge branch 'gdscustp:main' into main
+[33m3caad4f[m Updated home page with trusted logos and circular images
+[33m5dfbc13[m Merge pull request #8 from iRyllB/main
+[33m97331cc[m Resolved merge conflicts
+[33m5eee140[m minor changes
+[33m474c9e2[m Merge pull request #7 from iRyllB/main
+[33m9542360[m Fix navbar visibility issue and improve section styles
+[33mcbb2b20[m Merge pull request #6 from iRyllB/main
+[33ma7a9b0a[m updated navbar colros and css page
+[33mec0ed10[m Add files via upload
+[33m77f7dec[m Updates nav bar colors, css foundaiton each page
+[33m23fa03e[m Merge pull request #4 from gdscustp/dev
+[33mb49f7a0[m Add vercel deployment workflow as part of the CI/CD pipelilne
+[33m96f4a26[m Add vercel deployment workflow as part of the CI/CD pipelilne
+[33mdc6ed22[m Fix git conflicts
+[33m309f4ee[m Merge branch 'dev' of https://github.co
