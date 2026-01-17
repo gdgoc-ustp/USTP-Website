@@ -31,15 +31,21 @@ export default function Footer() {
 
         <div className="footer-links-container">
           <div className="footer-links-column">
-            <h3 className="footer-column-title">Everything</h3>
-            <Link to="/" className="footer-link">Lorem ipsum dolor sit</Link>
-            <Link to="/" className="footer-link">Lorem ipsum dolor sit</Link>
+            <h3 className="footer-column-title">Community</h3>
+            <a href="https://gdg.community.dev/" target="_blank" rel="noopener noreferrer" className="footer-link">
+              Become a Member
+            </a>
+            <Link to="/faqs" className="footer-link">FAQ</Link>
           </div>
 
           <div className="footer-links-column">
-            <h3 className="footer-column-title">Everything</h3>
-            <Link to="/" className="footer-link">Lorem ipsum dolor sit</Link>
-            <Link to="/" className="footer-link">Lorem ipsum dolor sit</Link>
+            <h3 className="footer-column-title">Resources</h3>
+            <a href="https://devlibrary.withgoogle.com/" target="_blank" rel="noopener noreferrer" className="footer-link">
+              Dev Library
+            </a>
+            <a href="https://discord.gg/CgTHNhpW" target="_blank" rel="noopener noreferrer" className="footer-link">
+              Speaker Slides
+            </a>
           </div>
         </div>
       </div>
