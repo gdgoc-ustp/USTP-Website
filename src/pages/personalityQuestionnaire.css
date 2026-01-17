@@ -1,0 +1,343 @@
+/* Personality Questionnaire Page Styles */
+.personality-questionnaire-page {
+  min-height: calc(100vh - 96px);
+  background: #f8f9fa;
+  padding-top: 72px;
+}
+
+.questionnaire-section {
+  padding: 4rem 1rem;
+  background: #f8f9fa;
+}
+
+.questionnaire-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Progress bar */
+.progress-container {
+  margin-bottom: 3rem;
+  text-align: center;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background-color: #f0f0f0;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #498CF6 0%, #4EA865 50%, #FBC10E 75%, #EB483B 100%);
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+.progress-text {
+  font-size: 16px;
+  color: #666;
+  font-weight: 500;
+  font-family: 'Google-Sans', sans-serif;
+}
+
+/* Question card */
+.question-card {
+  background: white;
+  border-radius: 20px;
+  padding: 3rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  border: 2px solid #f0f0f0;
+  margin-bottom: 2rem;
+}
+
+.question-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.question-emoji {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.question-number {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #383838;
+  margin-bottom: 0.5rem;
+  font-family: 'Google-Sans', sans-serif;
+}
+
+.question-subtitle {
+  font-size: 16px;
+  color: #666;
+  font-weight: 500;
+  font-style: italic;
+}
+
+/* Question options */
+.question-options {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.option-label {
+  display: block;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.option-input {
+  display: none;
+}
+
+.option-content {
+  display: flex;
+  align-items: center;
+  padding: 1.5rem;
+  border: 2px solid #f0f0f0;
+  border-radius: 15px;
+  background: white;
+  transition: all 0.3s ease;
+  gap: 1rem;
+}
+
+.option-content:hover {
+  border-color: #498CF6;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(73, 140, 246, 0.1);
+}
+
+.option-label.selected .option-content {
+  border-color: #498CF6;
+  background-color: rgba(73, 140, 246, 0.05);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(73, 140, 246, 0.2);
+}
+
+.option-letter {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #f8f9fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 700;
+  color: #666;
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+  font-family: 'Google-Sans', sans-serif;
+}
+
+.option-label.selected .option-letter {
+  background: linear-gradient(135deg, #498CF6 0%, #236AD1 100%);
+  color: white;
+}
+
+.option-text {
+  font-size: 16px;
+  color: #383838;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+/* Navigation buttons */
+.question-navigation {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.nav-button {
+  padding: 15px 30px;
+  border-radius: 50px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Google-Sans', sans-serif;
+  border: none;
+  min-width: 120px;
+}
+
+.prev-button {
+  background-color: transparent;
+  color: #666;
+  border: 2px solid #ddd;
+}
+
+.prev-button:hover:not(:disabled) {
+  background-color: #f8f9fa;
+  border-color: #ccc;
+}
+
+.prev-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.next-button {
+  background-color: #498CF6;
+  color: white;
+}
+
+.next-button:hover:not(:disabled) {
+  background-color: #236AD1;
+  transform: translateY(-2px);
+}
+
+.next-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.submit-button {
+  background-color: #EB483B;
+  color: white;
+  min-width: 150px;
+}
+
+.submit-button:hover:not(:disabled) {
+  background-color: #d73c2f;
+  transform: translateY(-2px);
+}
+
+.submit-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Alternative option */
+.alternative-option {
+  text-align: center;
+  padding: 2rem;
+  background-color: #f8f9fa;
+  border-radius: 15px;
+  border: 2px solid #f0f0f0;
+}
+
+.alternative-option p {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+
+.code-input-link {
+  padding: 12px 24px;
+  border-radius: 50px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Google-Sans', sans-serif;
+  background-color: transparent;
+  color: #4EA865;
+  border: 2px solid #4EA865;
+}
+
+.code-input-link:hover {
+  background-color: #4EA865;
+  color: white;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .questionnaire-section {
+    padding: 2rem 1rem;
+  }
+
+  .question-card {
+    padding: 2rem;
+  }
+
+  .question-number {
+    font-size: 1.5rem;
+  }
+
+  .question-emoji {
+    font-size: 2.5rem;
+  }
+
+  .option-content {
+    padding: 1rem;
+    flex-direction: column;
+    text-align: center;
+    gap: 0.5rem;
+  }
+
+  .option-letter {
+    width: 35px;
+    height: 35px;
+    font-size: 16px;
+  }
+
+  .option-text {
+    font-size: 15px;
+  }
+
+  .question-navigation {
+    flex-direction: column;
+  }
+
+  .nav-button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .question-card {
+    padding: 1.5rem;
+  }
+
+  .question-number {
+    font-size: 1.3rem;
+  }
+
+  .question-emoji {
+    font-size: 2rem;
+  }
+
+  .option-content {
+    padding: 1rem;
+  }
+
+  .option-text {
+    font-size: 14px;
+  }
+}
+
+/* Loading animation */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.submit-button.loading {
+  position: relative;
+  color: transparent;
+}
+
+.submit-button.loading::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top: 2px solid white;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}

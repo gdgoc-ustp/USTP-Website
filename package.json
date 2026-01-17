@@ -1,0 +1,71 @@
+{
+  "name": "gdscustp",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.6.0",
+    "@fortawesome/free-solid-svg-icons": "^6.6.0",
+    "@fortawesome/react-fontawesome": "^0.2.2",
+    "@react-spring/parallax": "^9.7.4",
+    "@react-spring/web": "^9.7.4",
+    "@sentry/react": "^10.26.0",
+    "@supabase/supabase-js": "^2.47.14",
+    "@testing-library/jest-dom": "^6.5.0",
+    "@testing-library/react": "^16.0.1",
+    "@testing-library/user-event": "^14.5.2",
+    "@tinymce/tinymce-react": "^5.1.1",
+    "aos": "^2.3.4",
+    "chart.js": "^4.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.1",
+    "express": "^4.21.2",
+    "framer-motion": "^12.23.24",
+    "node-fetch": "^3.3.2",
+    "react": "^18.3.1",
+    "react-chartjs-2": "^5.3.0",
+    "react-dom": "^18.3.1",
+    "react-icons": "^5.5.0",
+    "react-router-dom": "^6.26.2",
+    "react-scripts": "^5.0.1",
+    "react-spring": "^9.7.5",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1",
+    "uuid": "^11.0.5",
+    "web-vitals": "^4.2.3"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "server": "node --max-http-header-size=32768 server.js",
+    "dev": "react-scripts start",
+    "start:prod": "npm run build && npm run server",
+    "vercel-build": "npm run build:vercel",
+    "build:vercel": "cross-env CI=false DISABLE_ESLINT_PLUGIN=true react-scripts build"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.23",
+    "cross-env": "^10.0.0",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^4.1.18"
+  }
+}

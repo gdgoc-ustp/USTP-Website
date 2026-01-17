@@ -1,0 +1,1 @@
+# Team Member Headshots\n\nPlace team member headshots in this directory.\n\nNaming convention: firstname-lastname.png or firstname-lastname.jpg\n\nExample:\n- hannah-aque.png\n- kent-sisi.jpg\n- jewel-daguinotas.png\n\nUpdate the image paths in src/data/team.js to reference these files.

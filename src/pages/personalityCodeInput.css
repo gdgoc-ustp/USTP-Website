@@ -1,0 +1,267 @@
+/* Personality Code Input Page Styles */
+.personality-code-input-page {
+  min-height: calc(100vh - 96px);
+  background: #f8f9fa;
+  padding-top: 72px;
+}
+
+.code-input-section {
+  padding: 4rem 1rem;
+  background: #f8f9fa;
+}
+
+.code-input-content {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.code-input-header {
+  margin-bottom: 3rem;
+}
+
+.code-input-header h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #383838;
+  margin-bottom: 1rem;
+  font-family: 'Google-Sans', sans-serif;
+}
+
+.code-input-header p {
+  font-size: 18px;
+  color: #666;
+  line-height: 1.6;
+  max-width: 600px;
+  margin: 0 auto;
+  font-weight: 500;
+}
+
+/* Code input form */
+.code-input-form {
+  margin-bottom: 3rem;
+}
+
+.code-inputs {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.code-input {
+  width: 60px;
+  height: 60px;
+  border: 2px solid #ddd;
+  border-radius: 12px;
+  text-align: center;
+  font-size: 24px;
+  font-weight: 700;
+  font-family: 'Google-Sans', sans-serif;
+  color: #383838;
+  background: white;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.code-input:focus {
+  border-color: #498CF6;
+  box-shadow: 0 0 0 3px rgba(73, 140, 246, 0.1);
+  transform: scale(1.05);
+}
+
+.code-input:not(:placeholder-shown) {
+  border-color: #4EA865;
+  background-color: rgba(78, 168, 101, 0.05);
+}
+
+.code-input::placeholder {
+  color: #ccc;
+  font-weight: 400;
+}
+
+/* Error message */
+.error-message {
+  background-color: rgba(235, 72, 59, 0.1);
+  color: #EB483B;
+  padding: 12px 20px;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+  border-left: 4px solid #EB483B;
+}
+
+/* Form actions */
+.form-actions {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+
+.submit-button, .clear-button {
+  padding: 15px 30px;
+  border-radius: 50px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Google-Sans', sans-serif;
+  border: none;
+}
+
+.submit-button {
+  background-color: #EB483B;
+  color: white;
+  min-width: 200px;
+}
+
+.submit-button:hover:not(:disabled) {
+  background-color: #d73c2f;
+  transform: translateY(-2px);
+}
+
+.submit-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.clear-button {
+  background-color: transparent;
+  color: #498CF6;
+  border: 2px solid #498CF6;
+}
+
+.clear-button:hover {
+  background-color: rgba(73, 140, 246, 0.1);
+}
+
+/* Alternative options */
+.alternative-options {
+  padding: 2rem;
+  background-color: #f8f9fa;
+  border-radius: 20px;
+  border: 2px solid #f0f0f0;
+}
+
+.alternative-options p {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+
+.take-quiz-button {
+  padding: 15px 30px;
+  border-radius: 50px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Google-Sans', sans-serif;
+  background-color: transparent;
+  color: #4EA865;
+  border: 2px solid #4EA865;
+}
+
+.take-quiz-button:hover {
+  background-color: #4EA865;
+  color: white;
+  transform: translateY(-2px);
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .code-input-header h2 {
+    font-size: 2rem;
+  }
+
+  .code-input-header p {
+    font-size: 16px;
+  }
+
+  .code-inputs {
+    gap: 8px;
+  }
+
+  .code-input {
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
+  }
+
+  .form-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .submit-button, .clear-button, .take-quiz-button {
+    width: 100%;
+    max-width: 300px;
+  }
+}
+
+@media (max-width: 480px) {
+  .code-input-section {
+    padding: 2rem 1rem;
+  }
+
+  .code-input-header h2 {
+    font-size: 1.6rem;
+  }
+
+  .code-inputs {
+    gap: 6px;
+  }
+
+  .code-input {
+    width: 45px;
+    height: 45px;
+    font-size: 18px;
+    border-radius: 8px;
+  }
+
+  .alternative-options {
+    padding: 1.5rem;
+    margin: 0 10px;
+  }
+}
+
+/* Animation for successful input */
+@keyframes inputSuccess {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+.code-input.success {
+  animation: inputSuccess 0.3s ease;
+}
+
+/* Loading state */
+.submit-button.loading {
+  position: relative;
+  color: transparent;
+}
+
+.submit-button.loading::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top: 2px solid white;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
+}

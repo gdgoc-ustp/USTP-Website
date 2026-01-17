@@ -1,0 +1,262 @@
+{
+    "info": {
+        "_postman_id": "unique-id",
+        "name": "USTP Website API",
+        "description": "API documentation for the USTP Website, including public endpoints for events and blog posts.",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "variable": [
+        {
+            "key": "supabase_url",
+            "value": "https://yrvykwljzajfkraytbgr.supabase.co",
+            "type": "string"
+        },
+        {
+            "key": "anon_key",
+            "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inlydnlrd2xqemFqZmtyYXl0YmdyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzY5MjczMjIsImV4cCI6MjA1MjUwMzMyMn0.WzWYdut9GkGSjH5cehOcuc6YzZR5g-XQgZ3Kh9d_6UA",
+            "type": "string"
+        }
+    ],
+    "item": [
+        {
+            "name": "Public Endpoints",
+            "description": "Endpoints that don't require authentication",
+            "item": [
+                {
+                    "name": "Events",
+                    "item": [
+                        {
+                            "name": "Get All Events",
+                            "request": {
+                                "method": "GET",
+                                "header": [
+                                    {
+                                        "key": "apikey",
+                                        "value": "{{anon_key}}"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{supabase_url}}/rest/v1/events?select=*",
+                                    "host": ["{{supabase_url}}"],
+                                    "path": ["rest", "v1", "events"],
+                                    "query": [
+                                        {
+                                            "key": "select",
+                                            "value": "*"
+                                        },
+                                        {
+                                            "key": "status",
+                                            "value": "Upcoming",
+                                            "description": "Filter events by status (Upcoming, Ongoing, Past)",
+                                            "disabled": true
+                                        },
+                                        {
+                                            "key": "limit",
+                                            "value": "10",
+                                            "description": "Number of events to return",
+                                            "disabled": true
+                                        },
+                                        {
+                                            "key": "offset",
+                                            "value": "0",
+                                            "description": "Number of events to skip",
+                                            "disabled": true
+                                        },
+                                        {
+                                            "key": "order",
+                                            "value": "created_at.desc",
+                                            "description": "Order events by field",
+                                            "disabled": true
+                                        }
+                                    ]
+                                },
+                                "description": "Retrieve a list of all events. Can be filtered by status and ordered by various fields."
+                            }
+                        },
+                        {
+                            "name": "Get Event by ID",
+                            "request": {
+                                "method": "GET",
+                                "header": [
+                                    {
+                                        "key": "apikey",
+                                        "value": "{{anon_key}}"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{supabase_url}}/rest/v1/events?id=eq.:id&select=*",
+                                    "host": ["{{supabase_url}}"],
+                                    "path": ["rest", "v1", "events"],
+                                    "query": [
+                                        {
+                                            "key": "id",
+                                            "value": "eq.:id"
+                                        },
+                                        {
+                                            "key": "select",
+                                            "value": "*"
+                                        }
+                                    ],
+                                    "variable": [
+                                        {
+                                            "key": "id",
+                                            "value": "",
+                                            "description": "The ID of the event to retrieve"
+                                        }
+                                    ]
+                                },
+                                "description": "Retrieve detailed information about a specific event."
+                            }
+                        },
+                        {
+                            "name": "Get Upcoming Events",
+                            "request": {
+                                "method": "GET",
+                                "header": [
+                                    {
+                                        "key": "apikey",
+                                        "value": "{{anon_key}}"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{supabase_url}}/rest/v1/events?status=eq.Upcoming&select=*&order=created_at.desc",
+                                    "host": ["{{supabase_url}}"],
+                                    "path": ["rest", "v1", "events"],
+                                    "query": [
+                                        {
+                                            "key": "status",
+                                            "value": "eq.Upcoming"
+                                        },
+                                        {
+                                            "key": "select",
+                                            "value": "*"
+                                        },
+                                        {
+                                            "key": "order",
+                                            "value": "created_at.desc"
+                                        }
+                                    ]
+                                },
+                                "description": "Retrieve a list of upcoming events, ordered by creation date."
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "Blog Posts",
+                    "item": [
+                        {
+                            "name": "Get All Blog Posts",
+                            "request": {
+                                "method": "GET",
+                                "header": [
+                                    {
+                                        "key": "apikey",
+                                        "value": "{{anon_key}}"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{supabase_url}}/rest/v1/blog_posts?select=*",
+                                    "host": ["{{supabase_url}}"],
+                                    "path": ["rest", "v1", "blog_posts"],
+                                    "query": [
+                                        {
+                                            "key": "select",
+                                            "value": "*"
+                                        },
+                                        {
+                                            "key": "limit",
+                                            "value": "10",
+                                            "description": "Number of posts to return",
+                                            "disabled": true
+                                        },
+                                        {
+                                            "key": "offset",
+                                            "value": "0",
+                                            "description": "Number of posts to skip",
+                                            "disabled": true
+                                        },
+                                        {
+                                            "key": "order",
+                                            "value": "created_at.desc",
+                                            "description": "Order posts by field",
+                                            "disabled": true
+                                        }
+                                    ]
+                                },
+                                "description": "Retrieve a list of all blog posts. Can be paginated and ordered by various fields."
+                            }
+                        },
+                        {
+                            "name": "Get Blog Post by ID",
+                            "request": {
+                                "method": "GET",
+                                "header": [
+                                    {
+                                        "key": "apikey",
+                                        "value": "{{anon_key}}"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{supabase_url}}/rest/v1/blog_posts?id=eq.:id&select=*",
+                                    "host": ["{{supabase_url}}"],
+                                    "path": ["rest", "v1", "blog_posts"],
+                                    "query": [
+                                        {
+                                            "key": "id",
+                                            "value": "eq.:id"
+                                        },
+                                        {
+                                            "key": "select",
+                                            "value": "*"
+                                        }
+                                    ],
+                                    "variable": [
+                                        {
+                                            "key": "id",
+                                            "value": "",
+                                            "description": "The ID of the blog post to retrieve"
+                                        }
+                                    ]
+                                },
+                                "description": "Retrieve detailed information about a specific blog post."
+                            }
+                        },
+                        {
+                            "name": "Get Recent Blog Posts",
+                            "request": {
+                                "method": "GET",
+                                "header": [
+                                    {
+                                        "key": "apikey",
+                                        "value": "{{anon_key}}"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{supabase_url}}/rest/v1/blog_posts?select=*&order=created_at.desc&limit=5",
+                                    "host": ["{{supabase_url}}"],
+                                    "path": ["rest", "v1", "blog_posts"],
+                                    "query": [
+                                        {
+                                            "key": "select",
+                                            "value": "*"
+                                        },
+                                        {
+                                            "key": "order",
+                                            "value": "created_at.desc"
+                                        },
+                                        {
+                                            "key": "limit",
+                                            "value": "5"
+                                        }
+                                    ]
+                                },
+                                "description": "Retrieve the 5 most recent blog posts."
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+} 

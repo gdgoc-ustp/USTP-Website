@@ -1,0 +1,279 @@
+/* Style sheet for Navigation Bar Component*/
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+/* Navbar Container */
+.navbar-container {
+  width: 100%;
+  height: 72px;
+  backdrop-filter: blur(10px);
+  position: fixed;
+  z-index: 100;
+  background-color: rgba(255, 255, 255, 0.7);
+  left: 0;
+  top: 0;
+}
+
+.navbar-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1440px;
+  height: 100%;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.navbar-logo {
+  width: 65px;
+  height: 32px;
+}
+
+/* Navigation Links */
+.navbar-links {
+  display: flex;
+  gap: 48px;
+  align-items: center;
+}
+
+.nav-link {
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  color: #232527;
+  padding: 10px 18px;
+  border-radius: 100px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+  background-color: #f1f1f1;
+}
+
+.nav-link.active {
+  color: #FFFFFF;
+  background-color: #498CF6;
+}
+
+/* Custom active states for specific links */
+a[href="/news"].active {
+  background-color: #EB483B;
+}
+
+a[href="/events"].active {
+  background-color: #4EA865;
+}
+
+a[href="/about-us"].active {
+  background-color: #FBC10E;
+}
+
+a[href="/team"].active {
+  background-color: #FBC10E;
+}
+
+/* Register Button */
+.register-button {
+  font-size: 16px;
+  font-weight: 700;
+  color: #498CF6;
+  background-color: white;
+  padding: 12px 24px;
+  border-radius: 100px;
+  border: 1px solid #498CF6;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.register-button:hover {
+  background-color: #498CF6;
+  color: white;
+}
+
+.mobile-register {
+  display: none;
+}
+
+/* Dropdown Menu */
+.nav-dropdown {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 8px 0;
+  min-width: 180px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+  margin-top: 8px;
+}
+
+.nav-dropdown:hover .dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.dropdown-link {
+  display: block;
+  padding: 12px 20px;
+  color: #232527;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.dropdown-link:hover {
+  background-color: rgba(251, 193, 14, 0.1);
+  color: #FBC10E;
+}
+
+/* Hamburger Menu */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 30px;
+  height: 21px;
+  cursor: pointer;
+  z-index: 110;
+}
+
+.hamburger span {
+  display: block;
+  height: 3px;
+  width: 100%;
+  background-color: #000;
+  border-radius: 10px;
+  transition: all 0.3s ease-in-out;
+}
+
+.hamburger.open span:nth-child(1) {
+  transform: translateY(9px) rotate(45deg);
+}
+
+.hamburger.open span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.open span:nth-child(3) {
+  transform: translateY(-9px) rotate(-45deg);
+}
+
+/* Mobile Menu Overlay */
+.menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 90;
+  display: none;
+}
+
+.menu-overlay.active {
+  display: block;
+}
+
+/* Body class to prevent scrolling when menu is open */
+body.menu-open {
+  overflow: hidden;
+}
+
+/* Media Queries for Responsive Design */
+@media (max-width: 768px) {
+  .navbar-content {
+    padding: 0 16px;
+  }
+  
+  .navbar-logo {
+    margin-left: 8px;
+  }
+  
+  .navbar-links {
+    position: fixed;
+    flex-direction: column;
+    top: 0;
+    right: -300px;
+    width: 250px;
+    height: 100vh;
+    background-color: white;
+    padding: 80px 20px 40px;
+    transition: all 0.3s ease-in-out;
+    z-index: 100;
+    gap: 20px;
+  }
+  
+  .navbar-links.mobile-menu-active {
+    right: 0;
+  }
+  
+  .hamburger {
+    display: flex;
+  }
+  
+  .desktop-register {
+    display: none;
+  }
+  
+  .mobile-register {
+    display: block;
+    width: 100%;
+    margin-top: 20px;
+  }
+  
+  /* Mobile dropdown styles */
+  .nav-dropdown {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+  }
+  
+  .dropdown-menu {
+    position: static;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    box-shadow: none;
+    margin-top: 8px;
+    padding: 0;
+    background-color: rgba(251, 193, 14, 0.05);
+    border-radius: 8px;
+  }
+  
+  .dropdown-link {
+    padding: 10px 20px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar-content {
+    padding: 0 20px;
+  }
+  
+  .navbar-logo {
+    margin-left: 12px;
+  }
+  
+  .navbar-links {
+    width: 100%;
+    right: -100%;
+  }
+}

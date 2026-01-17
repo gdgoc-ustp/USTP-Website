@@ -1,0 +1,14 @@
+name: Trigger Vercel Deployment
+
+on:
+  push:    # This will trigger the action on every commit (push)
+    branches:
+      - main  # You can specify which branch to monitor (e.g., "main" or any other branch)
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Trigger Vercel Deploy
+      run: curl -X POST "https://api.vercel.com/v1/integrations/deploy/prj_Wlv8UGIoHjqDNr58Y9OaRPDGxg38/ClprZSQmUj"
