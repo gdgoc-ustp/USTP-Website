@@ -523,7 +523,7 @@ export default function Home() {
                     )}
 
                     <animated.div style={{ ...heroTitleSpring, position: 'absolute', zIndex: 10 }}>
-                        <h1 style={{ color: 'white', fontSize: '5rem', fontWeight: '700', margin: 0 }}>Home</h1>
+                        <h1 className="home-hero-title">Home</h1>
                     </animated.div>
                 </header>
 

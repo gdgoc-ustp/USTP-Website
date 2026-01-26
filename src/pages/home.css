@@ -16,65 +16,6 @@ html {
     scroll-behavior: smooth;
 }
 
-* {
-    margin: 0px;
-    padding: 0px;
-}
-
-body {
-    font-family: 'Google-Sans';
-    color: #383838;
-    font-weight: 500;
-}
-
-/* Global Zoom Fix - 80% equivalent */
-html {
-    font-size: 14px;
-    /* Reduces 1rem from 16px to 14px, effectively scaling down */
-    scroll-behavior: smooth;
-}
-
-/* Custom font face */
-@font-face {
-    font-family: 'Google-Sans';
-    src: url('../assets/fonts/GoogleSans-Regular.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'Google-Sans';
-    src: url('../assets/fonts/GoogleSans-Bold.ttf') format('truetype');
-    font-weight: bold;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'Google-Sans';
-    src: url('../assets/fonts/GoogleSans-BoldItalic.ttf') format('truetype');
-    font-weight: bold;
-    font-style: italic;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'Google-Sans';
-    src: url('../assets/fonts/GoogleSans-Medium.ttf') format('truetype');
-    font-weight: 500;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'Google-Sans';
-    src: url('../assets/fonts/GoogleSans-MediumItalic.ttf') format('truetype');
-    font-weight: 500;
-    font-style: italic;
-    font-display: swap;
-}
-
 /* Style for Banner */
 .banner {
     display: flex;
@@ -312,12 +253,32 @@ html {
 
 @media screen and (max-width: 768px) {
     .banner-title {
-        font-size: 3rem;
+        font-size: 3rem !important;
         white-space: normal;
     }
 
     .banner p {
         font-size: 22px;
+    }
+
+    .home-hero-title {
+        font-family: var(--font-google-sans);
+        color: white;
+        font-size: 5rem;
+        font-weight: 700;
+        margin: 0;
+    }
+
+    @media screen and (max-width: 768px) {
+        .home-hero-title {
+            font-size: 3rem;
+        }
+    }
+
+    @media screen and (max-width: 480px) {
+        .home-hero-title {
+            font-size: 2.5rem;
+        }
     }
 
     .circle,
