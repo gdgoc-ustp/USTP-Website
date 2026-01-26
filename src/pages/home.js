@@ -624,25 +624,43 @@ export default function Home() {
                     </section>
 
 
-                    <section className="trusted py-24 px-4 bg-white" data-aos="fade-up">
-                        <h1 className="text-4xl md:text-5xl font-bold text-center mb-16 text-gray-900 font-google-sans">Trusted by Organizations</h1>
+                    <section className="py-24 bg-gray-50/50" data-aos="fade-up">
+                        <div className="max-w-7xl mx-auto px-4">
+                            <div className="flex flex-col items-center mb-16">
+                                <span className="inline-block px-4 py-1.5 bg-blue-50 text-blue-600 rounded-full text-xs font-bold uppercase tracking-widest mb-4">
+                                    Our Network
+                                </span>
+                                <h1 className="text-4xl md:text-5xl font-bold text-center text-gray-900 font-google-sans leading-tight">
+                                    Trusted by Organizations
+                                </h1>
+                            </div>
 
-                        <div className="max-w-6xl mx-auto">
-                            <Marquee speed={40} pauseOnHover={true} className="py-4">
-                                <div className="mx-12 opacity-50 hover:opacity-100 transition-all duration-300 grayscale hover:grayscale-0 cursor-pointer">
-                                    <img src="/partners/xu.jpg" alt="GDG - XU" className="h-16 w-auto object-contain" />
+                            <div className="relative">
+                                {/* Side masks for smoother fade */}
+                                <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-gray-50/50 to-transparent z-10 pointer-events-none"></div>
+                                <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-gray-50/50 to-transparent z-10 pointer-events-none"></div>
+
+                                <div className="py-8 bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
+                                    <Marquee speed={35} pauseOnHover={true}>
+                                        <div className="flex items-center gap-16 px-8">
+                                            <div className="opacity-40 hover:opacity-100 transition-all duration-500 grayscale hover:grayscale-0 cursor-pointer">
+                                                <img src="/partners/xu.jpg" alt="GDG - XU" className="h-12 w-auto object-contain" />
+                                            </div>
+                                            <div className="opacity-40 hover:opacity-100 transition-all duration-500 grayscale hover:grayscale-0 cursor-pointer">
+                                                <img src="/partners/gdg-usls.jpg" alt="GDG - USLS" className="h-12 w-auto object-contain" />
+                                            </div>
+                                            <div className="opacity-40 hover:opacity-100 transition-all duration-500 grayscale hover:grayscale-0 cursor-pointer">
+                                                <img src="/partners/DICT.png" alt="DICT Region X" className="h-14 w-auto object-contain" />
+                                            </div>
+                                            <div className="opacity-40 hover:opacity-100 transition-all duration-500 grayscale hover:grayscale-0 cursor-pointer flex items-center gap-3">
+                                                <SiGoogle className="text-3xl" />
+                                                <span className="font-bold text-xl text-gray-700">Google</span>
+                                            </div>
+                                            {/* Repeating for seamless loop if needed, though Marquee usually handles this */}
+                                        </div>
+                                    </Marquee>
                                 </div>
-                                <div className="mx-12 opacity-50 hover:opacity-100 transition-all duration-300 grayscale hover:grayscale-0 cursor-pointer">
-                                    <img src="/partners/gdg-usls.jpg" alt="GDG - USLS" className="h-16 w-auto object-contain" />
-                                </div>
-                                <div className="mx-12 opacity-50 hover:opacity-100 transition-all duration-300 grayscale hover:grayscale-0 cursor-pointer">
-                                    <img src="/partners/DICT.png" alt="DICT Region X" className="h-16 w-auto object-contain" />
-                                </div>
-                                <div className="mx-12 opacity-50 hover:opacity-100 transition-all duration-300 grayscale hover:grayscale-0 cursor-pointer flex items-center gap-3">
-                                    <SiGoogle className="text-4xl" />
-                                    <span className="font-bold text-xl text-gray-700">Google</span>
-                                </div>
-                            </Marquee>
+                            </div>
                         </div>
                     </section>
 
