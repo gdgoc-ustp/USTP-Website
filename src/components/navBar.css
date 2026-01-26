@@ -1,8 +1,8 @@
 /* Style sheet for Navigation Bar Component*/
 
 * {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
 /* Navbar Container */
@@ -197,83 +197,114 @@ body.menu-open {
 }
 
 /* Media Queries for Responsive Design */
+/* Mobile Bottom Navigation */
+.mobile-bottom-nav {
+  display: none;
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  padding: 8px 32px;
+  border-radius: 100px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12);
+  display: none;
+  /* Hidden by default on desktop */
+  align-items: center;
+  gap: 24px;
+  z-index: 1000;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  width: auto;
+  max-width: 95%;
+}
+
+.mobile-nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: #8E9093;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+.mobile-nav-item .nav-icon {
+  font-size: 20px;
+  z-index: 2;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.mobile-nav-item span {
+  display: none;
+  /* Hide text for the clean circle look */
+}
+
+/* Active State - Circle Background */
+.mobile-nav-item.active {
+  background-color: #498CF6;
+  color: white;
+  transform: translateY(-4px) scale(1.05);
+  /* Reduced lift and added subtle scale */
+  box-shadow: 0 4px 12px rgba(73, 140, 246, 0.4);
+  /* Softer shadow */
+}
+
+.mobile-nav-item.active .nav-icon {
+  transform: scale(1);
+  /* Reset icon scale since parent scales */
+}
+
+/* Specific Colors for Sections */
+/* News - Red */
+.mobile-nav-item[href="/news"].active {
+  background-color: #EB483B;
+  box-shadow: 0 4px 12px rgba(235, 72, 59, 0.4);
+}
+
+/* Events - Green */
+.mobile-nav-item[href="/events"].active {
+  background-color: #4EA865;
+  box-shadow: 0 4px 12px rgba(78, 168, 101, 0.4);
+}
+
+/* About - Yellow */
+.mobile-nav-item[href="/about-us"].active {
+  background-color: #FBC10E;
+  box-shadow: 0 4px 12px rgba(251, 193, 14, 0.4);
+}
+
+/* Team - Yellow (same as About) */
+.mobile-nav-item[href="/team"].active {
+  background-color: #FBC10E;
+  box-shadow: 0 4px 12px rgba(251, 193, 14, 0.4);
+}
+
+/* Media Queries for Responsive Design */
 @media (max-width: 768px) {
-  .navbar-content {
-    padding: 0 16px;
-  }
-  
-  .navbar-logo {
-    margin-left: 8px;
-  }
-  
-  .navbar-links {
-    position: fixed;
-    flex-direction: column;
-    top: 0;
-    right: -300px;
-    width: 250px;
-    height: 100vh;
-    background-color: white;
-    padding: 80px 20px 40px;
-    transition: all 0.3s ease-in-out;
-    z-index: 100;
-    gap: 20px;
-  }
-  
-  .navbar-links.mobile-menu-active {
-    right: 0;
-  }
-  
-  .hamburger {
-    display: flex;
-  }
-  
-  .desktop-register {
+  .navbar-container {
     display: none;
+    /* Hide top navbar on mobile */
   }
-  
-  .mobile-register {
-    display: block;
-    width: 100%;
-    margin-top: 20px;
+
+  .mobile-bottom-nav {
+    display: flex;
+    /* Show bottom nav on mobile */
   }
-  
-  /* Mobile dropdown styles */
-  .nav-dropdown {
-    flex-direction: column;
-    align-items: stretch;
-    width: 100%;
-  }
-  
-  .dropdown-menu {
-    position: static;
-    opacity: 1;
-    visibility: visible;
-    transform: none;
-    box-shadow: none;
-    margin-top: 8px;
-    padding: 0;
-    background-color: rgba(251, 193, 14, 0.05);
-    border-radius: 8px;
-  }
-  
-  .dropdown-link {
-    padding: 10px 20px;
-    font-size: 14px;
-  }
+
+  /* Adjust body padding if needed, or rely on existing layout */
 }
 
 @media (max-width: 480px) {
-  .navbar-content {
-    padding: 0 20px;
-  }
-  
-  .navbar-logo {
-    margin-left: 12px;
-  }
-  
-  .navbar-links {
-    width: 100%;
-    right: -100%;
+  .mobile-bottom-nav {
+    bottom: 20px;
+    padding: 12px 20px;
+    width: 90%;
+    justify-content: space-between;
+    gap: 0;
   }
 }
