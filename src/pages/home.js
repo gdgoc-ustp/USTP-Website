@@ -504,9 +504,12 @@ export default function Home() {
                                                     })()}
                                                 </div>
 
-                                                <div className="mt-auto pt-6 border-t border-gray-100 flex items-center justify-between text-blue-600 font-bold group-hover:translate-x-2 transition-transform duration-300 cursor-pointer text-lg">
+                                                <Link
+                                                    to={`/news/article/${post.id}`}
+                                                    className="mt-auto pt-6 border-t border-gray-100 flex items-center justify-between text-blue-600 font-bold group-hover:translate-x-2 transition-transform duration-300 cursor-pointer text-lg"
+                                                >
                                                     Read Article <span className="text-2xl transform transition-transform group-hover:translate-x-1">→</span>
-                                                </div>
+                                                </Link>
                                             </div>
                                         </div>
                                     ))
