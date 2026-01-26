@@ -1165,23 +1165,21 @@ html {
 }
 
 /* Trusted by Organizations Section */
-.trusted {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 100px 0;
-    gap: 80px;
-    width: 90%;
-    max-width: 90%;
-    background: #FFFFFF;
-    margin: 0 auto;
+#overhaul-v2-root .trusted {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    width: 100% !important;
+    max-width: none !important;
+    background: #FFFFFF !important;
+    margin: 0 auto !important;
 }
 
-.trusted h1 {
-    font-size: 56px;
-    font-weight: 700;
-    color: #383838;
-    margin-bottom: 40px;
+#overhaul-v2-root .trusted h1 {
+    font-size: inherit !important;
+    font-weight: 700 !important;
+    color: #383838 !important;
+    margin-bottom: inherit !important;
 }
 
 .trusted-container {
@@ -1236,8 +1234,8 @@ html {
 
 /* Responsive styles for Trusted section */
 @media (max-width: 1600px) {
-    .trusted {
-        padding: 80px 100px;
+    #overhaul-v2-root .trusted {
+        padding: inherit !important;
     }
 
     .trusted-row {
@@ -1251,8 +1249,8 @@ html {
 }
 
 @media (max-width: 1200px) {
-    .trusted {
-        padding: 60px 50px;
+    #overhaul-v2-root .trusted {
+        padding: inherit !important;
     }
 
     .trusted-row {
@@ -1280,14 +1278,14 @@ html {
 }
 
 @media (max-width: 768px) {
-    .trusted {
-        padding: 40px 20px;
-        gap: 40px;
+    #overhaul-v2-root .trusted {
+        padding: inherit !important;
+        gap: 40px !important;
     }
 
-    .trusted h1 {
-        font-size: 36px;
-        margin-bottom: 20px;
+    #overhaul-v2-root .trusted h1 {
+        font-size: 36px !important;
+        margin-bottom: 20px !important;
     }
 
     .trusted-container {

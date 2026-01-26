@@ -624,8 +624,8 @@ export default function Home() {
                     </section>
 
 
-                    <section className="trusted py-12" data-aos="fade-up">
-                        <h1 className="text-3xl md:text-4xl font-bold text-center mb-12 text-gray-900 font-google-sans">Trusted by Organizations</h1>
+                    <section className="trusted py-24 px-4 bg-white" data-aos="fade-up">
+                        <h1 className="text-4xl md:text-5xl font-bold text-center mb-16 text-gray-900 font-google-sans">Trusted by Organizations</h1>
 
                         <div className="max-w-6xl mx-auto">
                             <Marquee speed={40} pauseOnHover={true} className="py-4">
