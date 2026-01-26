@@ -12,33 +12,45 @@ import sampleImage2 from '../assets/sample.png';
 import { getFeaturedMembers, getGroupColor } from '../data/team';
 
 // Unifed Hero Card Component
-// A clean, high-impact card that combines text and image in a unified block, rather than alternating separate sections
-const HeroCard = ({ title, description, image, theme = "light" }) => (
-    <div className="py-8 px-6">
-        <div className={`max-w-7xl mx-auto rounded-[3rem] overflow-hidden shadow-sm border border-gray-100 ${theme === 'light' ? 'bg-white' : 'bg-gray-50'}`}>
-            <div className="flex flex-col lg:flex-row">
-                <div className="w-full lg:w-1/2 p-8 md:p-16 flex flex-col justify-center gap-6">
-                    <span className="text-sm font-bold tracking-widest uppercase text-blue-600">About Us</span>
-                    <h2 className="text-3xl md:text-5xl font-bold font-google-sans leading-tight text-gray-900">
-                        {title}
-                    </h2>
-                    <p className="text-lg text-gray-600 leading-relaxed font-google-sans">
+// Improved with alternating layout support and richer visual hierarchy
+const HeroCard = ({ title, description, image, theme = "light", reverse = false }) => (
+    <div className="py-12 px-6">
+        <div className={`max-w-7xl mx-auto rounded-[3rem] overflow-hidden shadow-lg border border-gray-100 ${theme === 'light' ? 'bg-white' : 'bg-gray-50'} group hover:shadow-2xl transition-all duration-500`}>
+            <div className={`flex flex-col ${reverse ? 'lg:flex-row-reverse' : 'lg:flex-row'} items-center`}>
+                <div className="w-full lg:w-1/2 p-8 md:p-20 flex flex-col justify-center gap-8">
+                    <div className="flex flex-col gap-4">
+                        <span className={`text-sm font-bold tracking-widest uppercase ${reverse ? 'text-red-500' : 'text-blue-600'}`}>
+                            {reverse ? 'Our Mission' : 'Who We Are'}
+                        </span>
+                        <h2 className="text-4xl md:text-6xl font-bold font-google-sans leading-tight text-gray-900">
+                            {title}
+                        </h2>
+                    </div>
+                    <p className="text-xl text-gray-600 leading-relaxed font-google-sans font-light">
                         {description}
                     </p>
+                    {/* Decorative Element */}
+                    <div className={`w-24 h-2 rounded-full mt-4 ${reverse ? 'bg-red-500' : 'bg-blue-600'}`}></div>
                 </div>
-                <div className="w-full lg:w-1/2 h-[300px] lg:h-auto min-h-[400px] relative">
+                <div className="w-full lg:w-1/2 h-[400px] lg:h-[600px] relative overflow-hidden">
                     <img
                         src={image}
                         alt={title}
-                        className="absolute inset-0 w-full h-full object-cover"
+                        className="absolute inset-0 w-full h-full object-cover transform transition-transform duration-1000 group-hover:scale-105"
                     />
+                    <div className={`absolute inset-0 bg-gradient-to-t ${reverse ? 'from-red-900/40' : 'from-blue-900/40'} to-transparent opacity-60`}></div>
                 </div>
             </div>
         </div>
     </div>
 );
 
-// Roadmap Item Component - Material Design Style
+// ... (RoadmapItem component remains unchanged) ...
+// Note: In a real scenario I would not remove the code unless I am rewriting it, 
+// but for the tool I need to match the replacement block precisely or replace the whole file content block I choose.
+// I will include RoadmapItem briefly or assume the user wants me to replace the bottom part primarily if I target it.
+// Actually, I can just replace the definition of HeroCard and the main AboutUs body content.
+
 const RoadmapItem = ({ year, title, description, image, index, label }) => {
     const isEven = index % 2 === 0;
 
@@ -132,19 +144,20 @@ export default function AboutUs() {
             <main className="bg-gray-50 min-h-screen">
                 <HeroSection title="About Us" theme="aboutus" previousPath={location.state?.from} />
 
-                {/* 1. Who We Are - Clean Unified Cards */}
-                <section className="py-12">
+                {/* 1. Who We Are - Clean Unified Cards with Alternating Layout */}
+                <section className="py-12 flex flex-col gap-12">
                     <HeroCard
                         title="Fostering Innovation"
-                        description="Google Developer Groups (GDG) is a community of passionate developers interested in Google's developer technologies. We help developers grow their skills and build innovative solutions."
+                        description="Google Developer Groups (GDG) is a community of passionate developers interested in Google's developer technologies. We help developers grow their skills and build innovative solutions through hands-on workshops and real-world projects."
                         image={sampleImage1}
                         theme="light"
                     />
                     <HeroCard
                         title="Building Community"
-                        description="Our mission is to create a vibrant ecosystem where developers can connect, learn, and collaborate. We believe in the power of community-led learning through tech talks and workshops."
+                        description="Our mission is to create a vibrant ecosystem where developers can connect, learn, and collaborate. We believe in the power of community-led learning, fostering an inclusive environment for everyone to thrive in technology."
                         image={sampleImage2}
                         theme="light"
+                        reverse={true}
                     />
                 </section>
 
@@ -169,12 +182,33 @@ export default function AboutUs() {
                         </div>
 
                         <div className="relative">
-                            {/* Animated Center Line (Desktop) */}
-                            <div className="hidden md:block absolute left-1/2 top-4 bottom-12 w-1 bg-gray-100 transform -translate-x-1/2 rounded-full"></div>
-                            <motion.div
-                                style={{ scaleY }}
-                                className="hidden md:block absolute left-1/2 top-4 bottom-12 w-1 bg-gradient-to-b from-red-500 to-red-600 transform -translate-x-1/2 origin-top rounded-full shadow-[0_0_15px_rgba(239,68,68,0.5)] z-0"
-                            ></motion.div>
+                            {/* SVG Connector Path for perfectly smooth connections */}
+                            <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-full -translate-x-1/2 h-full z-0 overflow-visible pointer-events-none">
+                                <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+                                    <motion.path
+                                        d="M 50 0 L 50 100"
+                                        stroke="#f3f4f6"
+                                        strokeWidth="4"
+                                        vectorEffect="non-scaling-stroke"
+                                        fill="none"
+                                    />
+                                    <motion.path
+                                        d="M 50 0 L 50 100"
+                                        stroke="url(#gradient-line)"
+                                        strokeWidth="4"
+                                        vectorEffect="non-scaling-stroke"
+                                        fill="none"
+                                        style={{ pathLength: scaleY }}
+                                    />
+                                    <defs>
+                                        <linearGradient id="gradient-line" x1="0%" y1="0%" x2="0%" y2="100%">
+                                            <stop offset="0%" stopColor="#ef4444" />
+                                            <stop offset="50%" stopColor="#3b82f6" />
+                                            <stop offset="100%" stopColor="#f59e0b" />
+                                        </linearGradient>
+                                    </defs>
+                                </svg>
+                            </div>
 
                             <div className="flex flex-col">
                                 <RoadmapItem
@@ -229,7 +263,7 @@ export default function AboutUs() {
                     </div>
                 </section>
 
-                {/* 4. Meet The Team - Moved After Departments */}
+                {/* 4. Meet The Team - Redesigned CTA */}
                 <section className="py-24 px-6 bg-gray-50">
                     <div className="max-w-7xl mx-auto">
                         <div className="text-center mb-16">
@@ -237,7 +271,7 @@ export default function AboutUs() {
                             <p className="text-gray-600 max-w-2xl mx-auto text-lg">The people making it all happen.</p>
                         </div>
 
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 justify-items-center mb-16">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 justify-items-center mb-20">
                             {featuredMembers.map((member, index) => {
                                 const groupColor = getGroupColor(member.group);
                                 return (
@@ -260,10 +294,26 @@ export default function AboutUs() {
                             })}
                         </div>
 
-                        <div className="text-center">
-                            <Link to="/team" className="inline-flex items-center gap-2 px-10 py-4 bg-gray-900 text-white rounded-full font-bold hover:bg-gray-800 transition-all hover:scale-105 shadow-xl">
-                                View Full Team
-                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                        {/* Redesigned View Team CTA - Full Width Card */}
+                        <div className="max-w-4xl mx-auto" data-aos="zoom-in">
+                            <Link to="/team" className="block group relative overflow-hidden rounded-[2.5rem] bg-gray-900 text-white shadow-2xl hover:shadow-3xl transition-all duration-300 transform hover:-translate-y-1">
+                                <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-600 opacity-90 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                {/* Decorative Blobs */}
+                                <div className="absolute top-0 right-0 w-64 h-64 bg-white opacity-10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 group-hover:scale-110 transition-transform duration-700"></div>
+                                <div className="absolute bottom-0 left-0 w-48 h-48 bg-yellow-400 opacity-20 rounded-full blur-2xl translate-y-1/3 -translate-x-1/3"></div>
+
+                                <div className="relative px-8 py-12 md:py-16 md:px-16 flex flex-col md:flex-row items-center justify-between gap-8">
+                                    <div className="text-center md:text-left">
+                                        <h3 className="text-3xl md:text-4xl font-bold font-google-sans mb-2">Want to see everyone?</h3>
+                                        <p className="text-blue-100 text-lg">Explore the full roster of our talented team members.</p>
+                                    </div>
+                                    <div className="flex-shrink-0">
+                                        <span className="inline-flex items-center gap-3 px-8 py-4 bg-white text-blue-600 font-bold rounded-full text-lg shadow-lg group-hover:shadow-xl transition-all group-hover:bg-gray-50 group-hover:scale-105">
+                                            View All Members
+                                            <svg className="w-5 h-5 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                                        </span>
+                                    </div>
+                                </div>
                             </Link>
                         </div>
                     </div>
