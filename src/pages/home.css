@@ -92,7 +92,7 @@ html {
 @media screen and (max-width: 768px) {
     .banner {
         height: auto !important;
-        min-height: 40vh !important;
+        min-height: 50vh !important;
         padding: 60px 0;
     }
 }
@@ -312,7 +312,7 @@ html {
 
 @media screen and (max-width: 768px) {
     .banner-title {
-        font-size: 48px;
+        font-size: 3rem;
         white-space: normal;
     }
 
@@ -341,7 +341,7 @@ html {
 
 @media screen and (max-width: 480px) {
     .banner-title {
-        font-size: 36px;
+        font-size: 2.5rem;
     }
 
     .banner p {
