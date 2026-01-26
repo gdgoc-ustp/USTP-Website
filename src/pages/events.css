@@ -199,35 +199,86 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 50px;
-    font-family: 'Google Sans', sans-serif;
+    padding: 4rem 2rem;
+    min-height: 300px;
     width: 100%;
+    text-align: center;
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    border: 1px solid #f0f0f0;
+    margin: 2rem 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.public-loading-container::before {
+    content: none;
 }
 
 .public-loading-spinner {
+    width: 60px;
+    height: 60px;
     border: 4px solid rgba(78, 168, 101, 0.1);
     border-top: 4px solid #4EA865;
+    border-right: 4px solid #4EA865;
     border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    animation: spin 1s linear infinite;
-    margin-bottom: 20px;
+    animation: spin 1.2s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+    margin-bottom: 1.5rem;
+    position: relative;
+    z-index: 1;
 }
 
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+.public-loading-spinner::after {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    right: -4px;
+    bottom: -4px;
+    border: 2px solid rgba(78, 168, 101, 0.2);
+    border-radius: 50%;
+    animation: spin 2s linear infinite reverse;
+}
+
+.public-loading-container p {
+    font-size: 18px;
+    color: #666;
+    font-weight: 500;
+    position: relative;
+    z-index: 1;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.public-error-container {
+    background: linear-gradient(135deg, #fff8f8 0%, #fef2f2 100%);
+    border: 2px solid rgba(239, 68, 68, 0.2);
 }
 
 .public-retry-button {
-    padding: 10px 20px;
+    padding: 12px 28px;
     background-color: #4EA865;
     color: white;
     border: none;
-    border-radius: 30px;
+    border-radius: 50px;
     margin-top: 20px;
     cursor: pointer;
     font-family: 'Google Sans', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(78, 168, 101, 0.3);
+}
+
+.public-retry-button:hover {
+    background-color: #3d8b50;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(78, 168, 101, 0.4);
+}
+
+.public-no-events {
+    font-size: 18px;
+    color: #333;
 }
 
 /* Responsive styles */

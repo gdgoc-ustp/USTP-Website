@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import NavigationBar from "../components/navBar";
 import Footer from "../components/footer";
 import './home.css';
@@ -22,9 +22,48 @@ export default function Home() {
     });
     const [latestNews, setLatestNews] = useState([]);
     const [newsLoading, setNewsLoading] = useState(true);
+    const [currentSlide, setCurrentSlide] = useState(0);
+
+    // Testimonial slides data
+    const testimonials = [
+        {
+            image: '/photos/3.jpg',
+            quote: '"Joining GDG USTP has been a game-changer for my development journey. The workshops and community support helped me land my first tech internship!"',
+            reviewer: '- Ken Tupino and friends (tinuod)',
+        },
+        {
+            image: '/photos/1.jpg',
+            quote: '"The hands-on workshops and mentorship I received here gave me the confidence to build my own projects and contribute to open source."',
+            reviewer: '- Maria Santos, Web Developer',
+        },
+        {
+            image: '/photos/2.jpg',
+            quote: '"GDG USTP connected me with amazing developers and opened doors to opportunities I never thought possible as a student."',
+            reviewer: '- James Rivera, Mobile Developer',
+        },
+    ];
 
     // Create a ref for scrolling to content
     const contentRef = useRef(null);
+
+    // Gallery slide navigation
+    const nextSlide = useCallback(() => {
+        setCurrentSlide((prev) => (prev + 1) % testimonials.length);
+    }, [testimonials.length]);
+
+    const prevSlide = useCallback(() => {
+        setCurrentSlide((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+    }, [testimonials.length]);
+
+    const goToSlide = (index) => {
+        setCurrentSlide(index);
+    };
+
+    // Auto-advance slides
+    useEffect(() => {
+        const interval = setInterval(nextSlide, 5000);
+        return () => clearInterval(interval);
+    }, [nextSlide]);
 
     // Check if mobile on initial load and window resize
     useEffect(() => {
@@ -251,8 +290,14 @@ export default function Home() {
                                         <h2 className="home-info-title">Fostering Innovation & Learning</h2>
                                         <p className="home-info-text">Google Developer Groups on Campus USTP is a vibrant community of passionate developers at the University of Science and Technology of Southern Philippines. We organize events, workshops, and learning opportunities to help students grow their skills and build innovative solutions using Google's developer technologies.</p>
                                         <Link to="/about-us" style={{ textDecoration: 'none' }}>
-                                            <button className="home-learn-more-button">
-                                                <span className="home-learn-more-text">Learn More</span>
+                                            <button className="wtsup-button" style={{
+                                                minWidth: 'auto',
+                                                height: '48px',
+                                                padding: '12px 28px',
+                                                marginTop: '4px',
+                                                fontSize: '15px'
+                                            }}>
+                                                Learn More
                                             </button>
                                         </Link>
                                     </div>
@@ -306,8 +351,14 @@ export default function Home() {
                                         <h2 className="home-info-title">Fostering Innovation & Learning</h2>
                                         <p className="home-info-text">Google Developer Groups on Campus USTP is a vibrant community of passionate developers at the University of Science and Technology of Southern Philippines. We organize events, workshops, and learning opportunities to help students grow their skills and build innovative solutions using Google's developer technologies.</p>
                                         <Link to="/about-us" style={{ textDecoration: 'none' }}>
-                                            <button className="home-learn-more-button">
-                                                <span className="home-learn-more-text">Learn More</span>
+                                            <button className="wtsup-button" style={{
+                                                minWidth: 'auto',
+                                                height: '48px',
+                                                padding: '12px 28px',
+                                                marginTop: '4px',
+                                                fontSize: '15px'
+                                            }}>
+                                                Learn More
                                             </button>
                                         </Link>
                                     </div>
@@ -362,20 +413,37 @@ export default function Home() {
                     <section className="gallery" data-aos="fade-up">
                         <h1>Inspiring Members</h1>
                         <div className="gallery-container">
-                            <div className="gallery-image" style={{
-                                backgroundImage: `url(/photos/3.jpg)`,
-                                backgroundPosition: 'center',
-                                backgroundSize: 'cover',
-                                backgroundRepeat: 'no-repeat',
-                                borderRadius: '12px',
-                                minHeight: '300px',
-                                width: '100%',
-                                marginBottom: '20px'
-                            }}></div>
-                            <div className="text-content">
-                                <div className="quote">"Joining GDG USTP has been a game-changer for my development journey. The workshops and community support helped me land my first tech internship!"</div>
-                                <div className="reviewer">- Ken Tupino and friends (tinuod)</div>
-                                <a href="/team" className="cta-link">Meet Our Amazing Team →</a>
+                            <button className="gallery-arrow prev" onClick={prevSlide} aria-label="Previous slide" />
+                            <div
+                                className="gallery-slider"
+                                style={{ transform: `translateX(-${currentSlide * 100}%)` }}
+                            >
+                                {testimonials.map((testimonial, index) => (
+                                    <div key={index} className="gallery-slide">
+                                        <div
+                                            className="gallery-image"
+                                            style={{
+                                                backgroundImage: `url(${testimonial.image})`,
+                                            }}
+                                        />
+                                        <div className="text-content">
+                                            <div className="quote">{testimonial.quote}</div>
+                                            <div className="reviewer">{testimonial.reviewer}</div>
+                                            <Link to="/team" className="cta-link">Meet Our Amazing Team →</Link>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                            <button className="gallery-arrow next" onClick={nextSlide} aria-label="Next slide" />
+                            <div className="gallery-nav">
+                                {testimonials.map((_, index) => (
+                                    <button
+                                        key={index}
+                                        className={`gallery-nav-dot ${index === currentSlide ? 'active' : ''}`}
+                                        onClick={() => goToSlide(index)}
+                                        aria-label={`Go to slide ${index + 1}`}
+                                    />
+                                ))}
                             </div>
                         </div>
                     </section>
@@ -467,12 +535,22 @@ export default function Home() {
                                 <p className="cta-text">Join our thriving community of developers to learn, share, and grow together. Connect with like-minded individuals and participate in events, workshops, and collaborative projects.</p>
                                 <div className="cta-buttons">
                                     <Link to="/contact" style={{ textDecoration: 'none' }}>
-                                        <button className="cta-button primary">
-                                            <span>Join Now</span>
+                                        <button className="wtsup-button" style={{
+                                            minWidth: '120px',
+                                            height: '48px',
+                                            padding: '12px 24px',
+                                            fontSize: '15px'
+                                        }}>
+                                            Join Now
                                         </button>
                                     </Link>
                                     <Link to="/events" style={{ textDecoration: 'none' }}>
-                                        <button className="cta-button secondary">
+                                        <button className="cta-button secondary" style={{
+                                            border: '2px solid #498CF6',
+                                            color: '#498CF6',
+                                            borderRadius: '100px',
+                                            background: 'transparent'
+                                        }}>
                                             <span>View Events</span>
                                         </button>
                                     </Link>
