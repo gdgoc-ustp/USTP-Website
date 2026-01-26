@@ -64,6 +64,11 @@ const HeroSection = ({ title, theme, previousPath }) => {
   const isSequentialLeft = navigatingLeft && skipAmount === 1;
   const isSkipLeft = navigatingLeft && skipAmount > 1;
 
+  // skip detection for right navigation
+  const skipAmountRight = navigatingRight ? currentIndex - previousIndex : 0;
+  const isSequentialRight = navigatingRight && skipAmountRight === 1;
+  const isSkipRight = navigatingRight && skipAmountRight > 1;
+
   // next page to the right (for circle-8 color on current page)
   const nextRightIndex = currentIndex + 1;
   const nextRightPath = INDEX_TO_PATH[nextRightIndex];
@@ -187,8 +192,8 @@ const HeroSection = ({ title, theme, previousPath }) => {
         {/* main (incoming) circle */}
         <motion.div
           className="circle"
-          initial={hasValidTransition ? (navigatingRight ? {
-            // when going RIGHT, incoming circle comes FROM circle-8 position (bottom right)
+          initial={hasValidTransition ? (navigatingRight ? (isSequentialRight ? {
+            // when going RIGHT (sequential), incoming circle comes FROM circle-8 position (bottom right)
             left: 'auto',
             right: circle8Position.right,
             top: circle8Position.top,
@@ -197,6 +202,14 @@ const HeroSection = ({ title, theme, previousPath }) => {
             x: '0%',
             y: '0%'
           } : {
+            // when going RIGHT (skip), incoming circle comes from the right side
+            left: '120%',
+            top: '50%',
+            width: circle8Size,
+            height: circle8Size,
+            x: '-50%',
+            y: '-50%'
+          }) : {
             // when going LEFT, incoming circle comes from the left side
             left: '-20%',
             top: '50%',

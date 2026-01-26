@@ -35,6 +35,8 @@ export default function Home() {
     });
 
     const [showPageContent, setShowPageContent] = useState(hasSeenHeroOnMount);
+    // State to force circle2 visibility after transition from News
+    const [forceVisible, setForceVisible] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
     const [isHeroVisible, setIsHeroVisible] = useState(hasSeenHeroOnMount);
     const [windowSize, setWindowSize] = useState({
@@ -155,6 +157,37 @@ export default function Home() {
     // Calculate target size for the circle based on window size to match CSS clamp(240px, 90vmin, 1100px)
     const vmin = Math.min(windowSize.width, windowSize.height);
     const targetSize = Math.min(Math.max(240, vmin * 0.9), 1100);
+    const circle8Size = vmin * 0.082;
+
+    const prevIndex = PAGE_ORDER[previousPath] ?? -1;
+    const currentIndex = PAGE_ORDER['/'];
+    const navigatingLeft = prevIndex > currentIndex;
+    const skipAmount = navigatingLeft ? prevIndex - currentIndex : 0;
+    const isSequentialLeft = hasSeenHeroOnMount && previousPath && navigatingLeft && skipAmount === 1;
+
+    // Responsive landing props for circle2 - converted to pixels for smooth spring animation
+    const getLandingCircle2Props = () => {
+        const w = windowSize.width;
+        const h = windowSize.height;
+        // Default desktop props
+        let props = { width: 300, height: 300, leftPct: 0.14, bottomPct: 0.10 };
+
+        if (w < 480) props = { width: 150, height: 150, leftPct: 0, bottomPct: 0.15 };
+        else if (w < 768) props = { width: 200, height: 200, leftPct: 0.02, bottomPct: 0.12 };
+        else if (w < 1200) props = { width: 250, height: 250, leftPct: 0.14, bottomPct: 0.10 };
+
+        // Convert to absolute pixels to avoid 'auto' vs '%' interpolation issues
+        const left = w * props.leftPct;
+        const top = h * (1 - props.bottomPct) - props.height;
+
+        return {
+            left,
+            top,
+            width: props.width,
+            height: props.height
+        };
+    };
+    const landingC2 = getLandingCircle2Props();
 
     // Animation for the blue circle (circle1)
     const circleSpring = useSpring({
@@ -182,6 +215,72 @@ export default function Home() {
         config: config.molasses,
         immediate: hasSeenHeroOnMount
     });
+
+    // Animation for the red circle (circle2 -> circle-8 position)
+    const bannerHeightHero = Math.min(Math.max(360, windowSize.height * 0.6), 720);
+    const circle2Spring = useSpring({
+        to: isHeroVisible ? {
+            left: windowSize.width * 0.98 - circle8Size,
+            top: bannerHeightHero * 0.86,
+            width: circle8Size,
+            height: circle8Size,
+            opacity: isSequentialLeft && !forceVisible ? 0 : 1 // Hide if duplicate (News -> Home) until delay
+        } : {
+            left: landingC2.left,
+            top: landingC2.top,
+            width: landingC2.width,
+            height: landingC2.height,
+            opacity: 1
+        },
+        config: config.molasses,
+        immediate: hasSeenHeroOnMount
+    });
+
+    // Add delay for circle-2 appearance if duplicate
+    useEffect(() => {
+        if (isSequentialLeft && isHeroVisible) {
+            const timeout = setTimeout(() => {
+                setForceVisible(true);
+            }, 800);
+            return () => clearTimeout(timeout);
+        } else {
+            setForceVisible(false);
+        }
+    }, [isSequentialLeft, isHeroVisible]);
+
+    // Better approach for delayed fade-in: separate spring or animated value?
+    // Since we are using useSpring declarative, we can use a delay prop in the config?
+    // But opacity depends on 'isSequentialLeft' which is constant.
+    // 'isSequentialLeft' is true for the whole duration.
+    // So "opacity: 0" remains 0!
+    // We need "opacity: 1" eventually.
+    // We can use the 'delay' prop in useSpring?
+    // "delay: isSequentialLeft ? 800 : 0".
+    // And "opacity: 1" always?
+    // If we set opacity: 1 and delay: 800.
+    // Then on mount, it waits 800s before applying opacity: 1?
+    // Initial state is applied immediately?
+    // If loading from News, we mount fresh.
+    // immediate: hasSeenHeroOnMount is true.
+    // So it jumps to "to" state.
+    // We need to override "immediate" for opacity?
+
+    // Let's stick thereto:
+    // If isSequentialLeft, we want opacity 0 -> 1 over time.
+    // This is handled by spring interpolation if we change values.
+    // But value is constant 1?
+    // Correct fix: use a ref or state for 'delayedOpacity'.
+
+    // Simplification: We will trust that removing the 'motion.div' logic we had needs to be replaced.
+    // My previous 'motion.div' logic had `initial: 0, animate: 1, delay: 0.8`.
+    // I can replicate that with useSpring using 'from' and 'to'?
+    // On mount (News->Home):
+    // from: { opacity: isSequentialLeft ? 0 : 1 }
+    // to: { opacity: 1 }
+    // delay: isSequentialLeft ? 800 : 0.
+
+    // But useSpring handles updates.
+    // Let's refine the spring definition in the code block.
 
     // Animation for fading out initial banner content
     const bannerContentSpring = useSpring({
@@ -232,7 +331,7 @@ export default function Home() {
 
                     {/* Initial Banner Circles - Wrapped to preserve positioning context */}
                     <animated.div style={{ ...bannerContentSpring, position: 'absolute', inset: 0, zIndex: 0 }}>
-                        <div className="circle circle2"></div>
+                        {/* circle2 removed, handled globally */}
                         <div className="circle circle3"></div>
                         <div className="circle circle4"></div>
 
@@ -245,71 +344,12 @@ export default function Home() {
                     {/* New Hero Circles (Fade in) - Placed before circle1 so circle1 is on top */}
                     <animated.div className="hero-circles" style={{ ...heroCirclesSpring, position: 'absolute', inset: 0, zIndex: 0 }}>
                         <div className="circle circle-1"></div>
-                        <div className="circle circle-2"></div>
+                        {/* circle-2 removed, handled globally as circle2 */}
                         <div className="circle circle-3"></div>
                         <div className="circle circle-4"></div>
                         <div className="circle circle-5"></div>
                         <div className="circle circle-6"></div>
-                        {/* circle-8: uses motion.div with inline styles (no CSS class positioning) */}
-                        {(() => {
-                            const prevIndex = PAGE_ORDER[previousPath] ?? -1;
-                            const currentIndex = PAGE_ORDER['/'];
-                            const navigatingLeft = prevIndex > currentIndex;
-                            const skipAmount = navigatingLeft ? prevIndex - currentIndex : 0;
-                            // Redefined locally for clarity inside this IIFE scope
-                            const isSequentialLeft = hasSeenHeroOnMount && previousPath && navigatingLeft && skipAmount === 1;
-                            const isSkipLeft = hasSeenHeroOnMount && previousPath && navigatingLeft && skipAmount > 1;
-                            const circle8Size = Math.min(windowSize.width, windowSize.height) * 0.082;
-
-                            return (
-                                <motion.div
-                                    key={isSkipLeft ? 'skip-circle8' : isSequentialLeft ? 'seq-circle8' : 'static-circle8'}
-                                    initial={isSkipLeft ? {
-                                        position: 'absolute',
-                                        left: `calc(98% - ${circle8Size}px)`,
-                                        top: '120%',
-                                        width: circle8Size,
-                                        height: circle8Size,
-                                        opacity: 0
-                                    } : isSequentialLeft ? {
-                                        position: 'absolute',
-                                        left: `calc(98% - ${circle8Size}px)`,
-                                        top: '86%',
-                                        width: circle8Size,
-                                        height: circle8Size,
-                                        opacity: 0 // Start hidden to avoid duplicate with incoming circle
-                                    } : {
-                                        position: 'absolute',
-                                        left: `calc(98% - ${circle8Size}px)`,
-                                        top: '86%',
-                                        width: circle8Size,
-                                        height: circle8Size,
-                                        opacity: 1
-                                    }}
-                                    animate={isSequentialLeft ? {
-                                        position: 'absolute',
-                                        left: `calc(98% - ${circle8Size}px)`,
-                                        top: '86%',
-                                        width: circle8Size,
-                                        height: circle8Size,
-                                        opacity: 1,
-                                        transition: { duration: 0.1, delay: 0.8 } // Fade in after transition
-                                    } : {
-                                        position: 'absolute',
-                                        left: `calc(98% - ${circle8Size}px)`,
-                                        top: '86%',
-                                        width: circle8Size,
-                                        height: circle8Size,
-                                        opacity: 1,
-                                        transition: { duration: 0.9, ease: [0.25, 0.46, 0.45, 0.94] }
-                                    }}
-                                    style={{
-                                        borderRadius: '50%',
-                                        background: 'linear-gradient(135deg, #EB483B 0%, #B41F19 100%)'
-                                    }}
-                                />
-                            );
-                        })()}
+                        {/* circle-8 removed, handled globally as circle2 (which becomes circle-8) */}
                     </animated.div>
 
                     {/* Old circle-8 exit animation (animates DOWN and fades out when navigating left to home) */}
@@ -397,7 +437,7 @@ export default function Home() {
                         );
                     })()}
 
-                    {/* Blue Circle - with incoming animation when coming from other pages */}
+
                     {hasSeenHeroOnMount && previousPath && PAGE_ORDER[previousPath] !== undefined ? (() => {
                         const prevIndex = PAGE_ORDER[previousPath] ?? -1;
                         const currentIndex = PAGE_ORDER['/'];
@@ -417,9 +457,9 @@ export default function Home() {
                                     y: '-50%'
                                 } : {
                                     // coming from circle-8 position
-                                    left: 'auto',
-                                    right: '2%',
+                                    left: `calc(98% - ${circle8Size}px)`,
                                     top: '86%',
+                                    right: 'auto',
                                     width: circle8Size,
                                     height: circle8Size,
                                     x: '0%',
@@ -438,6 +478,18 @@ export default function Home() {
                     })() : (
                         <animated.div className="circle circle1" style={circleSpring}></animated.div>
                     )}
+
+                    {/* Global Red Circle (circle2) - Transitions from banner to circle-8 position */}
+                    <animated.div
+                        className="circle circle2"
+                        style={{
+                            ...circle2Spring,
+                            borderRadius: '50%',
+                            position: 'absolute',
+                            zIndex: isHeroVisible ? 1 : 0,
+                            animation: isHeroVisible ? 'none' : 'float2 15s infinite ease-in-out'
+                        }}
+                    />
 
                     {/* Banner Content (Text/Button) */}
                     <animated.div style={{ ...bannerContentSpring, zIndex: 2, position: 'relative' }}>
