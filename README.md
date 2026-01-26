@@ -1,24 +1,6 @@
-# GDGOC USTP Website
+# GDG USTP Website
 
-This is the official **GDGOC USTP (Google Developer Groups on Campus - University of Science and Technology of Southern Philippines)** website. It showcases GDG events, accomplishments, announcements, and other essential information.
-
-## Features
-
-- **Dynamic Pages**: Showcases important sections like Home, News, Events, and About Us with up-to-date content.
-- **Responsive Design**: Ensures the site works well on a variety of screen sizes, including mobile devices, tablets, and desktops.
-- **Event Showcase**: A dedicated page to highlight upcoming and past GDG USTP events.
-- **Announcements Section**: Stay updated with the latest news and developments from the GDG USTP community.
-- **Team Information**: The "About Us" section provides details about the club, its mission, vision, and members.
-- **Public API**: RESTful API for accessing events and blog posts
-- **Admin Dashboard**: Secure admin interface for managing content
-- **Blog System**: Rich text editor for creating and managing blog posts
-
-## Pages
-
-- **Home**: The main landing page, with a summary of the latest news and featured events.
-- **News**: Displays the latest announcements, updates, and other relevant news from GDG USTP.
-- **Events**: Showcases the upcoming and past events with detailed descriptions.
-- **About Us**: Learn more about GDG USTP, including the club's mission, vision, and the team behind it.
+This is the official **GDG USTP (Google Developer Groups on Campus - University of Science and Technology of Southern Philippines)** website. It showcases GDG events, accomplishments, announcements, and other essential information.
 
 ## Table of Contents
 
@@ -41,7 +23,7 @@ cd USTP-Website
 npm install
 ```
 
-Rename `.env.sample` to `.env` and fill with the appropriate values. Please contact me for this.
+Rename `.env.sample` to `.env` and fill with the appropriate values.
 
 However, If you want to create your own supabase instance, copy and execute all .sql files on `/sql` directory to supabase sql editor to setup RLS and table policies.
 
@@ -51,7 +33,7 @@ However, If you want to create your own supabase instance, copy and execute all 
 Once the dependencies are installed, start the development server:
 
 ```bash
-npm run start
+bun start
 ```
 
 This will launch the website locally at `http://localhost:5000/` (or whatever port is set on `.env`). Any changes made to the source code will trigger a live reload of the site.
@@ -59,14 +41,14 @@ This will launch the website locally at `http://localhost:5000/` (or whatever po
 For production builds, run:
 
 ```bash
-npm run build
+bun build
 ```
 
 This creates a production-ready version of the website in the `build` folder.
 
 ## CMS Development
 
-CMS Admin interface is accessible in `/admin` endpoint. [HERE](https://GDG-ustp.vercel.app/admin/login)
+CMS Admin interface is accessible in `/admin` endpoint. [HERE](https://gdgustp.com/admin/login)
 
 The CMS provides a secure admin interface for managing content:
 - Event Management: Create, update, and delete events
@@ -78,27 +60,12 @@ The CMS provides a secure admin interface for managing content:
 
 The application requires the following environment variables to be set in the `.env` file:
 
-### TinyMCE Integration
-
-The application uses TinyMCE for rich text editing in the admin interface. The configuration is centralized in `src/lib/tinymceConfig.js`. 
-
-Important notes:
-- A valid TinyMCE API key is required (`REACT_APP_TINYMCE_API_KEY` in the `.env` file)
-- You can obtain a free API key from [TinyMCE Cloud](https://www.tiny.cloud/auth/signup/)
-- The implementation is compatible with TinyMCE 7.x
-- Several deprecated plugins from older versions have been removed
-
-If you encounter TinyMCE errors, verify that:
-1. You have a valid API key
-2. The environment variable is correctly loaded
-3. You're using supported plugins (check `src/lib/tinymceConfig.js`)
-
 ## Scripts
 
-- `npm start`: Starts the development server.
-- `npm run build`: Builds the production-ready version of the site.
-- `npm run test`: Runs the test suite (if available).
-- `npm run eject`: Ejects the project from `create-react-app` (use with caution).
+- `bun dev`: Starts the development server.
+- `bun build`: Builds the production-ready version of the site.
+- `bun test`: Runs the test suite (if available).
+- `bun eject`: Ejects the project from `create-react-app` (use with caution).
 
 ## File Structure
 

@@ -4,6 +4,7 @@
    - Reduce redundancy by combining similar style declarations
    - Implement proper CSS hierarchy for better specificity management 
    
+   This is a cursed css file, refactor at your own risk
    Watch for overlapping css entries - Kent */
 
 
@@ -90,8 +91,8 @@ html {
 /* Add specific styling for mobile view */
 @media screen and (max-width: 768px) {
     .banner {
-        height: auto;
-        min-height: 100vh;
+        height: auto !important;
+        min-height: 40vh !important;
         padding: 60px 0;
     }
 }
@@ -319,6 +320,8 @@ html {
         font-size: 22px;
     }
 
+    .circle,
+    .transition-circle,
     .circle1,
     .circle2,
     .circle3,
@@ -327,11 +330,12 @@ html {
     .gray-circle2,
     .gray-circle3,
     .hero-circles {
-        display: none;
+        display: none !important;
     }
 
     .mobile-hero-background {
         display: block;
+        z-index: 0;
     }
 }
 

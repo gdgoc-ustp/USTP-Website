@@ -3,7 +3,7 @@ import { Editor } from '@tinymce/tinymce-react';
 import { v4 as uuidv4 } from 'uuid';
 import { supabase } from '../../lib/supabase';
 import { TINYMCE_API_KEY, getEditorConfig } from '../../lib/tinymceConfig';
-import './Events.css';
+//import './Events.css';
 
 // Add this component for full-page event editing
 const EventEditor = ({ formData, setFormData, handleSubmit, handleCloseModal, handleInputChange, handleEditorChange, handleDragEnter, handleDragLeave, handleDragOver, handleDrop, fileInputRef, isDragging, uploadProgress, loading, selectedEvent, error }) => {
@@ -11,20 +11,20 @@ const EventEditor = ({ formData, setFormData, handleSubmit, handleCloseModal, ha
         <div className="full-page-editor">
             <div className="full-page-editor-header">
                 <h1>{selectedEvent ? 'Edit Event' : 'Add New Event'}</h1>
-                <button 
+                <button
                     onClick={handleCloseModal}
                     className="back-to-list-button"
                 >
                     ← Back to Events
                 </button>
             </div>
-            
+
             {error && (
                 <div className="events-error full-page-error">
                     {error}
                 </div>
             )}
-            
+
             <form onSubmit={handleSubmit} className="event-form full-page-form">
                 <div className="editor-content">
                     <div className="editor-main-content">
@@ -52,7 +52,7 @@ const EventEditor = ({ formData, setFormData, handleSubmit, handleCloseModal, ha
                                 className="full-width-input"
                             />
                         </div>
-                        
+
                         <div className="form-group description-group">
                             <label htmlFor="description">Description</label>
                             <Editor
@@ -66,11 +66,11 @@ const EventEditor = ({ formData, setFormData, handleSubmit, handleCloseModal, ha
                             />
                         </div>
                     </div>
-                    
+
                     <div className="editor-sidebar">
                         <div className="sidebar-section">
                             <h3>Event Details</h3>
-                            
+
                             <div className="form-group">
                                 <label htmlFor="event_date">Event Date</label>
                                 <input
@@ -97,7 +97,7 @@ const EventEditor = ({ formData, setFormData, handleSubmit, handleCloseModal, ha
                                     <option value="Cancelled">Cancelled</option>
                                 </select>
                             </div>
-                            
+
                             <div className="form-group">
                                 <label htmlFor="rsvp_link">RSVP Link (Optional)</label>
                                 <input
@@ -111,10 +111,10 @@ const EventEditor = ({ formData, setFormData, handleSubmit, handleCloseModal, ha
                                 />
                             </div>
                         </div>
-                        
+
                         <div className="sidebar-section">
                             <h3>Featured Image</h3>
-                            <div 
+                            <div
                                 className={`image-drop-zone ${isDragging ? 'dragging' : ''}`}
                                 onDragEnter={handleDragEnter}
                                 onDragLeave={handleDragLeave}
@@ -125,7 +125,7 @@ const EventEditor = ({ formData, setFormData, handleSubmit, handleCloseModal, ha
                                 {formData.image_url ? (
                                     <div className="image-preview">
                                         <img src={formData.image_url} alt="Preview" />
-                                        <button 
+                                        <button
                                             type="button"
                                             className="remove-image"
                                             onClick={(e) => {
@@ -141,7 +141,7 @@ const EventEditor = ({ formData, setFormData, handleSubmit, handleCloseModal, ha
                                         <p>Drag & drop an image here or click to select</p>
                                         {uploadProgress > 0 && (
                                             <div className="upload-progress">
-                                                <div 
+                                                <div
                                                     className="progress-bar"
                                                     style={{ width: `${uploadProgress}%` }}
                                                 />
@@ -153,22 +153,22 @@ const EventEditor = ({ formData, setFormData, handleSubmit, handleCloseModal, ha
                                     ref={fileInputRef}
                                     type="file"
                                     accept="image/*"
-                                    onChange={(e) => {/* Handle file select here */}}
+                                    onChange={(e) => {/* Handle file select here */ }}
                                     style={{ display: 'none' }}
                                 />
                             </div>
                         </div>
-                        
+
                         <div className="form-actions">
-                            <button 
+                            <button
                                 type="submit"
                                 className="save-button"
                                 disabled={loading}
                             >
                                 {loading ? 'Saving...' : (selectedEvent ? 'Update Event' : 'Create Event')}
                             </button>
-                            <button 
-                                type="button" 
+                            <button
+                                type="button"
                                 onClick={handleCloseModal}
                                 className="cancel-button"
                             >
@@ -200,7 +200,7 @@ export default function Events() {
     const [isDragging, setIsDragging] = useState(false);
     const [uploadProgress, setUploadProgress] = useState(0);
     const fileInputRef = useRef(null);
-    
+
     // New state for search, filtering, sorting and pagination
     const [searchTerm, setSearchTerm] = useState('');
     const [statusFilter, setStatusFilter] = useState('All');
@@ -208,7 +208,7 @@ export default function Events() {
     const [sortDirection, setSortDirection] = useState('desc');
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage] = useState(6);
-    
+
     // New state for edit mode (modal or full-page)
     const [editMode, setEditMode] = useState('modal'); // 'modal' or 'fullpage'
 
@@ -245,42 +245,42 @@ export default function Events() {
             if (statusFilter !== 'All' && event.status !== statusFilter) {
                 return false;
             }
-            
+
             // Apply search filter to heading and tagline
-            if (searchTerm && !event.heading.toLowerCase().includes(searchTerm.toLowerCase()) && 
+            if (searchTerm && !event.heading.toLowerCase().includes(searchTerm.toLowerCase()) &&
                 !event.tagline?.toLowerCase().includes(searchTerm.toLowerCase())) {
                 return false;
             }
-            
+
             return true;
         })
         .sort((a, b) => {
             // Apply sorting
             const aValue = a[sortField];
             const bValue = b[sortField];
-            
+
             if (sortDirection === 'asc') {
                 return aValue > bValue ? 1 : -1;
             } else {
                 return aValue < bValue ? 1 : -1;
             }
         });
-    
+
     // Calculate pagination
     const indexOfLastEvent = currentPage * itemsPerPage;
     const indexOfFirstEvent = indexOfLastEvent - itemsPerPage;
     const currentEvents = filteredEvents.slice(indexOfFirstEvent, indexOfLastEvent);
     const totalPages = Math.ceil(filteredEvents.length / itemsPerPage);
-    
+
     // Generate pagination controls
     const renderPagination = () => {
         if (totalPages <= 1) return null;
-        
+
         const pageNumbers = [];
         for (let i = 1; i <= totalPages; i++) {
             pageNumbers.push(
-                <button 
-                    key={i} 
+                <button
+                    key={i}
                     className={`pagination-button ${currentPage === i ? 'active' : ''}`}
                     onClick={() => setCurrentPage(i)}
                 >
@@ -288,10 +288,10 @@ export default function Events() {
                 </button>
             );
         }
-        
+
         return (
             <div className="pagination-controls">
-                <button 
+                <button
                     className="pagination-button"
                     onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
                     disabled={currentPage === 1}
@@ -299,7 +299,7 @@ export default function Events() {
                     &lt;
                 </button>
                 {pageNumbers}
-                <button 
+                <button
                     className="pagination-button"
                     onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
                     disabled={currentPage === totalPages}
@@ -309,7 +309,7 @@ export default function Events() {
             </div>
         );
     };
-    
+
     // Handle sort toggle
     const handleSort = (field) => {
         if (sortField === field) {
@@ -440,7 +440,7 @@ export default function Events() {
             if (formData.event_date) {
                 const eventDate = new Date(formData.event_date);
                 const today = new Date();
-                
+
                 // If event date is in the past and status is Upcoming, show warning
                 if (eventDate < today && formData.status === 'Upcoming') {
                     setError('Cannot set status to Upcoming for past dates. Status will be automatically set to Completed.');
@@ -480,7 +480,7 @@ export default function Events() {
             handleCloseModal();
         } catch (error) {
             console.error('Error saving event:', error);
-            
+
             // Handle specific validation errors from the database
             if (error.message?.includes('Cannot set status to Upcoming for past dates')) {
                 setError('Cannot set status to Upcoming for past dates. Please change the status to Completed or Cancelled, or set a future date.');
@@ -533,7 +533,7 @@ export default function Events() {
     // Format date for event_date input (YYYY-MM-DD)
     const formatDateForInput = (dateString) => {
         if (!dateString) return '';
-        
+
         try {
             const date = new Date(dateString);
             // Format as YYYY-MM-DDThh:mm (datetime-local format)
@@ -578,7 +578,7 @@ export default function Events() {
     const handleEditorImageUpload = async (blobInfo) => {
         try {
             const file = blobInfo.blob();
-            
+
             // Security checks
             const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
             const maxSize = 5 * 1024 * 1024; // 5MB
@@ -618,11 +618,11 @@ export default function Events() {
             throw error;
         }
     };
-    
+
     // Format date for display
     const formatDate = (dateString) => {
         if (!dateString) return 'N/A';
-        
+
         try {
             const date = new Date(dateString);
             return date.toLocaleDateString('en-US', {
@@ -654,7 +654,7 @@ export default function Events() {
     // If in full-page edit mode, render the editor component
     if (editMode === 'fullpage' && isModalOpen) {
         return (
-            <EventEditor 
+            <EventEditor
                 formData={formData}
                 setFormData={setFormData}
                 handleSubmit={handleSubmit}
@@ -679,7 +679,7 @@ export default function Events() {
         <div className="events-container">
             <div className="events-header">
                 <h1>Events Management</h1>
-                <button 
+                <button
                     className="event-add-button"
                     onClick={handleAddNew}
                 >
@@ -704,8 +704,8 @@ export default function Events() {
                     />
                 </div>
                 <div className="filter-controls">
-                    <select 
-                        value={statusFilter} 
+                    <select
+                        value={statusFilter}
                         onChange={(e) => setStatusFilter(e.target.value)}
                         className="status-filter"
                     >
@@ -728,20 +728,20 @@ export default function Events() {
                             <thead>
                                 <tr>
                                     <th className="image-column">Image</th>
-                                    <th 
+                                    <th
                                         className={`sortable-column ${sortField === 'heading' ? 'active' : ''}`}
                                         onClick={() => handleSort('heading')}
                                     >
                                         Title {sortField === 'heading' && (sortDirection === 'asc' ? '↑' : '↓')}
                                     </th>
-                                    <th 
+                                    <th
                                         className={`sortable-column ${sortField === 'event_date' ? 'active' : ''}`}
                                         onClick={() => handleSort('event_date')}
                                     >
                                         Date {sortField === 'event_date' && (sortDirection === 'asc' ? '↑' : '↓')}
                                     </th>
                                     <th>Status</th>
-                                    <th 
+                                    <th
                                         className={`sortable-column ${sortField === 'created_at' ? 'active' : ''}`}
                                         onClick={() => handleSort('created_at')}
                                     >
@@ -756,8 +756,8 @@ export default function Events() {
                                         <td className="image-cell">
                                             {event.image_url ? (
                                                 <div className="thumbnail-container">
-                                                    <img 
-                                                        src={event.image_url} 
+                                                    <img
+                                                        src={event.image_url}
                                                         alt={event.heading}
                                                         className="event-thumbnail"
                                                     />
@@ -798,7 +798,7 @@ export default function Events() {
                             </tbody>
                         </table>
                     </div>
-                    
+
                     {renderPagination()}
                 </>
             )}
@@ -810,16 +810,16 @@ export default function Events() {
                         <div className="modal-header">
                             <h2>{selectedEvent ? 'Edit Event' : 'Add New Event'}</h2>
                             <div className="modal-controls">
-                                <button 
-                                    type="button" 
+                                <button
+                                    type="button"
                                     className="fullscreen-button"
                                     onClick={switchToFullPage}
                                     title="Edit in full screen"
                                 >
                                     <span className="fullscreen-icon">⛶</span>
                                 </button>
-                                <button 
-                                    type="button" 
+                                <button
+                                    type="button"
                                     className="close-button"
                                     onClick={handleCloseModal}
                                     title="Close"
@@ -828,7 +828,7 @@ export default function Events() {
                                 </button>
                             </div>
                         </div>
-                        
+
                         <form onSubmit={handleSubmit} className="event-form">
                             <div className="form-group">
                                 <label htmlFor="heading">Heading</label>
@@ -852,7 +852,7 @@ export default function Events() {
                                     onChange={handleInputChange}
                                 />
                             </div>
-                            
+
                             <div className="form-group">
                                 <label htmlFor="event_date">Event Date</label>
                                 <input
@@ -877,7 +877,7 @@ export default function Events() {
 
                             <div className="form-group">
                                 <label>Thumbnail Image</label>
-                                <div 
+                                <div
                                     className={`image-drop-zone ${isDragging ? 'dragging' : ''}`}
                                     onDragEnter={handleDragEnter}
                                     onDragLeave={handleDragLeave}
@@ -888,7 +888,7 @@ export default function Events() {
                                     {formData.image_url ? (
                                         <div className="image-preview">
                                             <img src={formData.image_url} alt="Preview" />
-                                            <button 
+                                            <button
                                                 type="button"
                                                 className="remove-image"
                                                 onClick={(e) => {
@@ -904,7 +904,7 @@ export default function Events() {
                                             <p>Drag & drop an image here or click to select</p>
                                             {uploadProgress > 0 && (
                                                 <div className="upload-progress">
-                                                    <div 
+                                                    <div
                                                         className="progress-bar"
                                                         style={{ width: `${uploadProgress}%` }}
                                                     />
@@ -950,14 +950,14 @@ export default function Events() {
                             </div>
 
                             <div className="modal-actions">
-                                <button 
-                                    type="button" 
+                                <button
+                                    type="button"
                                     onClick={handleCloseModal}
                                     className="modal-cancel-button"
                                 >
                                     Cancel
                                 </button>
-                                <button 
+                                <button
                                     type="submit"
                                     className="modal-save-button"
                                     disabled={loading}
@@ -966,7 +966,7 @@ export default function Events() {
                                 </button>
                             </div>
                         </form>
-                        
+
                         {/* Resize handle */}
                         <div className="resize-handle"></div>
                     </div>
