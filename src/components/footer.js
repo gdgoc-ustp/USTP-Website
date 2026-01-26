@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import './footer.css';
 import Logo from '../assets/logo.svg';
-import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn, FaYoutube } from 'react-icons/fa';
+import { FaFacebookF, FaInstagram, FaLinkedinIn, FaGithub, FaDiscord } from 'react-icons/fa';
 
 export default function Footer() {
   const location = useLocation();
@@ -67,11 +67,11 @@ export default function Footer() {
           </div>
 
           <div className="footer-socials">
-            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><FaFacebookF /></a>
-            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter"><FaTwitter /></a>
-            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><FaInstagram /></a>
-            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><FaLinkedinIn /></a>
-            <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><FaYoutube /></a>
+            <a href="https://www.facebook.com/dscustp" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><FaFacebookF /></a>
+            <a href="https://github.com/USTP-GDSC" target="_blank" rel="noopener noreferrer" aria-label="Github"><FaGithub /></a>
+            <a href="https://discord.gg/CgTHNhpW" target="_blank" rel="noopener noreferrer" aria-label="Discord"><FaDiscord /></a>
+            <a href="https://www.instagram.com/gdgocustp/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><FaInstagram /></a>
+            <a href="https://www.linkedin.com/company/gdgocustp/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><FaLinkedinIn /></a>
           </div>
 
           <div className="footer-legal">
