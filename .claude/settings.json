@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"/home/xo/.nvm/versions/node/v24.12.0/lib/node_modules/rins_hooks/hooks/auto-commit/index.js\"",
+            "timeout": 30
+          }
+        ]
+      }
+    ]
+  }
+}
