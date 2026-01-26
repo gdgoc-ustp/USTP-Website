@@ -29,12 +29,11 @@
 }
 
 #overhaul-v2-root .roadmap-container {
-    perspective: 2000px !important;
-    transform-style: preserve-3d !important;
+    overflow: hidden !important;
 }
 
 #overhaul-v2-root .roadmap-item-card {
-    transform-style: preserve-3d !important;
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
 /* target specific headings and paragraphs if they look off in prod */
