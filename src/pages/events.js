@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 import NavigationBar from "../components/navBar";
 import Footer from "../components/footer";
 import HeroSection from "../components/HeroSection";
-import './events.css';
+//import './events.css';
 import Sample from '../assets/sample.png';
 import AOS from 'aos';
 import 'aos/dist/aos.css';

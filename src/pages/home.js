@@ -95,8 +95,9 @@ export default function Home() {
             setIsMobile(mobile);
 
             // Show content immediately on mobile
-            if (mobile && !showPageContent) {
-                setShowPageContent(true);
+            if (mobile) {
+                if (!showPageContent) setShowPageContent(true);
+                if (!isHeroVisible) setIsHeroVisible(true);
             }
 
             setWindowSize({
@@ -329,16 +330,16 @@ export default function Home() {
                 {/* Hero Section (always visible) */}
                 <header className="banner" style={{ height: isHeroVisible ? 'clamp(360px, 60svh, 720px)' : '100vh', transition: 'height 0.8s ease-in-out' }}>
 
+                    {/* Mobile Mesh Background (Shared with HeroSection) - Moved outside animated wrapper to persist */}
+                    <div className="mobile-hero-background">
+                        <div className="mesh-blob blob-blue"></div>
+                        <div className="mesh-blob blob-red"></div>
+                        <div className="mesh-blob blob-yellow"></div>
+                        <div className="mesh-blob blob-green"></div>
+                    </div>
+
                     {/* Initial Banner Circles - Wrapped to preserve positioning context */}
                     <animated.div style={{ ...bannerContentSpring, position: 'absolute', inset: 0, zIndex: 0 }}>
-                        {/* Mobile Mesh Background (Shared with HeroSection) */}
-                        <div className="mobile-hero-background">
-                            <div className="mesh-blob blob-blue"></div>
-                            <div className="mesh-blob blob-red"></div>
-                            <div className="mesh-blob blob-yellow"></div>
-                            <div className="mesh-blob blob-green"></div>
-                        </div>
-
                         {/* circle2 removed, handled globally */}
                         <div className="circle circle3"></div>
                         <div className="circle circle4"></div>
@@ -378,6 +379,7 @@ export default function Home() {
 
                         return (
                             <motion.div
+                                className="transition-circle"
                                 initial={{ left: `calc(98% - ${circle8Size}px)`, top: '86%', width: circle8Size, height: circle8Size, opacity: 1 }}
                                 animate={{ left: `calc(98% - ${circle8Size}px)`, top: '120%', width: circle8Size, height: circle8Size, opacity: 0 }}
                                 transition={{ duration: 0.9, ease: [0.25, 0.46, 0.45, 0.94] }}
@@ -405,6 +407,7 @@ export default function Home() {
 
                         return (
                             <motion.div
+                                className="transition-circle"
                                 initial={{ left: '50%', top: '50%', width: targetSize, height: targetSize, x: '-50%', y: '-50%', opacity: 1 }}
                                 animate={isSequentialLeft ? {
                                     // sequential left: exiting to circle-8 position (bottom right) - stays visible
@@ -499,25 +502,25 @@ export default function Home() {
                         }}
                     />
 
-                    {/* Banner Content (Text/Button) */}
-                    <animated.div style={{ ...bannerContentSpring, zIndex: 2, position: 'relative' }}>
-                        <div className="banner-content">
-                            <h1 className="banner-title">
-                                Building Good Things, <span className="color-text">Together!</span>
-                            </h1>
-                            <p>
-                                Google Developer Groups on Campus - USTP
-                            </p>
-                            {!isMobile && (
+                    {/* Banner Content (Text/Button) - Hidden on Mobile */}
+                    {!isMobile && (
+                        <animated.div style={{ ...bannerContentSpring, zIndex: 2, position: 'relative' }}>
+                            <div className="banner-content">
+                                <h1 className="banner-title">
+                                    Building Good Things, <span className="color-text">Together!</span>
+                                </h1>
+                                <p>
+                                    Google Developer Groups on Campus - USTP
+                                </p>
                                 <button
                                     className="banner-button"
                                     onClick={handleLearnMore}
                                 >
                                     Learn More
                                 </button>
-                            )}
-                        </div>
-                    </animated.div>
+                            </div>
+                        </animated.div>
+                    )}
 
                     <animated.div style={{ ...heroTitleSpring, position: 'absolute', zIndex: 10 }}>
                         <h1 style={{ color: 'white', fontSize: '5rem', fontWeight: '700', margin: 0 }}>Home</h1>
