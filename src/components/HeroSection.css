@@ -115,7 +115,12 @@
   .hero-section h1 {
     font-size: 4.5rem;
   }
-  .circle-1, .circle-2, .circle-3, .circle-4, .circle-8 {
+
+  .circle-1,
+  .circle-2,
+  .circle-3,
+  .circle-4,
+  .circle-8 {
     display: none;
   }
 }
@@ -130,16 +135,26 @@
   .hero-section h1 {
     font-size: 3.5rem;
   }
-  .circle-5, .circle-6 {
+
+  .circle-5,
+  .circle-6 {
     display: none;
   }
 }
 
 @media (max-width: 768px) {
-  .hero-section h1 {
-    font-size: 4rem;
+  .hero-section {
+    min-height: 50vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
-  .circle-5, .circle-6 {
+
+  .hero-section h1 {
+    font-size: 3rem;
+  }
+
+  .hero-circles {
     display: none;
   }
 }
@@ -148,7 +163,9 @@
   .hero-section h1 {
     font-size: 2.5rem;
   }
-  .circle-1, .circle-2, .circle-3, .circle-4, .circle-8 {
+
+  /* Ensure circles are definitely hidden */
+  .hero-circles {
     display: none;
   }
 }
