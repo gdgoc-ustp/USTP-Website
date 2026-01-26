@@ -10,14 +10,14 @@
 
 /* Global Zoom Fix - 80% equivalent */
 html {
-    font-size: 14px; /* Reduces 1rem from 16px to 14px, effectively scaling down */
+    font-size: 14px;
+    /* Reduces 1rem from 16px to 14px, effectively scaling down */
     scroll-behavior: smooth;
 }
 
 * {
     margin: 0px;
     padding: 0px;
-    font-family: 'Google-Sans', 'Open sans', sans-serif, Arial;
 }
 
 body {
@@ -28,7 +28,8 @@ body {
 
 /* Global Zoom Fix - 80% equivalent */
 html {
-    font-size: 14px; /* Reduces 1rem from 16px to 14px, effectively scaling down */
+    font-size: 14px;
+    /* Reduces 1rem from 16px to 14px, effectively scaling down */
     scroll-behavior: smooth;
 }
 
@@ -38,6 +39,7 @@ html {
     src: url('../assets/fonts/GoogleSans-Regular.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
+    font-display: swap;
 }
 
 @font-face {
@@ -45,6 +47,7 @@ html {
     src: url('../assets/fonts/GoogleSans-Bold.ttf') format('truetype');
     font-weight: bold;
     font-style: normal;
+    font-display: swap;
 }
 
 @font-face {
@@ -52,6 +55,7 @@ html {
     src: url('../assets/fonts/GoogleSans-BoldItalic.ttf') format('truetype');
     font-weight: bold;
     font-style: italic;
+    font-display: swap;
 }
 
 @font-face {
@@ -59,6 +63,7 @@ html {
     src: url('../assets/fonts/GoogleSans-Medium.ttf') format('truetype');
     font-weight: 500;
     font-style: normal;
+    font-display: swap;
 }
 
 @font-face {
@@ -66,6 +71,7 @@ html {
     src: url('../assets/fonts/GoogleSans-MediumItalic.ttf') format('truetype');
     font-weight: 500;
     font-style: italic;
+    font-display: swap;
 }
 
 /* Style for Banner */
@@ -1368,183 +1374,183 @@ html {
 
 /* Inspiring Members Section */
 .gallery {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #ffffff;
-  margin: 0;
-  padding: 2rem 0;
-  flex-direction: column;
-  min-height: 60vh;
-  height: auto;
-  margin-top: -70px;
-  width: 90%;
-  max-width: 90%;
-  margin-left: auto;
-  margin-right: auto;
-  overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff;
+    margin: 0;
+    padding: 2rem 0;
+    flex-direction: column;
+    min-height: 60vh;
+    height: auto;
+    margin-top: -70px;
+    width: 90%;
+    max-width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    overflow: hidden;
 }
 
 .gallery h1 {
-  font-size: clamp(28px, 8vh, 64px);
-  font-weight: 700;
-  margin-bottom: 1.5rem;
+    font-size: clamp(28px, 8vh, 64px);
+    font-weight: 700;
+    margin-bottom: 1.5rem;
 }
 
 /* Sliding Gallery Container */
 .gallery-container {
-  display: flex;
-  align-items: center;
-  background: linear-gradient(135deg, #f5a623 0%, #d07b3a 50%, #c06830 100%);
-  border-radius: 30px;
-  color: white;
-  padding: 0;
-  width: 100%;
-  max-width: 100%;
-  height: auto;
-  min-height: 400px;
-  flex-direction: row;
-  box-sizing: border-box;
-  position: relative;
-  overflow: hidden;
+    display: flex;
+    align-items: center;
+    background: linear-gradient(135deg, #f5a623 0%, #d07b3a 50%, #c06830 100%);
+    border-radius: 30px;
+    color: white;
+    padding: 0;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    min-height: 400px;
+    flex-direction: row;
+    box-sizing: border-box;
+    position: relative;
+    overflow: hidden;
 }
 
 /* Sliding wrapper for testimonials */
 .gallery-slider {
-  display: flex;
-  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-  width: 100%;
+    display: flex;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    width: 100%;
 }
 
 .gallery-slide {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  min-width: 100%;
-  padding: clamp(2rem, 5vh, 4rem) clamp(2rem, 5vw, 4rem);
-  gap: clamp(2rem, 4vw, 4rem);
-  box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    min-width: 100%;
+    padding: clamp(2rem, 5vh, 4rem) clamp(2rem, 5vw, 4rem);
+    gap: clamp(2rem, 4vw, 4rem);
+    box-sizing: border-box;
 }
 
 .gallery-image {
-  flex: 0 0 40%;
-  min-height: 280px;
-  border-radius: 20px;
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
+    flex: 0 0 40%;
+    min-height: 280px;
+    border-radius: 20px;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 .text-content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .quote {
-  font-size: clamp(20px, 5vh, 42px);
-  font-weight: bold;
-  line-height: 1.4;
+    font-size: clamp(20px, 5vh, 42px);
+    font-weight: bold;
+    line-height: 1.4;
 }
 
 .reviewer {
-  font-size: clamp(16px, 3.5vh, 24px);
-  margin-top: 1rem;
-  opacity: 0.9;
+    font-size: clamp(16px, 3.5vh, 24px);
+    margin-top: 1rem;
+    opacity: 0.9;
 }
 
 .cta-link {
-  font-size: clamp(14px, 2.6vh, 20px);
-  color: white;
-  margin-top: 1.5rem;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-weight: 600;
-  transition: opacity 0.3s ease;
+    font-size: clamp(14px, 2.6vh, 20px);
+    color: white;
+    margin-top: 1.5rem;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    transition: opacity 0.3s ease;
 }
 
 .cta-link:hover {
-  opacity: 0.8;
+    opacity: 0.8;
 }
 
 /* Gallery Navigation */
 .gallery-nav {
-  position: absolute;
-  bottom: 24px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  gap: 12px;
-  z-index: 10;
+    position: absolute;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 12px;
+    z-index: 10;
 }
 
 .gallery-nav-dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.4);
-  border: none;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  padding: 0;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.4);
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 0;
 }
 
 .gallery-nav-dot.active,
 .gallery-nav-dot:hover {
-  background: white;
-  transform: scale(1.2);
+    background: white;
+    transform: scale(1.2);
 }
 
 /* Gallery Arrow Navigation */
 .gallery-arrow {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.2);
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-  z-index: 10;
-  backdrop-filter: blur(4px);
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    z-index: 10;
+    backdrop-filter: blur(4px);
 }
 
 .gallery-arrow:hover {
-  background: rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.4);
 }
 
 .gallery-arrow.prev {
-  left: 20px;
+    left: 20px;
 }
 
 .gallery-arrow.next {
-  right: 20px;
+    right: 20px;
 }
 
 .gallery-arrow::before {
-  content: '';
-  width: 10px;
-  height: 10px;
-  border-top: 2px solid white;
-  border-right: 2px solid white;
+    content: '';
+    width: 10px;
+    height: 10px;
+    border-top: 2px solid white;
+    border-right: 2px solid white;
 }
 
 .gallery-arrow.prev::before {
-  transform: rotate(-135deg);
-  margin-left: 4px;
+    transform: rotate(-135deg);
+    margin-left: 4px;
 }
 
 .gallery-arrow.next::before {
-  transform: rotate(45deg);
-  margin-right: 4px;
+    transform: rotate(45deg);
+    margin-right: 4px;
 }
 
 /* Define the animations for the floating circles */

@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme {
-  --font-google-sans: "Google-Sans", "Open Sans", sans-serif;
+  --font-google-sans: "Google-Sans", "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
 /* Global Custom Scrollbar - Google-like aesthetic */
@@ -9,6 +9,8 @@ html,
 body {
   scrollbar-width: thin;
   scrollbar-color: rgba(0, 0, 0, 0.3) transparent;
+  -webkit-text-size-adjust: 100%;
+  /* Prevent font scaling in landscape on iOS */
 }
 
 /* Webkit browsers (Chrome, Safari, Edge) */
@@ -63,9 +65,7 @@ body:hover::-webkit-scrollbar,
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: var(--font-google-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
