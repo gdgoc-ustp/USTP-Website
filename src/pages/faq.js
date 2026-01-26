@@ -11,7 +11,7 @@ export default function FaQs() {
   };
 
   return (
-    <>
+    <div id="overhaul-v2-root">
       <title>FAQs</title>
       <NavigationBar />
 
@@ -35,9 +35,8 @@ export default function FaQs() {
                 >
                   <span>{faq.question}</span>
                   <span
-                    className={`transform transition-transform duration-300 text-gray-500 ${
-                      open ? "rotate-180" : "rotate-0"
-                    }`}
+                    className={`transform transition-transform duration-300 text-gray-500 ${open ? "rotate-180" : "rotate-0"
+                      }`}
                   >
                     ⌄
                   </span>
@@ -60,6 +59,6 @@ export default function FaQs() {
           })}
         </div>
       </main>
-    </>
+    </div>
   );
 }

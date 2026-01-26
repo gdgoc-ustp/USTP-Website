@@ -1,8 +1,54 @@
-/* TODO: Refactor stylesheet for better organization and maintainability
-   - Current approach uses individual entries for each element
-   - Consider grouping related styles and using consistent patterns
-   - Reduce redundancy by combining similar style declarations
-   - Implement proper CSS hierarchy for better specificity management - Kent */
+/* high specificity namespace */
+#overhaul-v2-root {
+    font-size: 16px !important;
+    font-family: 'Google-Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif !important;
+    line-height: 1.6 !important;
+}
+
+#overhaul-v2-root main {
+    width: 100% !important;
+    max-width: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+#overhaul-v2-root .container {
+    max-width: none !important;
+    width: 100% !important;
+    padding-left: 2rem !important;
+    padding-right: 2rem !important;
+}
+
+#overhaul-v2-root section {
+    padding-left: 2rem !important;
+    padding-right: 2rem !important;
+    max-width: none !important;
+    width: 100% !important;
+}
+
+/* killing the squeezed effect */
+#overhaul-v2-root .max-w-7xl,
+#overhaul-v2-root .max-w-6xl,
+#overhaul-v2-root .max-w-5xl,
+#overhaul-v2-root .max-w-4xl {
+    max-width: 85rem !important;
+    /* give it room while maintaining some structure */
+    margin: 0 auto !important;
+}
+
+@media (max-width: 768px) {
+
+    #overhaul-v2-root .max-w-7xl,
+    #overhaul-v2-root .max-w-6xl,
+    #overhaul-v2-root .max-w-5xl,
+    #overhaul-v2-root .max-w-4xl {
+        max-width: 100% !important;
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+    }
+}
+
+/* Original Styles */
 * {
     margin: 0;
     padding: 0;

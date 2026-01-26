@@ -52,7 +52,7 @@ export default function Footer() {
             <div className="footer-nav-column">
               <h4 className="footer-nav-title">Connect</h4>
               <ul className="footer-nav-list">
-                <li><a href="mailto:gdg.ustp@gmail.com" className="footer-nav-link">Contact Us</a></li>
+                <li><a href="mailto:contact@gdgustp.com" className="footer-nav-link">Contact Us</a></li>
                 <li><a href="https://discord.gg/CgTHNhpW" target="_blank" rel="noopener noreferrer" className="footer-nav-link">Discord Server</a></li>
               </ul>
             </div>

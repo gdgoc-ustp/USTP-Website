@@ -9,6 +9,32 @@
 
 
 
+/* high specificity namespace */
+#overhaul-v2-root {
+    /* typography: explicitly set fonts to kill hidden resets */
+    font-size: 16px !important;
+    font-family: 'Google-Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif !important;
+    line-height: 1.6 !important;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* high specificity overrides for layout squeezing */
+#overhaul-v2-root main {
+    width: 100% !important;
+    max-width: none !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    margin: 0 !important;
+}
+
+#overhaul-v2-root .home-hero-title {
+    font-size: 5rem !important;
+    font-weight: 700 !important;
+    color: white !important;
+    margin: 0 !important;
+}
+
 /* Global Zoom Fix - 80% equivalent */
 html {
     font-size: 14px;
@@ -261,7 +287,7 @@ html {
         font-size: 22px;
     }
 
-    .home-hero-title {
+    #overhaul-v2-root .home-hero-title {
         font-family: var(--font-google-sans);
         color: white;
         font-size: 5rem;
@@ -270,14 +296,14 @@ html {
     }
 
     @media screen and (max-width: 768px) {
-        .home-hero-title {
-            font-size: 3rem;
+        #overhaul-v2-root .home-hero-title {
+            font-size: 3rem !important;
         }
     }
 
     @media screen and (max-width: 480px) {
-        .home-hero-title {
-            font-size: 2.5rem;
+        #overhaul-v2-root .home-hero-title {
+            font-size: 2.5rem !important;
         }
     }
 

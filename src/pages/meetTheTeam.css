@@ -1,495 +1,57 @@
-/* Meet the Team Page Styles */
-
-.meet-team-page {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 50px 0;
-    width: 100%;
-    background: #FFFFFF;
+#overhaul-v2-root {
+    /* typography: explicitly set fonts to kill hidden resets */
+    font-size: 16px !important;
+    font-family: 'Google-Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif !important;
+    line-height: 1.6 !important;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
-.meet-team-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 75px 100px;
-    gap: 40px;
-    width: 100%;
-    max-width: 1720px;
-    background: rgba(73, 140, 246, 0.1);
-    border-radius: 90px;
+/* high specificity overrides for layout squeezing */
+#overhaul-v2-root main {
+    width: 100% !important;
+    max-width: none !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    margin: 0 !important;
 }
 
-/* Filter Controls */
-.team-filters {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-    width: 100%;
-    max-width: 1520px;
-    margin-bottom: 20px;
+#overhaul-v2-root .max-w-7xl {
+    max-width: 85rem !important;
+    margin: 0 auto !important;
 }
 
-.filter-search {
-    width: 100%;
+#overhaul-v2-root .team-card {
+    background: #ffffff !important;
+    border-radius: 2.5rem !important;
+    overflow: hidden !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+    transition: all 0.3s ease !important;
 }
 
-.search-input {
-    width: 100%;
-    padding: 16px 24px;
-    font-family: 'Google Sans', sans-serif;
-    font-size: 18px;
-    border: 2px solid #E0E0E0;
-    border-radius: 50px;
-    outline: none;
-    transition: all 0.3s ease;
+#overhaul-v2-root .team-card:hover {
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;
+    transform: translateY(-5px) !important;
 }
 
-.search-input:focus {
-    outline: none;
-    border-color: #498CF6;
-    box-shadow: 0 0 0 3px rgba(73, 140, 246, 0.1);
+#overhaul-v2-root h2,
+#overhaul-v2-root h3 {
+    font-weight: 700 !important;
 }
 
-.search-input::placeholder {
-    color: #999;
+/* hide scrollbar but keep functionality */
+#overhaul-v2-root .hide-scrollbar::-webkit-scrollbar {
+    display: none;
 }
 
-.filter-buttons {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    justify-content: center;
+#overhaul-v2-root .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }
 
-.filter-btn {
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    padding: 16px 32px;
-    gap: 10px;
-    height: 55px;
-    border: 2px solid #498CF6;
-    border-radius: 100px;
-    background-color: transparent;
-    font-family: 'Google Sans', sans-serif;
-    font-style: normal;
-    font-weight: 700;
-    font-size: 18px;
-    line-height: 25px;
-    text-align: center;
-    color: #498CF6;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    white-space: nowrap;
-}
-
-.filter-btn:hover {
-    background-color: rgba(73, 140, 246, 0.1);
-}
-
-.filter-btn:focus-visible {
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(73, 140, 246, 0.2);
-}
-
-.filter-btn.active {
-    background-color: #498CF6;
-    color: #FFFFFF;
-    font-weight: 700;
-}
-
-/* Specific active button colors */
-.filter-btn.active.all-teams-btn-color {
-    background-color: #ffffff;
-    color: #333;
-    border: 2px solid #000000;
-}
-
-.filter-btn.active.executives-btn-color {
-    background-color: #ffffff;
-    color: #333;
-}
-
-.filter-btn.active.operations-btn-color {
-    background-color: #498CF6;
-    color: #ffffff;
-}
-
-.filter-btn.active.technology-btn-color {
-    background-color: #EB483B;
-    color: #ffffff;
-}
-
-.filter-btn.active.communications-btn-color {
-    background-color: #FBC10E;
-    color: #ffffff;
-}
-
-.filter-btn.active.community-development-btn-color {
-    background-color: #4EA865;
-    color: #ffffff;
-}
-
-/* Team Group Section */
-.team-group-section {
-    width: 100%;
-    max-width: 1520px;
-    margin-bottom: 60px;
-}
-
-.team-group-title {
-    font-family: 'Google Sans', sans-serif;
-    font-weight: 700;
-    font-size: 48px;
-    line-height: 60px;
-    text-align: center;
-    color: #000000;
-    margin-bottom: 40px;
-}
-
-/* Team Grid */
-.team-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
-    gap: 30px;
-    width: 100%;
-    padding: 20px 20px;
-}
-
-/* Team Card - Consistent with AboutUs */
-.team-card {
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding:0;
-    width: 100%;
-    height: 460px;
-    border: 2px solid;
-    border-radius: 40px;
-    overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.team-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 24px rgba(73, 140, 246, 0.2);
-}
-
-.team-card-image {
-    width: 100%;
-    height: 320px;
-    background-position: center top;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-color: #EDD0B0;
-}
-
-.team-card-info {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 20px 25px;
-    gap: 5px;
-    width: 100%;
-    height: 140px;
-}
-
-.team-card-name {
-    width: 100%;
-    font-family: 'Google Sans', sans-serif;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 28px;
-    line-height: 120%;
-    color: #FFFFFF;
-    margin: 0;
-}
-
-.team-card-role {
-    width: 100%;
-    font-family:'Google-Sans', 'Open Sans', sans-serif, Arial;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 18px;
-    line-height: 140%;
-    color: #FFFFFF;
-    margin: 0;
-}
-
-/* No Results */
-.no-results {
-    width: 100%;
-    padding: 60px 20px;
-    text-align: center;
-}
-
-.no-results p {
-    font-family: 'Google Sans', sans-serif;
-    font-size: 24px;
-    color: #666;
-}
-
-/* Responsive Styles */
-@media (max-width: 1600px) {
-    .meet-team-container {
-        padding: 50px;
-        max-width: 90%;
-    }
-    
-    .team-grid {
-        grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-    }
-    
-    .team-card {
-        height: 420px;
-    }
-    
-    .team-card-image {
-        height: 300px;
-        background-position: center top;
-    }
-    
-    .team-card-image {
-        height: 300px;
-        background-position: center top;
-    }
-    
-    .team-card-name {
-        font-size: 26px;
-    }
-    
-    .team-card-role {
-        font-size: 16px;
-    }
-}
-
-@media (max-width: 1024px) {
-    .meet-team-container {
-        padding: 40px 30px;
-        border-radius: 60px;
-    }
-    
-    .team-group-title {
-        font-size: 42px;
-        line-height: 52px;
-        margin-bottom: 30px;
-    }
-    
-    .team-grid {
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-        gap: 25px;
-    }
-    
-    .team-card {
-        height: 400px;
-    }
-    
-    .team-card-image {
-        height: 280px;
-        background-position: center top;
-    }
-    
-    .team-card-image {
-        height: 280px;
-        background-position: center top;
-    }
-    
-    .team-card-info {
-        height: 120px;
-        padding: 20px 25px;
-    }
-    
-    .team-card-name {
-        font-size: 24px;
-    }
-    
-    .team-card-role {
-        font-size: 16px;
-    }
-    
-    .filter-btn {
-        font-size: 15px;
-        padding: 10px 24px;
-    }
-}
-
-@media (max-width: 768px) {
-    .meet-team-page {
-        padding: 30px 15px;
-    }
-    
-    .meet-team-container {
-        padding: 30px 20px;
-        border-radius: 40px;
-        gap: 30px;
-    }
-    
-    .team-filters {
-        gap: 20px;
-    }
-    
-    .search-input {
-        font-size: 16px;
-        padding: 14px 20px;
-    }
-    
-    .filter-buttons {
-        gap: 10px;
-    }
-    
-    .filter-btn {
-        padding: 15px 30px;
-        height: 50px;
-        font-size: 16px;
-    }
-    
-    .team-group-title {
-        font-size: 36px;
-        line-height: 46px;
-        margin-bottom: 25px;
-    }
-    
-    .team-grid {
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-        gap: 25px;
-    }
-    
-    .team-card {
-        height: 360px;
-        border-radius: 30px;
-    }
-    
-    .team-card-image {
-        height: 240px;
-        background-position: center top;
-    }
-    
-    .team-card-info {
-        height: 120px;
-        padding: 15px 20px;
-    }
-    
-    .team-card-name {
-        font-size: 22px;
-    }
-    
-    .team-card-role {
-        font-size: 14px;
-    }
-    
-    .no-results p {
-        font-size: 20px;
-    }
-}
-
-@media (max-width: 480px) {
-    .meet-team-page {
-        padding: 20px 10px;
-    }
-    
-    .meet-team-container {
-        padding: 25px 15px;
-        border-radius: 30px;
-        gap: 25px;
-    }
-    
-    .search-input {
-        font-size: 15px;
-        padding: 12px 18px;
-    }
-    
-    .filter-buttons {
-        gap: 8px;
-    }
-    
-    .filter-btn {
-        padding: 12px 24px;
-        height: 45px;
-        font-size: 16px;
-    }
-    
-    .team-group-title {
-        font-size: 28px;
-        line-height: 36px;
-        margin-bottom: 20px;
-    }
-    
-    .team-grid {
-        grid-template-columns: 1fr;
-        gap: 20px;
-    }
-    
-    .team-card {
-        height: auto;
-        border-radius: 30px;
-    }
-    
-    .team-card-image {
-        height: 220px;
-        background-position: center top;
-    }
-    
-    .team-card-info {
-        height: auto;
-        min-height: 100px;
-        padding: 15px 20px;
-    }
-    
-    .team-card-name {
-        font-size: 20px;
-    }
-    
-    .team-card-role {
-        font-size: 14px;
-    }
-    
-    .no-results p {
-        font-size: 18px;
-    }
-}
-
-@media (max-width: 320px) {
-    .meet-team-container {
-        padding: 20px 12px;
-        border-radius: 25px;
-    }
-    
-    .team-group-title {
-        font-size: 24px;
-        line-height: 30px;
-    }
-    
-    .team-card-image {
-        height: 180px;
-    }
-    
-    .team-card-name {
-        font-size: 18px;
-    }
-    
-    .team-card-role {
-        font-size: 13px;
-    }
-}
-
-/* Animation for team sections */
-.team-group-section {
-    animation: fadeIn 0.6s ease-in-out;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
+/* kill the squeezed effect on wide screens */
+@media (min-width: 1280px) {
+    #overhaul-v2-root .max-w-7xl {
+        max-width: 90rem !important;
     }
 }

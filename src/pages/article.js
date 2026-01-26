@@ -122,7 +122,7 @@ export default function Article() {
     };
 
     return (
-        <>
+        <div id="overhaul-v2-root">
             <title>{article ? article.heading : "Loading Article..."}</title>
             <NavigationBar />
 
@@ -271,6 +271,6 @@ export default function Article() {
                 ) : null}
             </main>
             <Footer />
-        </>
+        </div>
     );
 } 
