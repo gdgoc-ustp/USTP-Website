@@ -331,6 +331,14 @@ export default function Home() {
 
                     {/* Initial Banner Circles - Wrapped to preserve positioning context */}
                     <animated.div style={{ ...bannerContentSpring, position: 'absolute', inset: 0, zIndex: 0 }}>
+                        {/* Mobile Mesh Background (Shared with HeroSection) */}
+                        <div className="mobile-hero-background">
+                            <div className="mesh-blob blob-blue"></div>
+                            <div className="mesh-blob blob-red"></div>
+                            <div className="mesh-blob blob-yellow"></div>
+                            <div className="mesh-blob blob-green"></div>
+                        </div>
+
                         {/* circle2 removed, handled globally */}
                         <div className="circle circle3"></div>
                         <div className="circle circle4"></div>

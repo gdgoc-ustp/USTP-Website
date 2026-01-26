@@ -319,37 +319,19 @@ html {
         font-size: 22px;
     }
 
-    .circle1 {
-        width: 250px;
-        height: 250px;
-        top: -2%;
-        left: -3%;
-    }
-
-    .circle2 {
-        width: 200px;
-        height: 200px;
-        bottom: 12%;
-        left: 2%;
-    }
-
-    .circle3 {
-        width: 180px;
-        height: 180px;
-        top: 12%;
-        right: 0;
-    }
-
-    .circle4 {
-        width: 220px;
-        height: 220px;
-        bottom: -5%;
-        right: -3%;
-    }
-
+    .circle1,
+    .circle2,
+    .circle3,
+    .circle4,
     .gray-circle1,
-    .gray-circle2 {
+    .gray-circle2,
+    .gray-circle3,
+    .hero-circles {
         display: none;
+    }
+
+    .mobile-hero-background {
+        display: block;
     }
 }
 
@@ -362,37 +344,7 @@ html {
         font-size: 18px;
     }
 
-    .circle1 {
-        width: 200px;
-        height: 200px;
-        top: 0;
-        left: -10%;
-    }
-
-    .circle2 {
-        width: 150px;
-        height: 150px;
-        bottom: 15%;
-        left: 0;
-    }
-
-    .circle3 {
-        width: 130px;
-        height: 130px;
-        top: 15%;
-        right: -2%;
-    }
-
-    .circle4 {
-        width: 180px;
-        height: 180px;
-        bottom: 0;
-        right: -5%;
-    }
-
-    .gray-circle3 {
-        display: none;
-    }
+    /* Circles are hidden by 768px query above */
 }
 
 /* Original banner styles to keep for the second section */

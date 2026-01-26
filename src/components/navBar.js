@@ -143,14 +143,6 @@ export default function NavigationBar() {
                     <FaInfoCircle className="nav-icon" />
                     <span>About</span>
                 </NavLink>
-                <NavLink
-                    to="/team"
-                    className={({ isActive }) => isActive ? "mobile-nav-item active" : "mobile-nav-item"}
-                    onClick={handleNavClick('/team')}
-                >
-                    <FaUsers className="nav-icon" />
-                    <span>Team</span>
-                </NavLink>
             </nav>
 
             <div className={`menu-overlay ${isMenuOpen ? 'active' : ''}`} onClick={closeMenu}></div>
