@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import NavigationBar from "../components/navBar";
 import Footer from "../components/footer";
 import HeroSection from "../components/HeroSection";
@@ -67,6 +68,7 @@ const TimelineItem = ({ year, title, description, image, isLast }) => (
 
 
 export default function AboutUs() {
+    const location = useLocation();
     const featuredMembers = getFeaturedMembers(3);
 
     return (
@@ -75,7 +77,7 @@ export default function AboutUs() {
             <NavigationBar />
 
             <main className="bg-gray-50 min-h-screen">
-                <HeroSection title="About Us" theme="aboutus" />
+                <HeroSection title="About Us" theme="aboutus" previousPath={location.state?.from} />
 
                 {/* 1. Who We Are - Clean Unified Cards */}
                 <section className="py-12">

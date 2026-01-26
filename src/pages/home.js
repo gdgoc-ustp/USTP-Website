@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
+import { useLocation } from 'react-router-dom';
 import NavigationBar from "../components/navBar";
 import Footer from "../components/footer";
 import './home.css';
@@ -15,7 +16,10 @@ import { AnimatePresence, motion } from 'framer-motion';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 export default function Home() {
-    // Check local storage for hero state (persists per session)
+    const location = useLocation();
+    const previousPath = location.state?.from || null;
+
+    // check local storage for hero state (persists per session)
     const [hasSeenHeroOnMount] = useState(() => {
         return sessionStorage.getItem('heroSeen') === 'true';
     });
