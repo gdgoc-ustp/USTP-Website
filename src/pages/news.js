@@ -1,16 +1,16 @@
 import React, { useEffect, useState, useMemo, useRef } from 'react';
 import NavigationBar from "../components/navBar";
 import Footer from "../components/footer";
+import HeroSection from "../components/HeroSection";
 import './news.css';
-import '../components/HeroSection.css';
 import Sample from '../assets/sample.png';
 import { Link, useLocation } from "react-router-dom";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import { motion } from 'framer-motion';
 
 export default function News() {
     const location = useLocation();
+    const contentRef = useRef(null);
 
     const [blogPosts, setBlogPosts] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -20,61 +20,6 @@ export default function News() {
     const [searchTerm, setSearchTerm] = useState('');
     const [sortBy, setSortBy] = useState('newest');
     const postsPerPage = 10;
-
-    // Window size for responsive circle sizing
-    const [windowSize, setWindowSize] = useState({
-        width: window.innerWidth,
-        height: window.innerHeight
-    });
-
-    const previousPath = location.state?.from || '/';
-    const comingFromHeroPage = previousPath.includes('/events') ||
-        previousPath.includes('/about') ||
-        previousPath.includes('/news');
-
-    const contentRef = useRef(null);
-    const vmin = Math.min(windowSize.width, windowSize.height);
-    const targetSize = Math.min(Math.max(240, vmin * 0.9), 1100);
-
-    const circleVariants = {
-        fromEvents: { left: '98%', top: '86%', width: `${vmin * 0.082}px`, height: `${vmin * 0.082}px` },
-        fromHero: { left: '50%', top: '50%', width: `${targetSize}px`, height: `${targetSize}px` },
-        fromHome: { left: '14%', top: '90%', width: '300px', height: '300px' },
-        final: { left: '50%', top: '50%', width: `${targetSize}px`, height: `${targetSize}px` }
-    };
-
-    const getInitialVariant = () => {
-        if (previousPath.includes('/events')) return 'fromEvents';
-        if (comingFromHeroPage) return 'fromHero';
-        return 'fromHome';
-    };
-
-    const bannerContentVariants = {
-        visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } },
-        hidden: { opacity: 0, y: -20, transition: { duration: 0.8, ease: "easeOut" } }
-    };
-
-    const heroElementsVariants = {
-        hidden: { opacity: 0 },
-        visible: { opacity: 1, transition: { duration: 0.8, ease: "easeOut" } }
-    };
-
-    const [bannerHeight, setBannerHeight] = useState(comingFromHeroPage ? 'clamp(360px, 60svh, 720px)' : '100vh');
-
-    useEffect(() => {
-        if (!comingFromHeroPage) {
-            const timer = setTimeout(() => {
-                setBannerHeight('clamp(360px, 60svh, 720px)');
-            }, 300);
-            return () => clearTimeout(timer);
-        }
-    }, [comingFromHeroPage]);
-
-    useEffect(() => {
-        const handleResize = () => setWindowSize({ width: window.innerWidth, height: window.innerHeight });
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
-    }, []);
 
     useEffect(() => {
         AOS.init({ duration: 800, easing: 'ease-in-out', once: true });
@@ -148,35 +93,7 @@ export default function News() {
             <title>News</title>
             <NavigationBar />
             <main className="bg-gray-50 min-h-screen">
-                <header className="banner" style={{
-                    height: bannerHeight,
-                    transition: comingFromHeroPage ? 'none' : 'height 0.8s ease-in-out',
-                    position: 'relative', overflow: 'hidden'
-                }}>
-                    {!comingFromHeroPage && (
-                        <motion.div variants={bannerContentVariants} initial="visible" animate="hidden" style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
-                            <div className="circle circle1"></div>
-                            <div className="circle circle3"></div>
-                            <div className="circle circle4"></div>
-                            <div className="gray-circle gray-circle1"></div>
-                            <div className="gray-circle gray-circle2"></div>
-                            <div className="gray-circle gray-circle3"></div>
-                        </motion.div>
-                    )}
-                    <motion.div className="hero-circles" variants={heroElementsVariants} initial="hidden" animate="visible" style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
-                        <div className="circle circle-1"></div>
-                        <div className="circle circle-2"></div>
-                        <div className="circle circle-3"></div>
-                        <div className="circle circle-4"></div>
-                        <div className="circle circle-5"></div>
-                        <div className="circle circle-6"></div>
-                        <div className="circle circle-8" style={{ background: 'linear-gradient(135deg, #4EA865 0%, #1C793A 100%)' }}></div>
-                    </motion.div>
-                    <motion.div variants={circleVariants} initial={getInitialVariant()} animate="final" transition={{ duration: 1.2, ease: [0.25, 0.46, 0.45, 0.94], type: "tween" }} style={{ position: 'absolute', borderRadius: '50%', background: 'linear-gradient(135deg, #EB483B 0%, #B41F19 100%)', zIndex: 2, transform: 'translate(-50%, -50%)' }}></motion.div>
-                    <motion.div variants={heroElementsVariants} initial="hidden" animate="visible" style={{ position: 'absolute', zIndex: 10 }}>
-                        <h1 style={{ color: 'white', fontSize: '5rem', fontWeight: '700', margin: 0 }}>News</h1>
-                    </motion.div>
-                </header>
+                <HeroSection title="News" theme="news" previousPath={location.state?.from} />
 
                 <section className="py-24 px-4 max-w-7xl mx-auto" ref={contentRef} data-aos="fade-up">
                     <div className="flex flex-col md:flex-row justify-between items-center mb-16 gap-6">
@@ -204,9 +121,8 @@ export default function News() {
                         </div>
                     ) : filteredAndSortedPosts.length > 0 ? (
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                            {/* Featured Post (First item spans 2 cols if on large screen) */}
                             {filteredAndSortedPosts.map((post, index) => {
-                                const isFeatured = index === 0 && !searchTerm; // Only feature first if not searching
+                                const isFeatured = index === 0 && !searchTerm;
                                 return (
                                     <div key={post.id}
                                         className={`bg-white rounded-[2.5rem] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group flex flex-col border border-gray-100 ${isFeatured ? 'lg:col-span-2 lg:flex-row lg:items-center p-0' : 'flex-col'}`}
