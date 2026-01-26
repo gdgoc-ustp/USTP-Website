@@ -15,6 +15,16 @@ import { SiReact, SiFirebase, SiFlutter, SiAndroid, SiTensorflow, SiPython, SiGi
 import { AnimatePresence, motion } from 'framer-motion';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+
+// page order for transitions
+const PAGE_ORDER = { '/': 0, '/news': 1, '/events': 2, '/about-us': 3 };
+const THEME_COLORS = {
+    news: { primary: "#EB483B", secondary: "#B41F19" },
+    events: { primary: "#4EA865", secondary: "#1C793A" },
+    aboutus: { primary: "#FBC10E", secondary: "#EB8C05" }
+};
+const PATH_TO_THEME = { '/news': 'news', '/events': 'events', '/about-us': 'aboutus' };
+
 export default function Home() {
     const location = useLocation();
     const previousPath = location.state?.from || null;
@@ -244,8 +254,54 @@ export default function Home() {
                         <div className="circle circle-8"></div>
                     </animated.div>
 
-                    {/* Blue Circle (Transitions between states) */}
-                    <animated.div className="circle circle1" style={circleSpring}></animated.div>
+                    {/* Exiting circle when navigating TO home from another hero page */}
+                    {hasSeenHeroOnMount && previousPath && PATH_TO_THEME[previousPath] && (() => {
+                        const prevTheme = PATH_TO_THEME[previousPath];
+                        const prevColors = THEME_COLORS[prevTheme];
+                        const prevIndex = PAGE_ORDER[previousPath] ?? -1;
+                        const currentIndex = PAGE_ORDER['/'];
+                        const exitToRight = prevIndex > currentIndex; // prev page is to the right, so exit right
+                        const smallSize = targetSize * 0.15;
+
+                        return (
+                            <motion.div
+                                initial={{ left: '50%', top: '50%', width: targetSize, height: targetSize, x: '-50%', y: '-50%', opacity: 1 }}
+                                animate={{ left: exitToRight ? '120%' : '-20%', top: '50%', width: smallSize, height: smallSize, x: '-50%', y: '-50%', opacity: 0 }}
+                                transition={{ duration: 0.9, ease: [0.25, 0.46, 0.45, 0.94] }}
+                                style={{
+                                    position: 'absolute',
+                                    borderRadius: '50%',
+                                    background: `linear-gradient(135deg, ${prevColors.primary} 0%, ${prevColors.secondary} 100%)`,
+                                    zIndex: 1
+                                }}
+                            />
+                        );
+                    })()}
+
+                    {/* Blue Circle (Transitions between states) - with incoming animation when coming from other pages */}
+                    {hasSeenHeroOnMount && previousPath && PAGE_ORDER[previousPath] !== undefined ? (
+                        <motion.div
+                            className="circle"
+                            initial={{
+                                left: PAGE_ORDER[previousPath] > PAGE_ORDER['/'] ? '-20%' : '120%',
+                                top: '50%',
+                                width: targetSize * 0.15,
+                                height: targetSize * 0.15,
+                                x: '-50%',
+                                y: '-50%'
+                            }}
+                            animate={{ left: '50%', top: '50%', width: targetSize, height: targetSize, x: '-50%', y: '-50%' }}
+                            transition={{ duration: 0.9, ease: [0.25, 0.46, 0.45, 0.94] }}
+                            style={{
+                                position: 'absolute',
+                                borderRadius: '50%',
+                                background: 'linear-gradient(135deg, #498CF6 0%, #236AD1 100%)',
+                                zIndex: 2
+                            }}
+                        />
+                    ) : (
+                        <animated.div className="circle circle1" style={circleSpring}></animated.div>
+                    )}
 
                     {/* Banner Content (Text/Button) */}
                     <animated.div style={{ ...bannerContentSpring, zIndex: 2, position: 'relative' }}>
