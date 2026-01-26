@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import './footer.css';
 import Logo from '../assets/logo.svg';
-import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin, FaYoutube } from 'react-icons/fa';
+import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn, FaYoutube } from 'react-icons/fa';
 
 export default function Footer() {
   const location = useLocation();
@@ -15,78 +15,69 @@ export default function Footer() {
   };
 
   return (
-    <footer className="footer">
-      <div className="footer-top">
-        <div className="footer-logo-container">
-          <img src={Logo} className="footer-logo" alt="GDG Logo" />
-          <div className="footer-logo-text">
-            <div className="footer-title">
-              Google Developer Groups on Campus
+    <footer className="footer-container">
+      <div className="footer-content">
+        <div className="footer-main">
+          <div className="footer-brand-section">
+            <img src={Logo} className="footer-brand-logo" alt="GDG Logo" />
+            <div className="footer-brand-text">
+              <h2 className="footer-brand-title">Google Developer Groups</h2>
+              <p className="footer-brand-subtitle">On Campus • USTP</p>
             </div>
-            <div className="footer-subtitle">
-              University of Science and Technology of Southern Philippines
+            <p className="footer-mission-statement">
+              Connecting students, developers, and tech enthusiasts to learn, share, and grow together.
+            </p>
+          </div>
+
+          <div className="footer-nav-section">
+            <div className="footer-nav-column">
+              <h4 className="footer-nav-title">Community</h4>
+              <ul className="footer-nav-list">
+                <li><a href="https://gdg.community.dev/" target="_blank" rel="noopener noreferrer" className="footer-nav-link">Join Chapter</a></li>
+                <li><Link to="/about" className="footer-nav-link">About Us</Link></li>
+                <li><Link to="/events" className="footer-nav-link">Events</Link></li>
+                <li><Link to="/news" className="footer-nav-link">News</Link></li>
+              </ul>
+            </div>
+
+            <div className="footer-nav-column">
+              <h4 className="footer-nav-title">Resources</h4>
+              <ul className="footer-nav-list">
+                <li><a href="https://developers.google.com/" target="_blank" rel="noopener noreferrer" className="footer-nav-link">Google Developers</a></li>
+                <li><a href="https://devlibrary.withgoogle.com/" target="_blank" rel="noopener noreferrer" className="footer-nav-link">Dev Library</a></li>
+                <li><Link to="/faqs" className="footer-nav-link">FAQ</Link></li>
+              </ul>
+            </div>
+
+            <div className="footer-nav-column">
+              <h4 className="footer-nav-title">Connect</h4>
+              <ul className="footer-nav-list">
+                <li><a href="mailto:gdg.ustp@gmail.com" className="footer-nav-link">Contact Us</a></li>
+                <li><a href="https://discord.gg/CgTHNhpW" target="_blank" rel="noopener noreferrer" className="footer-nav-link">Discord Server</a></li>
+              </ul>
             </div>
           </div>
         </div>
 
-        <div className="footer-links-container">
-          <div className="footer-links-column">
-            <h3 className="footer-column-title">Community</h3>
-            <a href="https://gdg.community.dev/" target="_blank" rel="noopener noreferrer" className="footer-link">
-              Become a Member
-            </a>
-            <Link to="/faqs" className="footer-link">FAQ</Link>
-          </div>
+        <div className="footer-divider"></div>
 
-          <div className="footer-links-column">
-            <h3 className="footer-column-title">Resources</h3>
-            <a href="https://devlibrary.withgoogle.com/" target="_blank" rel="noopener noreferrer" className="footer-link">
-              Dev Library
-            </a>
-            <a href="https://discord.gg/CgTHNhpW" target="_blank" rel="noopener noreferrer" className="footer-link">
-              Speaker Slides
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <div className="footer-bottom">
-        <div className="footer-copyright-container">
+        <div className="footer-bottom">
           <div className="footer-copyright">
-            (C) GDG-USTP All Rights Reserved
+            &copy; {new Date().getFullYear()} GDG on Campus USTP. All Rights Reserved.
           </div>
-          <div className="footer-policy-links">
-            <div className="footer-dot" />
-            <Link to="/policy" className="footer-policy-link" onClick={(e) => handleLinkClick(e, '/policy')}>
-              Privacy & Policy
-            </Link>
-            <div className="footer-dot" />
-            <Link to="/terms" className="footer-policy-link" onClick={(e) => handleLinkClick(e, '/terms')}>
-              Terms of Use
-            </Link>
-            <div className="footer-dot" />
-            <Link to="/sitemap" className="footer-policy-link" onClick={(e) => handleLinkClick(e, '/sitemap')}>
-              Sitemap
-            </Link>
-          </div>
-        </div>
 
-        <div className="footer-social-links">
-          <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="footer-social-link">
-            <FaFacebook size={24} color="#000" />
-          </a>
-          <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="footer-social-link">
-            <FaTwitter size={24} color="#000" />
-          </a>
-          <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="footer-social-link">
-            <FaInstagram size={24} color="#000" />
-          </a>
-          <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="footer-social-link">
-            <FaLinkedin size={24} color="#000" />
-          </a>
-          <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" className="footer-social-link">
-            <FaYoutube size={24} color="#000" />
-          </a>
+          <div className="footer-socials">
+            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><FaFacebookF /></a>
+            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter"><FaTwitter /></a>
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><FaInstagram /></a>
+            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><FaLinkedinIn /></a>
+            <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><FaYoutube /></a>
+          </div>
+
+          <div className="footer-legal">
+            <Link to="/policy" className="footer-legal-link" onClick={(e) => handleLinkClick(e, '/policy')}>Privacy Policy</Link>
+            <Link to="/terms" className="footer-legal-link" onClick={(e) => handleLinkClick(e, '/terms')}>Terms of Use</Link>
+          </div>
         </div>
       </div>
     </footer>
