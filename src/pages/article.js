@@ -4,6 +4,10 @@ import NavigationBar from "../components/navBar";
 import Footer from "../components/footer";
 import "./article.css";
 import Sample from '../assets/sample.png';
+import { SiFacebook, SiX, SiLinkedin } from 'react-icons/si';
+import { FiLink, FiArrowLeft, FiClock, FiCalendar, FiUser } from 'react-icons/fi';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 export default function Article() {
     const { id } = useParams();
@@ -14,7 +18,9 @@ export default function Article() {
     const contentRef = useRef(null);
 
     useEffect(() => {
+        AOS.init({ duration: 800, easing: 'ease-in-out', once: true });
         fetchArticle();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [id]);
 
     // Reading progress tracking
@@ -44,7 +50,7 @@ export default function Article() {
         try {
             setLoading(true);
             setError(null);
-            
+
             const response = await fetch(
                 `${process.env.REACT_APP_SUPABASE_URL}/rest/v1/blog_posts?id=eq.${id}&select=*`,
                 {
@@ -60,7 +66,7 @@ export default function Article() {
             }
 
             const data = await response.json();
-            
+
             if (data.length === 0) {
                 throw new Error("Article not found");
             }
@@ -108,7 +114,6 @@ export default function Article() {
 
         if (platform === 'copy') {
             navigator.clipboard.writeText(url).then(() => {
-                // You could add a toast notification here
                 alert('Link copied to clipboard!');
             });
         } else {
@@ -122,118 +127,129 @@ export default function Article() {
             <NavigationBar />
 
             {/* Reading Progress Bar */}
-            <div className="reading-progress-container">
+            <div className="fixed top-0 left-0 w-full h-1 bg-gray-200 z-[9999]" style={{ display: readingProgress > 0 ? 'block' : 'none' }}>
                 <div
-                    className="reading-progress-bar"
+                    className="h-full bg-red-600 transition-all duration-300 ease-out"
                     style={{ width: `${readingProgress}%` }}
                 />
             </div>
 
-            <main className="article-page">
+            <main className="min-h-screen bg-gray-50 pt-28 pb-20">
                 {loading ? (
-                    <div className="loading-container">
-                        <div className="loading-spinner"></div>
-                        <p>Loading article...</p>
+                    <div className="flex flex-col items-center justify-center min-h-[60vh]">
+                        <div className="w-16 h-16 border-4 border-red-200 border-t-red-600 rounded-full animate-spin mb-4"></div>
+                        <p className="text-gray-500 font-google-sans">Loading article...</p>
                     </div>
                 ) : error ? (
-                    <div className="error-container">
-                        <h2>Error</h2>
-                        <p>{error}</p>
-                        <Link to="/news" className="back-button">
-                            Return to News
-                        </Link>
+                    <div className="max-w-2xl mx-auto px-4 py-20 text-center">
+                        <div className="bg-white rounded-[2rem] p-12 shadow-sm border border-red-100">
+                            <h2 className="text-3xl font-bold text-red-600 mb-4 font-google-sans">Error Loading Article</h2>
+                            <p className="text-gray-600 mb-8">{error}</p>
+                            <Link to="/news" className="inline-flex items-center gap-2 px-8 py-3 bg-gray-900 text-white rounded-full font-bold hover:bg-gray-800 transition-all">
+                                <FiArrowLeft /> Return to News
+                            </Link>
+                        </div>
                     </div>
                 ) : article ? (
-                    <>
-                        <div className="article-hero" style={{backgroundImage: `url(${getImageUrl(article.image_url)})`}}>
-                            <div className="article-hero-overlay"></div>
-                            <div className="article-hero-content">
-                                <div className="article-breadcrumb">
-                                    <Link to="/news" className="breadcrumb-link">News</Link>
-                                    <span className="breadcrumb-separator">›</span>
-                                    <span className="breadcrumb-current">Article</span>
-                                </div>
-                                <h1>{article.heading}</h1>
-                                <div className="article-meta-info">
-                                    <p className="article-date">{formatDate(article.created_at)}</p>
-                                    <span className="meta-separator">•</span>
-                                    <p className="reading-time">{estimateReadingTime(article.description)} min read</p>
-                                    <span className="meta-separator">•</span>
-                                    <p className="article-author">{article.author_id || "GDG USTP"}</p>
-                                </div>
-                                {article.tagline && <p className="article-tagline">{article.tagline}</p>}
-                            </div>
+                    <div className="max-w-4xl mx-auto px-4 sm:px-6">
+                        {/* Breadcrumbs */}
+                        <div className="flex items-center gap-2 text-sm text-gray-500 mb-8 font-google-sans" data-aos="fade-up">
+                            <Link to="/" className="hover:text-red-600 transition-colors">Home</Link>
+                            <span>/</span>
+                            <Link to="/news" className="hover:text-red-600 transition-colors">News</Link>
+                            <span>/</span>
+                            <span className="text-gray-900 font-medium truncate max-w-[200px]">{article.heading}</span>
                         </div>
-                        
-                        <div className="article-container">
-                            <div className="article-content" ref={contentRef}>
-                                {/* Social Share Buttons */}
-                                <div className="article-share">
-                                    <h3>Share this article</h3>
-                                    <div className="share-buttons">
-                                        <button onClick={() => shareArticle('twitter')} className="share-btn twitter" aria-label="Share on Twitter">
-                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                                                <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
-                                            </svg>
-                                        </button>
-                                        <button onClick={() => shareArticle('facebook')} className="share-btn facebook" aria-label="Share on Facebook">
-                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                                                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                                            </svg>
-                                        </button>
-                                        <button onClick={() => shareArticle('linkedin')} className="share-btn linkedin" aria-label="Share on LinkedIn">
-                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                                                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                                            </svg>
-                                        </button>
-                                        <button onClick={() => shareArticle('copy')} className="share-btn copy" aria-label="Copy link">
-                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                                <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
-                                                <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
-                                            </svg>
-                                        </button>
-                                    </div>
-                                </div>
 
-                                <div className="article-body" dangerouslySetInnerHTML={{ __html: article.description }} />
-                                
-                                <div className="article-meta">
-                                    <div className="article-author">
-                                        <h3>Author</h3>
-                                        <p>{article.author_id || "Anonymous"}</p>
+                        {/* Article Header */}
+                        <header className="mb-12" data-aos="fade-up" data-aos-delay="100">
+                            {/* Tags/Categories if available */}
+                            <div className="flex gap-2 mb-6">
+                                <span className="px-4 py-1.5 bg-red-100 text-red-600 text-sm font-bold rounded-full uppercase tracking-wider">
+                                    News
+                                </span>
+                            </div>
+
+                            <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-8 font-google-sans leading-tight">
+                                {article.heading}
+                            </h1>
+
+                            <div className="flex flex-wrap items-center gap-6 text-gray-600 font-medium pb-8 border-b border-gray-200">
+                                <div className="flex items-center gap-1">
+                                    <div className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center text-gray-500">
+                                        <FiUser size={20} />
                                     </div>
-                                    
-                                    <div className="article-tags">
-                                        <h3>Tags</h3>
-                                        <div className="tags-container">
-                                            {/* If you have tags, map them here */}
-                                            <span className="tag">GDG</span>
-                                            <span className="tag">USTP</span>
-                                            <span className="tag">News</span>
+                                    <span className="text-gray-900">{"GDG Team"}</span>
+                                </div>
+                                <div className="flex items-center gap-1">
+                                    <FiCalendar className="text-red-500" />
+                                    <span>{formatDate(article.created_at)}</span>
+                                </div>
+                                <div className="flex items-center gap-1">
+                                    <FiClock className="text-red-500" />
+                                    <span>{estimateReadingTime(article.description)} min read</span>
+                                </div>
+                            </div>
+                        </header>
+
+                        {/* Article Image */}
+                        <div className="relative aspect-video rounded-[2.5rem] overflow-hidden shadow-lg mb-12 group" data-aos="fade-up" data-aos-delay="200">
+                            <img
+                                src={getImageUrl(article.image_url)}
+                                alt={article.heading}
+                                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                            />
+                            {/* Optional: Add tagline overlay if needed, or keep clean */}
+                        </div>
+
+                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+                            {/* Social Share Sidebar (Desktop) */}
+                            <div className="hidden lg:block lg:col-span-1">
+                                <div className="sticky top-32 flex flex-col gap-4">
+                                    <button onClick={() => shareArticle('twitter')} className="w-10 h-10 rounded-full bg-gray-100 text-gray-600 flex items-center justify-center hover:bg-[#1DA1F2] hover:text-white transition-all shadow-sm hover:scale-110" title="Share on Twitter"><SiX /></button>
+                                    <button onClick={() => shareArticle('facebook')} className="w-10 h-10 rounded-full bg-gray-100 text-gray-600 flex items-center justify-center hover:bg-[#4267B2] hover:text-white transition-all shadow-sm hover:scale-110" title="Share on Facebook"><SiFacebook /></button>
+                                    <button onClick={() => shareArticle('linkedin')} className="w-10 h-10 rounded-full bg-gray-100 text-gray-600 flex items-center justify-center hover:bg-[#0077B5] hover:text-white transition-all shadow-sm hover:scale-110" title="Share on LinkedIn"><SiLinkedin /></button>
+                                    <button onClick={() => shareArticle('copy')} className="w-10 h-10 rounded-full bg-gray-100 text-gray-600 flex items-center justify-center hover:bg-gray-800 hover:text-white transition-all shadow-sm hover:scale-110" title="Copy Link"><FiLink /></button>
+                                </div>
+                            </div>
+
+                            {/* Main Content */}
+                            <div className="lg:col-span-11">
+                                <article className="article-body font-google-sans text-lg md:text-xl text-gray-800 leading-relaxed" ref={contentRef} data-aos="fade-up" data-aos-delay="300">
+                                    {article.tagline && (
+                                        <p className="text-xl md:text-2xl text-gray-500 font-medium mb-8 leading-relaxed italic border-l-4 border-red-500 pl-6">
+                                            {article.tagline}
+                                        </p>
+                                    )}
+                                    <div dangerouslySetInnerHTML={{ __html: article.description }} />
+                                </article>
+
+                                {/* Tags & Share (Mobile) */}
+                                <div className="mt-16 pt-8 border-t border-gray-200">
+                                    <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
+
+
+                                        <div className="flex items-center gap-4 lg:hidden">
+                                            <span className="text-gray-500 font-bold">Share:</span>
+                                            <div className="flex gap-3">
+                                                <button onClick={() => shareArticle('twitter')} className="w-10 h-10 rounded-full bg-gray-100 text-gray-600 flex items-center justify-center hover:bg-blue-400 hover:text-white transition-colors"><SiX /></button>
+                                                <button onClick={() => shareArticle('facebook')} className="w-10 h-10 rounded-full bg-gray-100 text-gray-600 flex items-center justify-center hover:bg-blue-600 hover:text-white transition-colors"><SiFacebook /></button>
+                                                <button onClick={() => shareArticle('linkedin')} className="w-10 h-10 rounded-full bg-gray-100 text-gray-600 flex items-center justify-center hover:bg-blue-700 hover:text-white transition-colors"><SiLinkedin /></button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                
-                                <div className="article-nav">
-                                    <Link to="/news" className="back-button">
-                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                            <path d="M19 12H5M12 19l-7-7 7-7"/>
-                                        </svg>
+
+                                {/* Navigation Footer */}
+                                <div className="mt-16 flex justify-center" data-aos="fade-up">
+                                    <Link to="/news" className="group flex items-center gap-3 px-8 py-4 bg-white text-gray-900 font-bold rounded-full text-lg border-2 border-gray-100 hover:border-red-600 hover:text-red-600 transition-all shadow-sm hover:shadow-lg">
+                                        <FiArrowLeft className="group-hover:-translate-x-1 transition-transform" />
                                         Back to News
                                     </Link>
-
-                                    <div className="article-actions">
-                                        <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="scroll-top-btn" aria-label="Scroll to top">
-                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                                <path d="M18 15l-6-6-6 6"/>
-                                            </svg>
-                                            Top
-                                        </button>
-                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </>
+                    </div>
                 ) : null}
             </main>
             <Footer />
