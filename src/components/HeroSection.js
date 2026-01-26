@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import "./HeroSection.css";
 
-// page order for determining transition direction
+// page order: [Home, News, Events, About Us]
 const PAGE_ORDER = {
   '/': 0,
   '/news': 1,
@@ -10,23 +10,18 @@ const PAGE_ORDER = {
   '/about-us': 3
 };
 
+const INDEX_TO_PATH = {
+  0: '/',
+  1: '/news',
+  2: '/events',
+  3: '/about-us'
+};
+
 const THEME_COLORS = {
-  home: {
-    primary: "#498CF6",
-    secondary: "#236AD1",
-  },
-  news: {
-    primary: "#EB483B",
-    secondary: "#B41F19",
-  },
-  events: {
-    primary: "#4EA865",
-    secondary: "#1C793A",
-  },
-  aboutus: {
-    primary: "#FBC10E",
-    secondary: "#EB8C05",
-  }
+  home: { primary: "#498CF6", secondary: "#236AD1" },
+  news: { primary: "#EB483B", secondary: "#B41F19" },
+  events: { primary: "#4EA865", secondary: "#1C793A" },
+  aboutus: { primary: "#FBC10E", secondary: "#EB8C05" }
 };
 
 const PATH_TO_THEME = {
@@ -52,78 +47,41 @@ const HeroSection = ({ title, theme, previousPath }) => {
 
   const vmin = Math.min(windowSize.width, windowSize.height);
   const targetSize = Math.min(Math.max(240, vmin * 0.9), 1100);
-  const smallSize = targetSize * 0.15;
+  const circle8Size = vmin * 0.082; // matches CSS .circle-8 size
 
-  // determine direction based on page order
-  const currentIndex = PAGE_ORDER[`/${theme === 'aboutus' ? 'about-us' : theme === 'home' ? '' : theme}`] ?? 1;
+  // current page index
+  const currentPath = `/${theme === 'aboutus' ? 'about-us' : theme === 'home' ? '' : theme}`;
+  const currentIndex = PAGE_ORDER[currentPath] ?? 1;
   const previousIndex = PAGE_ORDER[previousPath] ?? -1;
 
-  // if no valid previous path or same page, no transition
+  // navigation direction
   const hasValidTransition = previousIndex !== -1 && previousIndex !== currentIndex;
+  const navigatingRight = previousIndex < currentIndex; // going to higher index (e.g., Events -> About Us)
+  const navigatingLeft = previousIndex > currentIndex; // going to lower index (e.g., About Us -> Events)
 
-  // true = coming from left (need to enter from right), false = coming from right (enter from left)
-  const enterFromRight = previousIndex < currentIndex;
+  // skip detection for left navigation
+  const skipAmount = navigatingLeft ? previousIndex - currentIndex : 0;
+  const isSequentialLeft = navigatingLeft && skipAmount === 1;
+  const isSkipLeft = navigatingLeft && skipAmount > 1;
 
-  // get previous page's colors for the exiting circle
+  // next page to the right (for circle-8 color on current page)
+  const nextRightIndex = currentIndex + 1;
+  const nextRightPath = INDEX_TO_PATH[nextRightIndex];
+  const nextRightTheme = nextRightPath ? PATH_TO_THEME[nextRightPath] : null;
+  const nextRightColors = nextRightTheme ? THEME_COLORS[nextRightTheme] : null;
+
+  // old circle-8 color (page to the RIGHT of previous page - this exits down when navigating left)
+  const oldCircle8Index = previousIndex + 1;
+  const oldCircle8Path = INDEX_TO_PATH[oldCircle8Index];
+  const oldCircle8Theme = oldCircle8Path ? PATH_TO_THEME[oldCircle8Path] : null;
+  const oldCircle8Colors = oldCircle8Theme ? THEME_COLORS[oldCircle8Theme] : null;
+
+  // previous page colors (for exiting circle when navigating left)
   const previousTheme = PATH_TO_THEME[previousPath] || null;
   const previousColors = previousTheme ? THEME_COLORS[previousTheme] : null;
 
-  // animation variants for the main (incoming) circle
-  const mainCircleVariants = {
-    initial: hasValidTransition ? {
-      left: enterFromRight ? '120%' : '-20%',
-      top: '50%',
-      width: smallSize,
-      height: smallSize,
-      x: '-50%',
-      y: '-50%'
-    } : {
-      left: '50%',
-      top: '50%',
-      width: targetSize,
-      height: targetSize,
-      x: '-50%',
-      y: '-50%'
-    },
-    animate: {
-      left: '50%',
-      top: '50%',
-      width: targetSize,
-      height: targetSize,
-      x: '-50%',
-      y: '-50%',
-      transition: {
-        duration: 0.9,
-        ease: [0.25, 0.46, 0.45, 0.94]
-      }
-    }
-  };
-
-  // animation variants for the exiting circle
-  const exitCircleVariants = {
-    initial: {
-      left: '50%',
-      top: '50%',
-      width: targetSize,
-      height: targetSize,
-      x: '-50%',
-      y: '-50%',
-      opacity: 1
-    },
-    animate: {
-      left: enterFromRight ? '-20%' : '120%',
-      top: '50%',
-      width: smallSize,
-      height: smallSize,
-      x: '-50%',
-      y: '-50%',
-      opacity: 0,
-      transition: {
-        duration: 0.9,
-        ease: [0.25, 0.46, 0.45, 0.94]
-      }
-    }
-  };
+  // circle-8 position (bottom right corner)
+  const circle8Position = { right: '2%', top: '86%' };
 
   return (
     <section className={`hero-section ${theme}-theme`}>
@@ -135,13 +93,88 @@ const HeroSection = ({ title, theme, previousPath }) => {
         <div className="circle circle-5"></div>
         <div className="circle circle-6"></div>
 
+        {/* when navigating RIGHT: circle comes FROM circle-8, old exits left */}
+        {/* when navigating LEFT sequential: old circle shrinks TO circle-8 position, new comes from left */}
+        {/* when navigating LEFT skip: old circle exits RIGHT, old circle-8 fades down, new circle-8 animates up */}
+
+        {/* old circle-8 exit animation (animates DOWN and fades out when navigating left) */}
+        {hasValidTransition && navigatingLeft && oldCircle8Colors && (
+          <motion.div
+            className="circle"
+            initial={{
+              left: `calc(98% - ${circle8Size}px)`,
+              top: circle8Position.top,
+              width: circle8Size,
+              height: circle8Size,
+              opacity: 1
+            }}
+            animate={{
+              left: `calc(98% - ${circle8Size}px)`,
+              top: '120%',
+              width: circle8Size,
+              height: circle8Size,
+              opacity: 0,
+              transition: { duration: 0.9, ease: [0.25, 0.46, 0.45, 0.94] }
+            }}
+            style={{
+              position: 'absolute',
+              borderRadius: '50%',
+              background: `linear-gradient(135deg, ${oldCircle8Colors.primary} 0%, ${oldCircle8Colors.secondary} 100%)`,
+              zIndex: 0
+            }}
+          />
+        )}
+
         {/* exiting circle (previous page's color) */}
+        {/* We use left/top for all animations to ensure smooth interpolation by Framer Motion */}
         {hasValidTransition && previousColors && (
           <motion.div
             className="circle"
-            variants={exitCircleVariants}
-            initial="initial"
-            animate="animate"
+            initial={{
+              left: '50%',
+              top: '50%',
+              width: targetSize,
+              height: targetSize,
+              x: '-50%',
+              y: '-50%',
+              opacity: 1
+            }}
+            animate={isSequentialLeft ? {
+              // sequential left: previous circle shrinks TO circle-8 position
+              // We calculate left position: 100% - 2% (right margin) - circle8Size
+              left: `calc(98% - ${circle8Size}px)`,
+              top: '86%',
+              width: circle8Size,
+              height: circle8Size,
+              x: '0%', // Reset transform since we're positioning by top-left
+              y: '0%',
+              opacity: 1,
+              transition: { duration: 0.9, ease: [0.25, 0.46, 0.45, 0.94] }
+            } : isSkipLeft ? {
+              // skip left: previous circle exits to the RIGHT (not becoming circle-8)
+              left: '120%',
+              top: '50%',
+              width: circle8Size,
+              height: circle8Size,
+              x: '-50%',
+              y: '-50%',
+              opacity: 0,
+              transition: { duration: 0.9, ease: [0.25, 0.46, 0.45, 0.94] }
+            } : navigatingRight ? {
+              // navigating RIGHT: previous circle exits to the left and fades
+              left: '-20%',
+              top: '50%',
+              width: circle8Size,
+              height: circle8Size,
+              x: '-50%',
+              y: '-50%',
+              opacity: 0,
+              transition: { duration: 0.9, ease: [0.25, 0.46, 0.45, 0.94] }
+            } : {
+              // fallback
+              opacity: 0,
+              transition: { duration: 0.9 }
+            }}
             style={{
               position: 'absolute',
               borderRadius: '50%',
@@ -154,9 +187,41 @@ const HeroSection = ({ title, theme, previousPath }) => {
         {/* main (incoming) circle */}
         <motion.div
           className="circle"
-          variants={mainCircleVariants}
-          initial="initial"
-          animate="animate"
+          initial={hasValidTransition ? (navigatingRight ? {
+            // when going RIGHT, incoming circle comes FROM circle-8 position (bottom right)
+            left: 'auto',
+            right: circle8Position.right,
+            top: circle8Position.top,
+            width: circle8Size,
+            height: circle8Size,
+            x: '0%',
+            y: '0%'
+          } : {
+            // when going LEFT, incoming circle comes from the left side
+            left: '-20%',
+            top: '50%',
+            width: circle8Size,
+            height: circle8Size,
+            x: '-50%',
+            y: '-50%'
+          }) : {
+            left: '50%',
+            top: '50%',
+            width: targetSize,
+            height: targetSize,
+            x: '-50%',
+            y: '-50%'
+          }}
+          animate={{
+            left: '50%',
+            right: 'auto',
+            top: '50%',
+            width: targetSize,
+            height: targetSize,
+            x: '-50%',
+            y: '-50%',
+            transition: { duration: 0.9, ease: [0.25, 0.46, 0.45, 0.94] }
+          }}
           style={{
             position: 'absolute',
             borderRadius: '50%',
@@ -165,13 +230,55 @@ const HeroSection = ({ title, theme, previousPath }) => {
           }}
         />
 
-        {/* accent circle (circle-8) */}
-        <div
-          className="circle circle-8"
-          style={{
-            background: `linear-gradient(135deg, ${THEME_COLORS[theme === 'news' ? 'events' : theme === 'events' ? 'aboutus' : theme === 'aboutus' ? 'news' : 'news']?.primary} 0%, ${THEME_COLORS[theme === 'news' ? 'events' : theme === 'events' ? 'aboutus' : theme === 'aboutus' ? 'news' : 'news']?.secondary} 100%)`
-          }}
-        ></div>
+        {/* circle-8: uses motion.div with inline styles (no CSS class positioning) */}
+        {nextRightColors && (
+          <motion.div
+            key={isSkipLeft ? 'skip-circle8' : isSequentialLeft ? 'seq-circle8' : 'static-circle8'}
+            initial={isSkipLeft ? {
+              position: 'absolute',
+              left: `calc(98% - ${circle8Size}px)`,
+              top: '120%',
+              width: circle8Size,
+              height: circle8Size,
+              opacity: 0
+            } : isSequentialLeft ? {
+              position: 'absolute',
+              left: `calc(98% - ${circle8Size}px)`,
+              top: '86%',
+              width: circle8Size,
+              height: circle8Size,
+              opacity: 0 // Start hidden to avoid duplicate with incoming circle
+            } : {
+              position: 'absolute',
+              left: `calc(98% - ${circle8Size}px)`,
+              top: '86%',
+              width: circle8Size,
+              height: circle8Size,
+              opacity: 1
+            }}
+            animate={isSequentialLeft ? {
+              position: 'absolute',
+              left: `calc(98% - ${circle8Size}px)`,
+              top: '86%',
+              width: circle8Size,
+              height: circle8Size,
+              opacity: 1,
+              transition: { duration: 0.1, delay: 0.8 } // Fade in after transition
+            } : {
+              position: 'absolute',
+              left: `calc(98% - ${circle8Size}px)`,
+              top: '86%',
+              width: circle8Size,
+              height: circle8Size,
+              opacity: 1,
+              transition: { duration: 0.9, ease: [0.25, 0.46, 0.45, 0.94] }
+            }}
+            style={{
+              borderRadius: '50%',
+              background: `linear-gradient(135deg, ${nextRightColors.primary} 0%, ${nextRightColors.secondary} 100%)`
+            }}
+          />
+        )}
       </div>
       <div className="hero-content">
         <h1>{title}</h1>

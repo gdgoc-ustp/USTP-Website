@@ -250,9 +250,98 @@ export default function Home() {
                         <div className="circle circle-4"></div>
                         <div className="circle circle-5"></div>
                         <div className="circle circle-6"></div>
-                        {/* circle-7 is the blue circle animated below */}
-                        <div className="circle circle-8"></div>
+                        {/* circle-8: uses motion.div with inline styles (no CSS class positioning) */}
+                        {(() => {
+                            const prevIndex = PAGE_ORDER[previousPath] ?? -1;
+                            const currentIndex = PAGE_ORDER['/'];
+                            const navigatingLeft = prevIndex > currentIndex;
+                            const skipAmount = navigatingLeft ? prevIndex - currentIndex : 0;
+                            // Redefined locally for clarity inside this IIFE scope
+                            const isSequentialLeft = hasSeenHeroOnMount && previousPath && navigatingLeft && skipAmount === 1;
+                            const isSkipLeft = hasSeenHeroOnMount && previousPath && navigatingLeft && skipAmount > 1;
+                            const circle8Size = Math.min(windowSize.width, windowSize.height) * 0.082;
+
+                            return (
+                                <motion.div
+                                    key={isSkipLeft ? 'skip-circle8' : isSequentialLeft ? 'seq-circle8' : 'static-circle8'}
+                                    initial={isSkipLeft ? {
+                                        position: 'absolute',
+                                        left: `calc(98% - ${circle8Size}px)`,
+                                        top: '120%',
+                                        width: circle8Size,
+                                        height: circle8Size,
+                                        opacity: 0
+                                    } : isSequentialLeft ? {
+                                        position: 'absolute',
+                                        left: `calc(98% - ${circle8Size}px)`,
+                                        top: '86%',
+                                        width: circle8Size,
+                                        height: circle8Size,
+                                        opacity: 0 // Start hidden to avoid duplicate with incoming circle
+                                    } : {
+                                        position: 'absolute',
+                                        left: `calc(98% - ${circle8Size}px)`,
+                                        top: '86%',
+                                        width: circle8Size,
+                                        height: circle8Size,
+                                        opacity: 1
+                                    }}
+                                    animate={isSequentialLeft ? {
+                                        position: 'absolute',
+                                        left: `calc(98% - ${circle8Size}px)`,
+                                        top: '86%',
+                                        width: circle8Size,
+                                        height: circle8Size,
+                                        opacity: 1,
+                                        transition: { duration: 0.1, delay: 0.8 } // Fade in after transition
+                                    } : {
+                                        position: 'absolute',
+                                        left: `calc(98% - ${circle8Size}px)`,
+                                        top: '86%',
+                                        width: circle8Size,
+                                        height: circle8Size,
+                                        opacity: 1,
+                                        transition: { duration: 0.9, ease: [0.25, 0.46, 0.45, 0.94] }
+                                    }}
+                                    style={{
+                                        borderRadius: '50%',
+                                        background: 'linear-gradient(135deg, #EB483B 0%, #B41F19 100%)'
+                                    }}
+                                />
+                            );
+                        })()}
                     </animated.div>
+
+                    {/* Old circle-8 exit animation (animates DOWN and fades out when navigating left to home) */}
+                    {hasSeenHeroOnMount && previousPath && PATH_TO_THEME[previousPath] && (() => {
+                        const prevIndex = PAGE_ORDER[previousPath] ?? -1;
+                        const currentIndex = PAGE_ORDER['/'];
+                        const navigatingLeft = prevIndex > currentIndex;
+                        const skipAmount = navigatingLeft ? prevIndex - currentIndex : 0;
+                        const circle8Size = Math.min(windowSize.width, windowSize.height) * 0.082;
+
+                        // old circle-8 is the page to the RIGHT of the previous page
+                        const oldCircle8Index = prevIndex + 1;
+                        const oldCircle8Path = { 0: '/', 1: '/news', 2: '/events', 3: '/about-us' }[oldCircle8Index];
+                        const oldCircle8Theme = oldCircle8Path ? { '/': 'home', '/news': 'news', '/events': 'events', '/about-us': 'aboutus' }[oldCircle8Path] : null;
+                        const oldCircle8Colors = oldCircle8Theme ? THEME_COLORS[oldCircle8Theme] : null;
+
+                        if (!navigatingLeft || !oldCircle8Colors) return null;
+
+                        return (
+                            <motion.div
+                                initial={{ left: `calc(98% - ${circle8Size}px)`, top: '86%', width: circle8Size, height: circle8Size, opacity: 1 }}
+                                animate={{ left: `calc(98% - ${circle8Size}px)`, top: '120%', width: circle8Size, height: circle8Size, opacity: 0 }}
+                                transition={{ duration: 0.9, ease: [0.25, 0.46, 0.45, 0.94] }}
+                                style={{
+                                    position: 'absolute',
+                                    borderRadius: '50%',
+                                    background: `linear-gradient(135deg, ${oldCircle8Colors.primary} 0%, ${oldCircle8Colors.secondary} 100%)`,
+                                    zIndex: 0
+                                }}
+                            />
+                        );
+                    })()}
 
                     {/* Exiting circle when navigating TO home from another hero page */}
                     {hasSeenHeroOnMount && previousPath && PATH_TO_THEME[previousPath] && (() => {
@@ -260,13 +349,43 @@ export default function Home() {
                         const prevColors = THEME_COLORS[prevTheme];
                         const prevIndex = PAGE_ORDER[previousPath] ?? -1;
                         const currentIndex = PAGE_ORDER['/'];
-                        const exitToRight = prevIndex > currentIndex; // prev page is to the right, so exit right
-                        const smallSize = targetSize * 0.15;
+                        const navigatingLeft = prevIndex > currentIndex;
+                        const skipAmount = navigatingLeft ? prevIndex - currentIndex : 0;
+                        const isSequentialLeft = navigatingLeft && skipAmount === 1;
+                        const isSkipLeft = navigatingLeft && skipAmount > 1;
+                        const circle8Size = Math.min(windowSize.width, windowSize.height) * 0.082;
 
                         return (
                             <motion.div
                                 initial={{ left: '50%', top: '50%', width: targetSize, height: targetSize, x: '-50%', y: '-50%', opacity: 1 }}
-                                animate={{ left: exitToRight ? '120%' : '-20%', top: '50%', width: smallSize, height: smallSize, x: '-50%', y: '-50%', opacity: 0 }}
+                                animate={isSequentialLeft ? {
+                                    // sequential left: exiting to circle-8 position (bottom right) - stays visible
+                                    left: `calc(98% - ${circle8Size}px)`,
+                                    top: '86%',
+                                    width: circle8Size,
+                                    height: circle8Size,
+                                    x: '0%',
+                                    y: '0%',
+                                    opacity: 1
+                                } : isSkipLeft ? {
+                                    // skip left: exits to the RIGHT (not becoming circle-8)
+                                    left: '120%',
+                                    top: '50%',
+                                    width: circle8Size,
+                                    height: circle8Size,
+                                    x: '-50%',
+                                    y: '-50%',
+                                    opacity: 0
+                                } : {
+                                    // navigating right (shouldn't happen for home since it's index 0)
+                                    left: '-20%',
+                                    top: '50%',
+                                    width: circle8Size,
+                                    height: circle8Size,
+                                    x: '-50%',
+                                    y: '-50%',
+                                    opacity: 0
+                                }}
                                 transition={{ duration: 0.9, ease: [0.25, 0.46, 0.45, 0.94] }}
                                 style={{
                                     position: 'absolute',
@@ -278,28 +397,45 @@ export default function Home() {
                         );
                     })()}
 
-                    {/* Blue Circle (Transitions between states) - with incoming animation when coming from other pages */}
-                    {hasSeenHeroOnMount && previousPath && PAGE_ORDER[previousPath] !== undefined ? (
-                        <motion.div
-                            className="circle"
-                            initial={{
-                                left: PAGE_ORDER[previousPath] > PAGE_ORDER['/'] ? '-20%' : '120%',
-                                top: '50%',
-                                width: targetSize * 0.15,
-                                height: targetSize * 0.15,
-                                x: '-50%',
-                                y: '-50%'
-                            }}
-                            animate={{ left: '50%', top: '50%', width: targetSize, height: targetSize, x: '-50%', y: '-50%' }}
-                            transition={{ duration: 0.9, ease: [0.25, 0.46, 0.45, 0.94] }}
-                            style={{
-                                position: 'absolute',
-                                borderRadius: '50%',
-                                background: 'linear-gradient(135deg, #498CF6 0%, #236AD1 100%)',
-                                zIndex: 2
-                            }}
-                        />
-                    ) : (
+                    {/* Blue Circle - with incoming animation when coming from other pages */}
+                    {hasSeenHeroOnMount && previousPath && PAGE_ORDER[previousPath] !== undefined ? (() => {
+                        const prevIndex = PAGE_ORDER[previousPath] ?? -1;
+                        const currentIndex = PAGE_ORDER['/'];
+                        const navigatingLeft = prevIndex > currentIndex;
+                        const circle8Size = Math.min(windowSize.width, windowSize.height) * 0.082;
+
+                        return (
+                            <motion.div
+                                className="circle"
+                                initial={navigatingLeft ? {
+                                    // coming from left side
+                                    left: '-20%',
+                                    top: '50%',
+                                    width: circle8Size,
+                                    height: circle8Size,
+                                    x: '-50%',
+                                    y: '-50%'
+                                } : {
+                                    // coming from circle-8 position
+                                    left: 'auto',
+                                    right: '2%',
+                                    top: '86%',
+                                    width: circle8Size,
+                                    height: circle8Size,
+                                    x: '0%',
+                                    y: '0%'
+                                }}
+                                animate={{ left: '50%', right: 'auto', top: '50%', width: targetSize, height: targetSize, x: '-50%', y: '-50%' }}
+                                transition={{ duration: 0.9, ease: [0.25, 0.46, 0.45, 0.94] }}
+                                style={{
+                                    position: 'absolute',
+                                    borderRadius: '50%',
+                                    background: 'linear-gradient(135deg, #498CF6 0%, #236AD1 100%)',
+                                    zIndex: 2
+                                }}
+                            />
+                        );
+                    })() : (
                         <animated.div className="circle circle1" style={circleSpring}></animated.div>
                     )}
 
