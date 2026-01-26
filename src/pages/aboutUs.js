@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { LuSettings, LuCpu, LuMegaphone, LuUsers } from "react-icons/lu";
 import { useLocation } from 'react-router-dom';
 import NavigationBar from "../components/navBar";
 import Footer from "../components/footer";
@@ -177,14 +178,14 @@ export default function AboutUs() {
 
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                             {[
-                                { title: "Operations", desc: "Logistics & Planning", color: "bg-blue-50 text-blue-600" },
-                                { title: "Technology", desc: "Innovation & Workshops", color: "bg-red-50 text-red-600" }, /* Fixed: Red */
-                                { title: "Communications", desc: "Media & Outreach", color: "bg-yellow-50 text-yellow-600" },
-                                { title: "Community", desc: "Partnerships & Growth", color: "bg-green-50 text-green-600" } /* Fixed: Green */
+                                { title: "Operations", desc: "Logistics & Planning", color: "bg-blue-50 text-blue-600", icon: <LuSettings className="w-10 h-10" /> },
+                                { title: "Technology", desc: "Innovation & Workshops", color: "bg-red-50 text-red-600", icon: <LuCpu className="w-10 h-10" /> },
+                                { title: "Communications", desc: "Media & Outreach", color: "bg-yellow-50 text-yellow-600", icon: <LuMegaphone className="w-10 h-10" /> },
+                                { title: "Community", desc: "Partnerships & Growth", color: "bg-green-50 text-green-600", icon: <LuUsers className="w-10 h-10" /> }
                             ].map((dept, idx) => (
                                 <div key={idx} className="group p-10 rounded-[2.5rem] bg-gray-50 border border-transparent hover:bg-white hover:shadow-2xl hover:border-gray-100 transition-all duration-300 hover:-translate-y-2 text-center flex flex-col items-center" data-aos="fade-up" data-aos-delay={idx * 100}>
                                     <div className={`w-20 h-20 rounded-3xl ${dept.color} flex items-center justify-center mb-8 group-hover:scale-110 transition-transform shadow-sm`}>
-                                        <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                                        {dept.icon}
                                     </div>
                                     <h3 className="text-2xl font-bold font-google-sans text-gray-900 mb-3">{dept.title}</h3>
                                     <p className="text-gray-500 font-google-sans leading-relaxed">{dept.desc}</p>
