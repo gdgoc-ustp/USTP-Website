@@ -7,15 +7,22 @@ import './news.css';
 import '../components/HeroSection.css';
 import About from '../assets/sample.png';
 import { Link } from "react-router-dom";
+import { useSpring, animated, config } from 'react-spring';
+import Marquee from '../components/Marquee';
+import { SiReact, SiFirebase, SiFlutter, SiAndroid, SiTensorflow, SiPython, SiGithub, SiGooglecloud, SiGoogle } from 'react-icons/si';
+
+import { AnimatePresence, motion } from 'framer-motion';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import { useSpring, animated, config } from 'react-spring';
-
-
 export default function Home() {
-    const [showPageContent, setShowPageContent] = useState(false);
+    // Check local storage for hero state (persists per session)
+    const [hasSeenHeroOnMount] = useState(() => {
+        return sessionStorage.getItem('heroSeen') === 'true';
+    });
+
+    const [showPageContent, setShowPageContent] = useState(hasSeenHeroOnMount);
     const [isMobile, setIsMobile] = useState(false);
-    const [isHeroVisible, setIsHeroVisible] = useState(false);
+    const [isHeroVisible, setIsHeroVisible] = useState(hasSeenHeroOnMount);
     const [windowSize, setWindowSize] = useState({
         width: window.innerWidth,
         height: window.innerHeight
@@ -100,7 +107,7 @@ export default function Home() {
             try {
                 setNewsLoading(true);
                 const response = await fetch(
-                    `${process.env.REACT_APP_SUPABASE_URL}/rest/v1/blog_posts?select=*&limit=2&order=created_at.desc`,
+                    `${process.env.REACT_APP_SUPABASE_URL}/rest/v1/blog_posts?select=*&limit=3&order=created_at.desc`,
                     {
                         headers: {
                             "apikey": `${process.env.REACT_APP_SUPABASE_ANON_KEY}`,
@@ -127,7 +134,8 @@ export default function Home() {
     const contentProps = useSpring({
         opacity: showPageContent ? 1 : 0,
         transform: showPageContent ? 'translateY(0)' : 'translateY(20px)',
-        config: { tension: 280, friction: 60 }
+        config: { tension: 280, friction: 60 },
+        immediate: hasSeenHeroOnMount
     });
 
     // Calculate target size for the circle based on window size to match CSS clamp(240px, 90vmin, 1100px)
@@ -157,7 +165,8 @@ export default function Home() {
             animation: 'float1 15s infinite ease-in-out', // Re-enable animation
             zIndex: 1
         },
-        config: config.molasses
+        config: config.molasses,
+        immediate: hasSeenHeroOnMount
     });
 
     // Animation for fading out initial banner content
@@ -165,25 +174,30 @@ export default function Home() {
         opacity: isHeroVisible ? 0 : 1,
         transform: isHeroVisible ? 'translateY(-20px)' : 'translateY(0px)',
         pointerEvents: isHeroVisible ? 'none' : 'auto',
-        config: config.molasses
+        config: config.molasses,
+        immediate: hasSeenHeroOnMount
     });
 
     // Animation for fading in new hero title
     const heroTitleSpring = useSpring({
         opacity: isHeroVisible ? 1 : 0,
         transform: isHeroVisible ? 'translateY(0px)' : 'translateY(20px)',
-        delay: 200,
-        config: config.molasses
+        pointerEvents: isHeroVisible ? 'auto' : 'none',
+        delay: hasSeenHeroOnMount ? 0 : 200,
+        config: config.molasses,
+        immediate: hasSeenHeroOnMount
     });
 
     // Animation for new hero circles
     const heroCirclesSpring = useSpring({
         opacity: isHeroVisible ? 1 : 0,
-        config: config.molasses
+        config: config.molasses,
+        immediate: hasSeenHeroOnMount
     });
 
     const handleLearnMore = () => {
         setIsHeroVisible(true);
+        sessionStorage.setItem('heroSeen', 'true');
 
         // Show the rest of the page content after transition
         setTimeout(() => {
@@ -249,7 +263,6 @@ export default function Home() {
                         </div>
                     </animated.div>
 
-                    {/* New Hero Title "Home" */}
                     <animated.div style={{ ...heroTitleSpring, position: 'absolute', zIndex: 10 }}>
                         <h1 style={{ color: 'white', fontSize: '5rem', fontWeight: '700', margin: 0 }}>Home</h1>
                     </animated.div>
@@ -265,303 +278,237 @@ export default function Home() {
                     }}
                     ref={contentRef}
                 >
-                    {/* Replaced section-1 with news-container style content if hero is visible */}
-                    {isHeroVisible ? (
-                        <section className="news-container" style={{ paddingTop: '50px' }}>
-                            <div className="section-1-container" style={{ background: 'none', boxShadow: 'none', width: '100%', padding: 0 }}>
-                                <div className="home-info-group top-group">
-                                    <div className="home-image-box left-image" style={{
-                                        backgroundImage: `url(/photos/1.jpg)`,
-                                        backgroundPosition: 'center',
-                                        backgroundSize: 'cover',
-                                        backgroundRepeat: 'no-repeat'
-                                    }}>
-                                        <img
-                                            src="/photos/1.jpg"
-                                            alt="GDG USTP Community"
-                                            style={{
-                                                width: '1px',
-                                                height: '1px',
-                                                opacity: 0
-                                            }}
-                                        />
-                                    </div>
-                                    <div className="home-text-container">
-                                        <h2 className="home-info-title">Fostering Innovation & Learning</h2>
-                                        <p className="home-info-text">Google Developer Groups on Campus USTP is a vibrant community of passionate developers at the University of Science and Technology of Southern Philippines. We organize events, workshops, and learning opportunities to help students grow their skills and build innovative solutions using Google's developer technologies.</p>
-                                        <Link to="/about-us" style={{ textDecoration: 'none' }}>
-                                            <button className="wtsup-button" style={{
-                                                minWidth: 'auto',
-                                                height: '48px',
-                                                padding: '12px 28px',
-                                                marginTop: '4px',
-                                                fontSize: '15px'
-                                            }}>
-                                                Learn More
-                                            </button>
-                                        </Link>
-                                    </div>
-                                </div>
 
-                                <div className="home-info-group bottom-group">
-                                    <div className="home-text-container right-aligned">
-                                        <h2 className="home-info-title">Building Tomorrow's Developers</h2>
-                                        <p className="home-info-text">Our mission is to create a thriving ecosystem where USTP students can connect, learn, and collaborate on cutting-edge technologies. Through tech talks, hands-on workshops, hackathons, and coding sessions, we provide platforms for knowledge sharing and professional growth in the rapidly evolving tech industry.</p>
-                                    </div>
-                                    <div className="home-image-box right-image" style={{
-                                        backgroundImage: `url(/photos/2.jpg)`,
-                                        backgroundPosition: 'center',
-                                        backgroundSize: 'cover',
-                                        backgroundRepeat: 'no-repeat'
-                                    }}>
-                                        <img
-                                            src="/photos/2.jpg"
-                                            alt="GDG USTP Events"
-                                            style={{
-                                                width: '1px',
-                                                height: '1px',
-                                                opacity: 0
-                                            }}
-                                        />
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
-                    ) : (
-                        <section className="section-1">
-                            <div className="section-1-container">
-                                <div className="home-info-group top-group">
-                                    <div className="home-image-box left-image" style={{
-                                        backgroundImage: `url(/photos/1.jpg)`,
-                                        backgroundPosition: 'center',
-                                        backgroundSize: 'cover',
-                                        backgroundRepeat: 'no-repeat'
-                                    }}>
-                                        <img
-                                            src="/photos/1.jpg"
-                                            alt="GDG USTP Community"
-                                            style={{
-                                                width: '1px',
-                                                height: '1px',
-                                                opacity: 0
-                                            }}
-                                        />
-                                    </div>
-                                    <div className="home-text-container">
-                                        <h2 className="home-info-title">Fostering Innovation & Learning</h2>
-                                        <p className="home-info-text">Google Developer Groups on Campus USTP is a vibrant community of passionate developers at the University of Science and Technology of Southern Philippines. We organize events, workshops, and learning opportunities to help students grow their skills and build innovative solutions using Google's developer technologies.</p>
-                                        <Link to="/about-us" style={{ textDecoration: 'none' }}>
-                                            <button className="wtsup-button" style={{
-                                                minWidth: 'auto',
-                                                height: '48px',
-                                                padding: '12px 28px',
-                                                marginTop: '4px',
-                                                fontSize: '15px'
-                                            }}>
-                                                Learn More
-                                            </button>
-                                        </Link>
-                                    </div>
-                                </div>
 
-                                <div className="home-info-group bottom-group">
-                                    <div className="home-text-container right-aligned">
-                                        <h2 className="home-info-title">Building Tomorrow's Developers</h2>
-                                        <p className="home-info-text">Our mission is to create a thriving ecosystem where USTP students can connect, learn, and collaborate on cutting-edge technologies. Through tech talks, hands-on workshops, hackathons, and coding sessions, we provide platforms for knowledge sharing and professional growth in the rapidly evolving tech industry.</p>
-                                    </div>
-                                    <div className="home-image-box right-image" style={{
-                                        backgroundImage: `url(/photos/2.jpg)`,
-                                        backgroundPosition: 'center',
-                                        backgroundSize: 'cover',
-                                        backgroundRepeat: 'no-repeat'
-                                    }}>
-                                        <img
-                                            src="/photos/2.jpg"
-                                            alt="GDG USTP Events"
-                                            style={{
-                                                width: '1px',
-                                                height: '1px',
-                                                opacity: 0
-                                            }}
-                                        />
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
-                    )}
+                    <section className="py-24 px-4 bg-gray-50" data-aos="fade-up">
+                        <div className="max-w-7xl mx-auto">
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 auto-rows-[minmax(180px,auto)]">
 
-                    <section className="trusted" data-aos="fade-up">
-                        <h1>Trusted by Organizations</h1>
-                        <div className="trusted-container">
-                            <div className="trusted-row">
-                                <div className="partner-item">
-                                    <img src="/partners/xu.jpg" alt="GDG - XU" className="partner-logo" />
-                                    <p className="partner-name">GDG - XU</p>
-                                </div>
-                                <div className="partner-item">
-                                    <img src="/partners/gdg-usls.jpg" alt="GDG - USLS" className="partner-logo" />
-                                    <p className="partner-name">GDG - USLS</p>
-                                </div>
-                                <div className="partner-item">
-                                    <img src="/partners/DICT.png" alt="DICT Region X" className="partner-logo" />
-                                    <p className="partner-name">DICT Region X</p>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
-                    <section className="gallery" data-aos="fade-up">
-                        <h1>Inspiring Members</h1>
-                        <div className="gallery-container">
-                            <button className="gallery-arrow prev" onClick={prevSlide} aria-label="Previous slide" />
-                            <div
-                                className="gallery-slider"
-                                style={{ transform: `translateX(-${currentSlide * 100}%)` }}
-                            >
-                                {testimonials.map((testimonial, index) => (
-                                    <div key={index} className="gallery-slide">
-                                        <div
-                                            className="gallery-image"
-                                            style={{
-                                                backgroundImage: `url(${testimonial.image})`,
-                                            }}
-                                        />
-                                        <div className="text-content">
-                                            <div className="quote">{testimonial.quote}</div>
-                                            <div className="reviewer">{testimonial.reviewer}</div>
-                                            <Link to="/team" className="cta-link">Meet Our Amazing Team →</Link>
+                                {/* 1. Main Intro (Spans 2x2) */}
+                                <div className="md:col-span-2 lg:row-span-2 bg-white rounded-[2.5rem] p-8 md:p-12 shadow-sm border border-gray-100 relative overflow-hidden group flex flex-col justify-center">
+                                    <div className="absolute top-0 right-0 w-64 h-64 bg-blue-50 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 opacity-60"></div>
+                                    <div className="relative z-10">
+                                        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-100 text-blue-600 text-sm font-bold mb-6">
+                                            <SiGoogle className="text-xl" />
+                                            <span>Who We Are</span>
                                         </div>
+                                        <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900 font-google-sans leading-tight">
+                                            Fostering <span className="text-blue-600">Innovation</span>, <br className="hidden lg:block" /> Building Community
+                                        </h2>
+                                        <p className="text-lg text-gray-600 mb-8 leading-relaxed max-w-xl">
+                                            A platform for students to grow skills, connect with peers, and build solutions using Google technologies.
+                                        </p>
+                                        <Link to="/about-us">
+                                            <button className="px-8 py-3 bg-gray-900 text-white rounded-full font-bold hover:bg-gray-800 transition-all hover:shadow-lg hover:-translate-y-1 flex items-center gap-2">
+                                                More About Us <span className="text-xl">→</span>
+                                            </button>
+                                        </Link>
                                     </div>
-                                ))}
-                            </div>
-                            <button className="gallery-arrow next" onClick={nextSlide} aria-label="Next slide" />
-                            <div className="gallery-nav">
-                                {testimonials.map((_, index) => (
-                                    <button
-                                        key={index}
-                                        className={`gallery-nav-dot ${index === currentSlide ? 'active' : ''}`}
-                                        onClick={() => goToSlide(index)}
-                                        aria-label={`Go to slide ${index + 1}`}
+                                </div>
+
+                                {/* 2. Tall Image Tower (Spans 1x2 on LG) */}
+                                <div className="md:col-span-1 lg:row-span-2 rounded-[2.5rem] overflow-hidden shadow-sm relative min-h-[400px] h-full group order-2 lg:order-none">
+                                    <img
+                                        src="/photos/1.jpg"
+                                        alt="Community"
+                                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                                     />
-                                ))}
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+                                    <div className="absolute bottom-6 left-6 text-white">
+                                        <p className="font-bold text-2xl mb-1 font-google-sans">Community First</p>
+                                        <p className="text-sm opacity-90">Growing together</p>
+                                    </div>
+                                </div>
+
+                                {/* 3. Small Stat Tile (Spans 1x1) */}
+                                <div className="md:col-span-1 rounded-[2.5rem] bg-yellow-400 p-8 shadow-sm flex flex-col justify-center items-center text-center group hover:-translate-y-1 transition-transform duration-300">
+                                    <p className="text-5xl font-bold text-gray-900 mb-2 font-google-sans">50+</p>
+                                    <p className="text-sm font-bold uppercase tracking-wider text-gray-800">Events Hosted</p>
+                                </div>
+
+                                {/* 4. Social/Action Tile (Spans 1x1) */}
+                                <div className="md:col-span-1 bg-gray-900 rounded-[2.5rem] p-8 flex flex-col justify-center items-center text-center shadow-lg group hover:bg-gray-800 transition-colors cursor-pointer">
+                                    <SiGithub className="text-5xl text-white mb-4 group-hover:scale-110 transition-transform" />
+                                    <p className="text-white font-bold text-lg">Open Source</p>
+                                    <p className="text-gray-400 text-sm">Contribute</p>
+                                </div>
+
+                                {/* 5. Mission Card (Spans 2x1 Wide) */}
+                                <div className="md:col-span-2 bg-blue-600 rounded-[2.5rem] p-8 text-white shadow-xl relative overflow-hidden group flex flex-col md:flex-row items-center justify-between gap-6">
+                                    <div className="absolute top-0 right-0 w-48 h-48 bg-white opacity-10 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 group-hover:scale-125 transition-transform duration-700"></div>
+                                    <div className="relative z-10 flex-1">
+                                        <div className="inline-block px-3 py-1 bg-white/20 rounded-full text-xs font-bold mb-4 uppercase tracking-wider">Our Mission</div>
+                                        <h3 className="text-3xl font-bold font-google-sans leading-tight">Building Tomorrow's Developers</h3>
+                                    </div>
+                                    <div className="relative z-10 flex-shrink-0">
+                                        <Link to="/events" className="inline-flex items-center justify-center w-12 h-12 bg-white/20 hover:bg-white/30 rounded-full transition-colors">
+                                            <span className="text-xl">→</span>
+                                        </Link>
+                                    </div>
+                                </div>
+
+                                {/* 6. Wide Image Tile (Spans 2x1) */}
+                                <div className="md:col-span-2 rounded-[2.5rem] overflow-hidden shadow-sm relative h-[240px] group">
+                                    <img
+                                        src="/photos/2.jpg"
+                                        alt="Workshops"
+                                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                                    />
+                                    <div className="absolute inset-0 bg-blue-900/20 group-hover:bg-blue-900/10 transition-colors duration-300"></div>
+                                    <div className="absolute bottom-6 left-6 text-white">
+                                        <p className="font-bold text-2xl font-google-sans drop-shadow-lg">Hands-on Workshops</p>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                     </section>
 
-                    <section className="wtsup-wrapper">
-                        <div className="wtsup-section">
-                            <h1 className="wtsup-heading">What's Up?</h1>
-                            <div className="wtsup-container">
+
+                    <section className="trusted py-12" data-aos="fade-up">
+                        <h1 className="text-3xl md:text-4xl font-bold text-center mb-12 text-gray-900 font-google-sans">Trusted by Organizations</h1>
+
+                        <div className="max-w-6xl mx-auto">
+                            <Marquee speed={40} pauseOnHover={true} className="py-4">
+                                <div className="mx-12 opacity-50 hover:opacity-100 transition-all duration-300 grayscale hover:grayscale-0 cursor-pointer">
+                                    <img src="/partners/xu.jpg" alt="GDG - XU" className="h-16 w-auto object-contain" />
+                                </div>
+                                <div className="mx-12 opacity-50 hover:opacity-100 transition-all duration-300 grayscale hover:grayscale-0 cursor-pointer">
+                                    <img src="/partners/gdg-usls.jpg" alt="GDG - USLS" className="h-16 w-auto object-contain" />
+                                </div>
+                                <div className="mx-12 opacity-50 hover:opacity-100 transition-all duration-300 grayscale hover:grayscale-0 cursor-pointer">
+                                    <img src="/partners/DICT.png" alt="DICT Region X" className="h-16 w-auto object-contain" />
+                                </div>
+                                <div className="mx-12 opacity-50 hover:opacity-100 transition-all duration-300 grayscale hover:grayscale-0 cursor-pointer flex items-center gap-3">
+                                    <SiGoogle className="text-4xl" />
+                                    <span className="font-bold text-xl text-gray-700">Google</span>
+                                </div>
+                            </Marquee>
+                        </div>
+                    </section>
+
+
+
+                    <section className="py-24 px-4 bg-gray-50" data-aos="fade-up">
+                        <div className="max-w-7xl mx-auto">
+                            <h1 className="text-4xl md:text-5xl font-bold text-center mb-16 text-gray-900 font-google-sans">What's Up?</h1>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
                                 {newsLoading ? (
-                                    <div className="loading-container">
-                                        <div className="loading-spinner"></div>
-                                        <p>Loading latest news...</p>
+                                    <div className="col-span-1 md:col-span-2 lg:col-span-3 flex flex-col items-center justify-center p-12 bg-white rounded-3xl shadow-sm border border-gray-100 min-h-[400px]">
+                                        <div className="loading-spinner mb-4 w-12 h-12 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin"></div>
+                                        <p className="text-xl text-gray-600 font-medium">Loading latest news...</p>
                                     </div>
                                 ) : latestNews.length > 0 ? (
                                     latestNews.map((post) => (
-                                        <div key={post.id} className="wtsup-card">
-                                            <img 
-                                                src={post.image_url 
-                                                    ? (post.image_url.startsWith('http') 
-                                                        ? post.image_url 
-                                                        : `https://yrvykwljzajfkraytbgr.supabase.co/storage/v1/object/public/blog-images/${post.image_url}`)
-                                                    : About
-                                                } 
-                                                alt={post.heading} 
-                                                className="wtsup-image" 
-                                            />
-                                            <div className="wtsup-content">
-                                                <div className="wtsup-header">
-                                                    <h2 className="wtsup-title">{post.heading}</h2>
-                                                    <p className="wtsup-time">
-                                                        {(() => {
-                                                            const date = new Date(post.created_at);
-                                                            const now = new Date();
-                                                            const diffTime = Math.abs(now - date);
-                                                            const diffHours = Math.floor(diffTime / (1000 * 60 * 60));
-                                                            const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-                                                            
-                                                            if (diffDays < 1) {
-                                                                if (diffHours < 1) {
-                                                                    const diffMinutes = Math.floor(diffTime / (1000 * 60));
-                                                                    return `${diffMinutes} minute${diffMinutes !== 1 ? 's' : ''} ago`;
-                                                                }
-                                                                return `${diffHours} hour${diffHours !== 1 ? 's' : ''} ago`;
-                                                            } else if (diffDays === 1) {
-                                                                return 'Yesterday';
-                                                            } else if (diffDays < 7) {
-                                                                return `${diffDays} days ago`;
-                                                            }
-                                                            return date.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
-                                                        })()}
-                                                    </p>
+                                        <div key={post.id} className="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-300 group border border-gray-100 flex flex-col h-full transform hover:-translate-y-1">
+                                            <div className="h-64 lg:h-80 overflow-hidden relative">
+                                                <img
+                                                    src={post.image_url
+                                                        ? (post.image_url.startsWith('http')
+                                                            ? post.image_url
+                                                            : `https://yrvykwljzajfkraytbgr.supabase.co/storage/v1/object/public/blog-images/${post.image_url}`)
+                                                        : About
+                                                    }
+                                                    alt={post.heading}
+                                                    className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
+                                                />
+                                                <div className="absolute inset-0 bg-gradient-to-t from-gray-900/60 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-300"></div>
+                                            </div>
+
+                                            <div className="p-8 flex flex-col flex-grow relative">
+                                                {/* Floating Date Badge */}
+                                                <div className="absolute -top-5 right-8 bg-blue-600 text-white px-4 py-1.5 rounded-full text-sm font-bold shadow-lg tracking-wide uppercase">
+                                                    {(() => {
+                                                        const date = new Date(post.created_at);
+                                                        const now = new Date();
+                                                        const diffTime = Math.abs(now - date);
+                                                        const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+                                                        if (diffDays < 7) {
+                                                            return diffDays === 0 ? 'Today' : (diffDays === 1 ? 'Yesterday' : `${diffDays} days ago`);
+                                                        }
+                                                        return date.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+                                                    })()}
                                                 </div>
-                                                <p className="wtsup-description">
+
+                                                <div className="mb-4 mt-2">
+                                                    <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-3 font-google-sans leading-tight group-hover:text-blue-600 transition-colors line-clamp-2">{post.heading}</h2>
+                                                </div>
+
+                                                <div className="text-gray-600 text-lg leading-relaxed mb-8 line-clamp-3">
                                                     {post.tagline || (() => {
                                                         const doc = new DOMParser().parseFromString(post.description, "text/html");
                                                         const text = doc.body.textContent || "";
-                                                        return text.length > 200 ? text.slice(0, 200) + "..." : text;
+                                                        return text;
                                                     })()}
-                                                </p>
+                                                </div>
+
+                                                <div className="mt-auto pt-6 border-t border-gray-100 flex items-center justify-between text-blue-600 font-bold group-hover:translate-x-2 transition-transform duration-300 cursor-pointer text-lg">
+                                                    Read Article <span className="text-2xl transform transition-transform group-hover:translate-x-1">→</span>
+                                                </div>
                                             </div>
                                         </div>
                                     ))
                                 ) : (
-                                    <div className="wtsup-card">
-                                        <img src="/photos/5.jpg" alt="Placeholder" className="wtsup-image" />
-                                        <div className="wtsup-content">
-                                            <div className="wtsup-header">
-                                                <h2 className="wtsup-title">No news available</h2>
-                                                <p className="wtsup-time">Just now</p>
-                                            </div>
-                                            <p className="wtsup-description">
-                                                Check back soon for the latest updates and news from our community.
-                                            </p>
+                                    <div className="col-span-1 md:col-span-2 lg:col-span-3 bg-white rounded-3xl p-16 text-center shadow-sm border border-gray-100">
+                                        <div className="bg-gray-50 w-32 h-32 rounded-full flex items-center justify-center mx-auto mb-6">
+                                            <svg className="w-16 h-16 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path></svg>
                                         </div>
+                                        <h2 className="text-2xl font-bold text-gray-900 mb-2 font-google-sans">No news available</h2>
+                                        <p className="text-gray-500 text-lg">Check back soon for the latest updates from our community.</p>
                                     </div>
                                 )}
                             </div>
-                            <div className="wtsup-button-container">
-                                <Link to="/news" className="wtsup-button">Show More</Link>
+
+                            <div className="mt-16 flex justify-center">
+                                <Link to="/news" className="inline-flex items-center gap-3 px-8 py-4 bg-white text-blue-600 font-bold rounded-full text-lg border-2 border-blue-100 hover:border-blue-600 hover:bg-blue-600 hover:text-white transition-all duration-300 shadow-sm hover:shadow-lg">
+                                    Show More News
+                                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                                </Link>
                             </div>
                         </div>
                     </section>
 
-                    <section className="cta" data-aos="fade-up">
-                        <h1 className="cta-title">Join our community</h1>
-                        <div className="cta-container">
-                            <div className="cta-content">
-                                <h2 className="cta-heading">Ready to become part of our GDG community?</h2>
-                                <p className="cta-text">Join our thriving community of developers to learn, share, and grow together. Connect with like-minded individuals and participate in events, workshops, and collaborative projects.</p>
-                                <div className="cta-buttons">
-                                    <Link to="/contact" style={{ textDecoration: 'none' }}>
-                                        <button className="wtsup-button" style={{
-                                            minWidth: '120px',
-                                            height: '48px',
-                                            padding: '12px 24px',
-                                            fontSize: '15px'
-                                        }}>
+
+                    <section className="py-24 px-4 bg-white relative overflow-hidden" data-aos="fade-up">
+                        {/* Geometric decorations */}
+                        <div className="absolute top-0 left-0 w-64 h-64 bg-blue-100 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 opacity-60"></div>
+                        <div className="absolute bottom-0 right-0 w-96 h-96 bg-yellow-50 rounded-full blur-3xl translate-x-1/3 translate-y-1/3 opacity-60"></div>
+
+                        <div className="max-w-5xl mx-auto relative z-10 text-center">
+                            <h1 className="text-5xl md:text-7xl font-bold mb-8 text-gray-900 font-google-sans leading-tight">
+                                Join our <span className="text-blue-600">Community</span>
+                            </h1>
+
+                            <div className="bg-white/80 backdrop-blur-sm rounded-[3rem] p-8 md:p-16 border border-gray-100 shadow-2xl">
+                                <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gray-800">
+                                    Ready to build the future?
+                                </h2>
+                                <p className="text-xl text-gray-600 mb-10 max-w-3xl mx-auto leading-relaxed">
+                                    Join our thriving community of developers to learn, share, and grow together.
+                                    Connect with like-minded individuals and participate in events, workshops, and collaborative projects.
+                                </p>
+
+                                <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
+                                    <Link to="/register" className="w-full sm:w-auto">
+                                        <button className="w-full sm:w-auto px-10 py-5 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white font-bold rounded-full text-xl shadow-lg hover:shadow-blue-500/40 hover:-translate-y-1 transition-all duration-300">
                                             Join Now
                                         </button>
                                     </Link>
-                                    <Link to="/events" style={{ textDecoration: 'none' }}>
-                                        <button className="cta-button secondary" style={{
-                                            border: '2px solid #498CF6',
-                                            color: '#498CF6',
-                                            borderRadius: '100px',
-                                            background: 'transparent'
-                                        }}>
-                                            <span>View Events</span>
+                                    <Link to="/events" className="w-full sm:w-auto">
+                                        <button className="w-full sm:w-auto px-10 py-5 bg-white text-gray-800 font-bold rounded-full text-xl border-2 border-gray-200 hover:border-blue-500 hover:text-blue-600 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300">
+                                            View Events
                                         </button>
                                     </Link>
                                 </div>
                             </div>
-
                         </div>
                     </section>
                 </animated.div>
-            </main>
-            {(showPageContent || isMobile) && <Footer />}
+            </main >
+            {(showPageContent || isMobile) && <Footer />
+            }
         </>
     );
 }

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
 import NavigationBar from "../components/navBar";
 import Footer from "../components/footer";
 import HeroSection from "../components/HeroSection";
@@ -9,7 +8,6 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 
 export default function Events() {
-    const location = useLocation();
     const [events, setEvents] = useState({
         upcomingEvents: [],
         completedEvents: [],
@@ -130,7 +128,7 @@ export default function Events() {
             <title>Events</title>
             <NavigationBar />
             <main className="bg-gray-50 min-h-screen">
-                <HeroSection title="Events" theme="events" previousPath={location.state?.from} />
+                <HeroSection title="Events" theme="events" />
 
                 <section className="py-24 px-4 max-w-7xl mx-auto">
                     {/* Tabs */}
