@@ -34,7 +34,7 @@ export default function Footer() {
               <h4 className="footer-nav-title">Community</h4>
               <ul className="footer-nav-list">
                 <li><a href="https://gdg.community.dev/" target="_blank" rel="noopener noreferrer" className="footer-nav-link">Join Chapter</a></li>
-                <li><Link to="/about-us" className="footer-nav-link">About Us</Link></li>
+                <li><Link to="/about" className="footer-nav-link">About Us</Link></li>
                 <li><Link to="/events" className="footer-nav-link">Events</Link></li>
                 <li><Link to="/news" className="footer-nav-link">News</Link></li>
               </ul>
