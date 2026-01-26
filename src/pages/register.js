@@ -11,7 +11,7 @@ export default function Register() {
         <div className="register-card">
           <h1 className="register-title">GDG on Campus Event Registration</h1>
           <p className="register-subtitle">
-            Join Google Developer Groups on Campus events and grow your skills 🚀
+            Join Google Developer Groups on Campus!
           </p>
 
           <form className="register-form">
