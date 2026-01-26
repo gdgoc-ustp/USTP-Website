@@ -90,6 +90,12 @@ const HeroSection = ({ title, theme, previousPath }) => {
 
   return (
     <section className={`hero-section ${theme}-theme`}>
+      <div className="mobile-hero-background">
+        <div className="mesh-blob blob-blue"></div>
+        <div className="mesh-blob blob-red"></div>
+        <div className="mesh-blob blob-yellow"></div>
+        <div className="mesh-blob blob-green"></div>
+      </div>
       <div className="hero-circles">
         <div className="circle circle-1"></div>
         <div className="circle circle-2"></div>
