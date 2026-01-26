@@ -89,7 +89,7 @@ export default function News() {
 
 
     return (
-        <>
+        <div id="overhaul-v2-root">
             <title>News</title>
             <NavigationBar />
             <main className="bg-gray-50 min-h-screen">
@@ -181,6 +181,6 @@ export default function News() {
                 </section>
             </main>
             <Footer />
-        </>
+        </div>
     );
 }

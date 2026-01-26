@@ -25,13 +25,13 @@ export default function MeetTheTeam() {
     );
 
     return (
-        <>
+        <div id="overhaul-v2-root">
             <title>Meet the Team</title>
             <NavigationBar />
 
             <HeroSection title="Meet The Team" theme="aboutus" />
 
-            <section className="bg-gray-50 min-h-screen pb-24">
+            <main className="bg-gray-50 min-h-screen pb-24">
                 {/* Search Header */}
                 <div className="max-w-7xl mx-auto px-6 py-12">
                     <div className="relative max-w-xl mx-auto">
@@ -79,10 +79,10 @@ export default function MeetTheTeam() {
                         })}
                     </div>
                 )}
-            </section>
+            </main>
 
             <Footer />
-        </>
+        </div>
     );
 }
 

@@ -10,6 +10,8 @@ import storyImage from '../assets/story.png';
 import sampleImage1 from '../assets/sample.png';
 import sampleImage2 from '../assets/sample.png';
 import { getFeaturedMembers, getGroupColor } from '../data/team';
+import './aboutUs.css';
+
 
 // Unifed Hero Card Component
 // Improved with alternating layout support and richer visual hierarchy
@@ -137,7 +139,7 @@ export default function AboutUs() {
     });
 
     return (
-        <>
+        <div id="overhaul-v2-root">
             <title>About Us</title>
             <NavigationBar />
 
@@ -320,6 +322,6 @@ export default function AboutUs() {
                 </section>
             </main >
             <Footer />
-        </>
+        </div>
     );
 }

@@ -324,7 +324,7 @@ export default function Home() {
     };
 
     return (
-        <>
+        <div id="overhaul-v2-root">
             <NavigationBar />
             <main>
                 {/* Hero Section (always visible) */}
@@ -738,7 +738,7 @@ export default function Home() {
                         <div className="absolute top-0 left-0 w-64 h-64 bg-blue-100 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 opacity-60"></div>
                         <div className="absolute bottom-0 right-0 w-96 h-96 bg-yellow-50 rounded-full blur-3xl translate-x-1/3 translate-y-1/3 opacity-60"></div>
 
-                        <div className="max-w-5xl mx-auto relative z-10 text-center">
+                        <div className="max-w-7xl mx-auto relative z-10 text-center">
                             <h1 className="text-5xl md:text-7xl font-bold mb-8 text-gray-900 font-google-sans leading-tight">
                                 Join our <span className="text-blue-600">Community</span>
                             </h1>
@@ -768,9 +768,8 @@ export default function Home() {
                         </div>
                     </section>
                 </animated.div>
-            </main >
-            {(showPageContent || isMobile) && <Footer />
-            }
-        </>
+                {(showPageContent || isMobile) && <Footer />}
+            </main>
+        </div>
     );
 }

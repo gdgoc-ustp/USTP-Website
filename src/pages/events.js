@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 import NavigationBar from "../components/navBar";
 import Footer from "../components/footer";
 import HeroSection from "../components/HeroSection";
-//import './events.css';
+import './events.css';
 import Sample from '../assets/sample.png';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
@@ -126,7 +126,7 @@ export default function Events() {
     };
 
     return (
-        <>
+        <div id="overhaul-v2-root">
             <title>Events</title>
             <NavigationBar />
             <main className="bg-gray-50 min-h-screen">
@@ -200,6 +200,7 @@ export default function Events() {
                 </section>
             </main>
             <Footer />
-        </>
+        </div>
     );
 }
+
