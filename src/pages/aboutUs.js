@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
+import { motion, useScroll, useSpring } from 'framer-motion';
 import { LuSettings, LuCpu, LuMegaphone, LuUsers } from "react-icons/lu";
 import { useLocation } from 'react-router-dom';
 import NavigationBar from "../components/navBar";
@@ -37,40 +38,91 @@ const HeroCard = ({ title, description, image, theme = "light" }) => (
     </div>
 );
 
-// Image Timeline Item
-const TimelineItem = ({ year, title, description, image, isLast }) => (
-    <div className="relative pl-8 md:pl-0 md:w-1/2 md:ml-auto pr-0 md:pr-12 md:odd:ml-0 md:odd:mr-auto md:odd:pl-12 md:odd:text-right group" data-aos="fade-up">
-        {/* Dot */}
-        <div className="absolute left-0 top-8 md:left-auto md:right-[-9px] md:group-odd:right-auto md:group-odd:left-[-9px] w-5 h-5 rounded-full bg-red-500 border-4 border-white shadow-md z-10"></div>
-        {/* Line */}
-        {!isLast && (
-            <div className="absolute left-[9px] top-12 bottom-[-60px] md:left-auto md:right-0 md:group-odd:right-auto md:group-odd:left-0 w-0.5 bg-gray-200"></div>
-        )}
+// Roadmap Item Component - Material Design Style
+const RoadmapItem = ({ year, title, description, image, index, label }) => {
+    const isEven = index % 2 === 0;
 
-        <div className="mb-16">
-            <div className="mb-6 overflow-hidden rounded-[2rem] shadow-md h-48 md:h-64 w-full">
-                <img
-                    src={image}
-                    alt={title}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                />
+    // Google Brand Colors for the nodes
+    const colors = ["bg-blue-600", "bg-red-600", "bg-yellow-600", "bg-green-600"];
+    const nodeColor = colors[index % colors.length];
+
+    return (
+        <div className={`flex flex-col md:flex-row items-center justify-center w-full mb-24 relative z-10`}>
+            {/* Desktop Connector Line */}
+            <div className={`hidden md:block absolute top-[50%] h-0.5 w-[45%] bg-gray-200 -z-10 ${isEven ? 'right-[50%] origin-right' : 'left-[50%] origin-left'}`}></div>
+
+            {/* Left Side */}
+            <div className={`w-full md:w-[45%] flex justify-end px-6 ${isEven ? 'order-2 md:order-1' : 'order-2 md:order-3 md:justify-start'}`}>
+                <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-100px" }}
+                    transition={{ duration: 0.5, ease: "easeOut" }}
+                    whileHover={{ y: -5 }}
+                    className={`w-full max-w-xl bg-white rounded-[2rem] p-8 shadow-lg border border-gray-100 relative group transition-all duration-300 hover:shadow-xl`}
+                >
+                    {/* Floating Label Badge */}
+                    <div className={`absolute top-6 right-6 ${isEven ? 'md:left-6 md:right-auto' : ''}`}>
+                        <span className={`inline-block px-4 py-1.5 rounded-full ${nodeColor.replace('bg-', 'bg-').replace('600', '50')} ${nodeColor.replace('bg-', 'text-')} text-xs font-bold tracking-wider uppercase`}>
+                            {label}
+                        </span>
+                    </div>
+
+                    {/* Content Container */}
+                    <div className="mt-8">
+                        {/* Image Header */}
+                        <div className="h-56 w-full rounded-2xl overflow-hidden mb-6 relative bg-gray-100">
+                            <img
+                                src={image}
+                                alt={title}
+                                className="w-full h-full object-cover transform transition-transform duration-500 group-hover:scale-105"
+                            />
+                        </div>
+
+                        <h3 className="text-2xl font-bold font-google-sans text-gray-900 mb-3 leading-tight">
+                            {title}
+                        </h3>
+
+                        <p className="text-gray-600 font-medium font-google-sans leading-relaxed">
+                            {description}
+                        </p>
+                    </div>
+                </motion.div>
             </div>
 
-            <span className="inline-block px-4 py-1 rounded-full bg-red-50 text-red-600 font-bold text-sm mb-3">
-                {year}
-            </span>
-            <h3 className="text-2xl font-bold text-gray-900 font-google-sans mb-3">{title}</h3>
-            <p className="text-gray-600 leading-relaxed font-google-sans">
-                {description}
-            </p>
-        </div>
-    </div>
-);
+            {/* Center Node (Spine Marker) - Clean Colored Dot */}
+            <div className={`order-1 md:order-2 flex-shrink-0 relative z-20 mb-8 md:mb-0`}>
+                <motion.div
+                    initial={{ scale: 0 }}
+                    whileInView={{ scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ type: "spring", stiffness: 300, delay: 0.1 }}
+                    className={`w-5 h-5 rounded-full ${nodeColor} ring-4 ring-white shadow-md z-20 relative`}
+                ></motion.div>
+            </div>
 
+            {/* Right Side Spacer */}
+            <div className={`w-full md:w-[45%] hidden md:block ${isEven ? 'order-3' : 'order-1'}`}></div>
+        </div>
+    );
+}
 
 export default function AboutUs() {
     const location = useLocation();
     const featuredMembers = getFeaturedMembers(3);
+
+    const journeyContainerRef = useRef(null);
+    const { scrollYProgress } = useScroll({
+        target: journeyContainerRef,
+        offset: ["start center", "end center"]
+    });
+
+    // Smooth drawing of the line
+    const scaleY = useSpring(scrollYProgress, {
+        stiffness: 100,
+        damping: 30,
+        restDelta: 0.001
+    });
 
     return (
         <>
@@ -92,44 +144,92 @@ export default function AboutUs() {
                         title="Building Community"
                         description="Our mission is to create a vibrant ecosystem where developers can connect, learn, and collaborate. We believe in the power of community-led learning through tech talks and workshops."
                         image={sampleImage2}
-                        theme="light" // Kept light to avoid the "dark block" issue
+                        theme="light"
                     />
                 </section>
 
-                {/* 2. History - w/ Images */}
-                <section className="py-24 px-6 bg-white relative overflow-hidden">
-                    <div className="max-w-5xl mx-auto relative z-10">
-                        <div className="text-center mb-20">
-                            <h2 className="text-4xl md:text-5xl font-bold font-google-sans text-gray-900 mb-6" data-aos="fade-up">Our Journey</h2>
+                {/* 2. History - Roadmap Style */}
+                <section ref={journeyContainerRef} className="py-24 px-4 bg-white relative overflow-hidden">
+                    {/* Background Grid Pattern */}
+                    <div className="absolute inset-0 z-0 opacity-[0.03]"
+                        style={{ backgroundImage: 'radial-gradient(#000 1px, transparent 1px)', backgroundSize: '40px 40px' }}
+                    ></div>
+
+                    <div className="max-w-7xl mx-auto relative z-10">
+                        <div className="text-center mb-32">
+                            <motion.div
+                                initial={{ opacity: 0, y: 30 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                            >
+                                <span className="inline-block py-1 px-3 rounded-full bg-blue-50 text-blue-600 font-bold text-xs tracking-widest uppercase mb-4 border border-blue-100">Our Timeline</span>
+                                <h2 className="text-4xl md:text-6xl font-bold font-google-sans text-gray-900 mb-6">Roadmap</h2>
+                                <p className="text-gray-500 text-xl max-w-2xl mx-auto">From humble beginnings to a campus revolution. Here is how we did it.</p>
+                            </motion.div>
                         </div>
 
                         <div className="relative">
-                            <div className="hidden md:block absolute left-1/2 top-8 bottom-8 w-0.5 bg-gray-200 transform -translate-x-1/2"></div>
+                            {/* Animated Center Line (Desktop) */}
+                            <div className="hidden md:block absolute left-1/2 top-4 bottom-12 w-1 bg-gray-100 transform -translate-x-1/2 rounded-full"></div>
+                            <motion.div
+                                style={{ scaleY }}
+                                className="hidden md:block absolute left-1/2 top-4 bottom-12 w-1 bg-gradient-to-b from-red-500 to-red-600 transform -translate-x-1/2 origin-top rounded-full shadow-[0_0_15px_rgba(239,68,68,0.5)] z-0"
+                            ></motion.div>
 
-                            <TimelineItem
-                                year="The Beginning"
-                                title="Planting the Seed"
-                                description="GDG started as a small initiative to bring Google technologies to campus. It began with just a few students gathering to watch keynotes."
-                                image={storyImage}
-                            />
-                            <TimelineItem
-                                year="Growth Phase"
-                                title="Building Momentum"
-                                description="We expanded our reach, hosting our first major hackathon and establishing partnerships with local tech companies."
-                                image={sampleImage1}
-                            />
-                            <TimelineItem
-                                year="Today"
-                                title="A Thriving Ecosystem"
-                                description="Now, we continue to foster innovation with regular workshops on AI, Cloud, and Mobile development."
-                                image={sampleImage2}
-                                isLast={true}
-                            />
+                            <div className="flex flex-col">
+                                <RoadmapItem
+                                    index={0}
+                                    label="The Beginning"
+                                    title="Planting the Seed (2020)"
+                                    description="GDG started as a small initiative founded by Hannah Mae Hormiguera to bring Google technologies to campus."
+                                    image={storyImage}
+                                />
+                                <RoadmapItem
+                                    index={1}
+                                    label="Growth Phase"
+                                    title="Building Momentum (2020 - 2023)"
+                                    description="We expanded our reach, hosting our first major hackathon and establishing partnerships with local tech companies."
+                                    image={sampleImage1}
+                                />
+                                <RoadmapItem
+                                    index={2}
+                                    label="2024 - Today"
+                                    title="A Thriving Ecosystem"
+                                    description="Now, we continue to foster innovation with regular workshops on AI, Cloud, and Mobile development."
+                                    image={sampleImage2}
+                                />
+                            </div>
                         </div>
                     </div>
                 </section>
 
-                {/* 3. Meet The Team (Restored) */}
+                {/* 3. Departments - Moved Before Team */}
+                <section className="py-24 px-6 bg-white">
+                    <div className="max-w-7xl mx-auto">
+                        <div className="text-center mb-16">
+                            <h2 className="text-4xl md:text-5xl font-bold font-google-sans text-gray-900 mb-4" data-aos="fade-up">Our Departments</h2>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                            {[
+                                { title: "Operations", desc: "Logistics & Planning", color: "bg-blue-50 text-blue-600", icon: <LuSettings className="w-10 h-10" /> },
+                                { title: "Technology", desc: "Innovation & Workshops", color: "bg-red-50 text-red-600", icon: <LuCpu className="w-10 h-10" /> },
+                                { title: "Communications", desc: "Media & Outreach", color: "bg-yellow-50 text-yellow-600", icon: <LuMegaphone className="w-10 h-10" /> },
+                                { title: "Community", desc: "Partnerships & Growth", color: "bg-green-50 text-green-600", icon: <LuUsers className="w-10 h-10" /> }
+                            ].map((dept, idx) => (
+                                <div key={idx} className="group p-10 rounded-[2.5rem] bg-gray-50 border border-transparent hover:bg-white hover:shadow-2xl hover:border-gray-100 transition-all duration-300 hover:-translate-y-2 text-center flex flex-col items-center" data-aos="fade-up" data-aos-delay={idx * 100}>
+                                    <div className={`w-20 h-20 rounded-3xl ${dept.color} flex items-center justify-center mb-8 group-hover:scale-110 transition-transform shadow-sm`}>
+                                        {dept.icon}
+                                    </div>
+                                    <h3 className="text-2xl font-bold font-google-sans text-gray-900 mb-3">{dept.title}</h3>
+                                    <p className="text-gray-500 font-google-sans leading-relaxed">{dept.desc}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+
+                {/* 4. Meet The Team - Moved After Departments */}
                 <section className="py-24 px-6 bg-gray-50">
                     <div className="max-w-7xl mx-auto">
                         <div className="text-center mb-16">
@@ -168,33 +268,7 @@ export default function AboutUs() {
                         </div>
                     </div>
                 </section>
-
-                {/* 4. Departments - Corrected Colors */}
-                <section className="py-24 px-6 bg-white">
-                    <div className="max-w-7xl mx-auto">
-                        <div className="text-center mb-16">
-                            <h2 className="text-4xl md:text-5xl font-bold font-google-sans text-gray-900 mb-4" data-aos="fade-up">Our Departments</h2>
-                        </div>
-
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                            {[
-                                { title: "Operations", desc: "Logistics & Planning", color: "bg-blue-50 text-blue-600", icon: <LuSettings className="w-10 h-10" /> },
-                                { title: "Technology", desc: "Innovation & Workshops", color: "bg-red-50 text-red-600", icon: <LuCpu className="w-10 h-10" /> },
-                                { title: "Communications", desc: "Media & Outreach", color: "bg-yellow-50 text-yellow-600", icon: <LuMegaphone className="w-10 h-10" /> },
-                                { title: "Community", desc: "Partnerships & Growth", color: "bg-green-50 text-green-600", icon: <LuUsers className="w-10 h-10" /> }
-                            ].map((dept, idx) => (
-                                <div key={idx} className="group p-10 rounded-[2.5rem] bg-gray-50 border border-transparent hover:bg-white hover:shadow-2xl hover:border-gray-100 transition-all duration-300 hover:-translate-y-2 text-center flex flex-col items-center" data-aos="fade-up" data-aos-delay={idx * 100}>
-                                    <div className={`w-20 h-20 rounded-3xl ${dept.color} flex items-center justify-center mb-8 group-hover:scale-110 transition-transform shadow-sm`}>
-                                        {dept.icon}
-                                    </div>
-                                    <h3 className="text-2xl font-bold font-google-sans text-gray-900 mb-3">{dept.title}</h3>
-                                    <p className="text-gray-500 font-google-sans leading-relaxed">{dept.desc}</p>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </section>
-            </main>
+            </main >
             <Footer />
         </>
     );
