@@ -1,16 +1,18 @@
 import React, { useEffect, useState, useMemo, useRef } from 'react';
 import NavigationBar from "../components/navBar";
 import Footer from "../components/footer";
-import HeroSection from "../components/HeroSection";
 import './news.css';
+import './main.css';
+import './home.css';
+import '../components/HeroSection.css';
 import Sample from '../assets/sample.png';
 import { Link, useLocation } from "react-router-dom";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import { motion } from 'framer-motion';
 
 export default function News() {
     const location = useLocation();
-    const contentRef = useRef(null);
 
     const [blogPosts, setBlogPosts] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -21,8 +23,126 @@ export default function News() {
     const [sortBy, setSortBy] = useState('newest');
     const postsPerPage = 10;
 
+    // Window size for responsive circle sizing
+    const [windowSize, setWindowSize] = useState({
+        width: window.innerWidth,
+        height: window.innerHeight
+    });
+
+    // Get the previous path from location state
+    const previousPath = location.state?.from || '/';
+
+    // Determine if we're coming from a page with hero section
+    const comingFromHeroPage = previousPath.includes('/events') ||
+        previousPath.includes('/about') ||
+        previousPath.includes('/news');
+
+    const contentRef = useRef(null);
+
+    // Calculate target size for the circle based on window size (matching circle-7)
+    const vmin = Math.min(windowSize.width, windowSize.height);
+    const targetSize = Math.min(Math.max(240, vmin * 0.9), 1100);
+
+    // Define animation variants for the red circle
+    const circleVariants = {
+        fromEvents: {
+            // From circle-8 position (right: 2%, top: 86%)
+            left: '98%',
+            top: '86%',
+            width: `${Math.min(windowSize.width, windowSize.height) * 0.082}px`,
+            height: `${Math.min(windowSize.width, windowSize.height) * 0.082}px`,
+        },
+        fromHero: {
+            // Already at center position
+            left: '50%',
+            top: '50%',
+            width: `${targetSize}px`,
+            height: `${targetSize}px`,
+        },
+        fromHome: {
+            // From circle2 position (bottom: 10%, left: 14%)
+            left: '14%',
+            top: '90%',
+            width: '300px',
+            height: '300px',
+        },
+        final: {
+            // Final center position
+            left: '50%',
+            top: '50%',
+            width: `${targetSize}px`,
+            height: `${targetSize}px`,
+        }
+    };
+
+    // Determine initial variant based on previous page
+    const getInitialVariant = () => {
+        if (previousPath.includes('/events')) {
+            return 'fromEvents';
+        } else if (comingFromHeroPage) {
+            return 'fromHero';
+        } else {
+            return 'fromHome';
+        }
+    };
+
+    // Banner content animation variants
+    const bannerContentVariants = {
+        visible: {
+            opacity: 1,
+            y: 0,
+            transition: { duration: 0.8, ease: "easeOut" }
+        },
+        hidden: {
+            opacity: 0,
+            y: -20,
+            transition: { duration: 0.8, ease: "easeOut" }
+        }
+    };
+
+    // Hero elements animation variants
+    const heroElementsVariants = {
+        hidden: { opacity: 0 },
+        visible: {
+            opacity: 1,
+            transition: { duration: 0.8, ease: "easeOut" }
+        }
+    };
+
+    // Banner height management
+    const [bannerHeight, setBannerHeight] = useState(
+        comingFromHeroPage ? 'clamp(360px, 60svh, 720px)' : '100vh'
+    );
+
     useEffect(() => {
-        AOS.init({ duration: 800, easing: 'ease-in-out', once: true });
+        if (!comingFromHeroPage) {
+            // Animate height reduction after component mounts, coordinated with circle animation
+            const timer = setTimeout(() => {
+                setBannerHeight('clamp(360px, 60svh, 720px)');
+            }, 300); // Delay to let circle start moving first
+            return () => clearTimeout(timer);
+        }
+    }, [comingFromHeroPage]);
+
+    useEffect(() => {
+        // Window resize handler
+        const handleResize = () => {
+            setWindowSize({
+                width: window.innerWidth,
+                height: window.innerHeight
+            });
+        };
+
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+    useEffect(() => {
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true,
+        });
         fetchBlogPosts();
     }, []);
 
@@ -30,19 +150,36 @@ export default function News() {
         try {
             setLoading(true);
             setError(null);
+
             const offset = pageNumber * postsPerPage;
+
             const response = await fetch(
                 `${process.env.REACT_APP_SUPABASE_URL}/rest/v1/blog_posts?select=*&limit=${postsPerPage}&offset=${offset}&order=created_at.desc`,
-                { headers: { "apikey": `${process.env.REACT_APP_SUPABASE_ANON_KEY}`, "Content-Type": "application/json" } }
+                {
+                    headers: {
+                        "apikey": `${process.env.REACT_APP_SUPABASE_ANON_KEY}`,
+                        "Content-Type": "application/json"
+                    }
+                }
             );
 
-            if (!response.ok) throw new Error(`Error fetching blog posts: ${response.statusText}`);
+            if (!response.ok) {
+                throw new Error(`Error fetching blog posts: ${response.statusText}`);
+            }
 
             const data = await response.json();
-            if (data.length < postsPerPage) setHasMore(false);
 
-            if (pageNumber === 0) setBlogPosts(data);
-            else setBlogPosts((prev) => [...prev, ...data]);
+            if (data.length < postsPerPage) {
+                setHasMore(false);
+            }
+
+            // If this is the first page, replace the posts array
+            // If it's a subsequent page, append to the existing array
+            if (pageNumber === 0) {
+                setBlogPosts(data);
+            } else {
+                setBlogPosts((prev) => [...prev, ...data]);
+            }
         } catch (err) {
             console.error("Error fetching blog posts:", err);
             setError(err.message);
@@ -51,20 +188,47 @@ export default function News() {
         }
     };
 
+    // Function to create placeholder image if none exists
     const getImageUrl = (url) => {
         if (!url) return Sample;
         if (url.startsWith('http')) return url;
         return `https://yrvykwljzajfkraytbgr.supabase.co/storage/v1/object/public/blog-images/${url}`;
     };
 
+    // Function to format date nicely
     const formatDate = (dateString) => {
         const date = new Date(dateString);
-        return date.toLocaleDateString(undefined, { year: "numeric", month: "long", day: "numeric" });
+        const now = new Date();
+        const diffTime = Math.abs(now - date);
+        const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+        if (diffDays < 1) {
+            const diffHours = Math.floor(diffTime / (1000 * 60 * 60));
+            if (diffHours < 1) {
+                const diffMinutes = Math.floor(diffTime / (1000 * 60));
+                return `${diffMinutes} minute${diffMinutes !== 1 ? 's' : ''} ago`;
+            }
+            return `${diffHours} hour${diffHours !== 1 ? 's' : ''} ago`;
+        } else if (diffDays === 1) {
+            return 'Yesterday';
+        } else if (diffDays < 7) {
+            return `${diffDays} days ago`;
+        } else {
+            const options = { year: "numeric", month: "long", day: "numeric" };
+            return date.toLocaleDateString(undefined, options);
+        }
     };
 
+    // Function to strip HTML tags from description for preview
     const stripHtml = (html) => {
         const doc = new DOMParser().parseFromString(html, "text/html");
         return doc.body.textContent || "";
+    };
+
+    const truncateText = (text, maxLength = 200) => {
+        if (!text) return "";
+        if (text.length <= maxLength) return text;
+        return text.slice(0, maxLength) + "...";
     };
 
     const loadMore = () => {
@@ -73,6 +237,7 @@ export default function News() {
         fetchBlogPosts(nextPage);
     };
 
+    // Filter and sort posts based on search term and sort option
     const filteredAndSortedPosts = useMemo(() => {
         let filtered = blogPosts.filter(post =>
             post.heading.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -81,105 +246,251 @@ export default function News() {
         );
 
         switch (sortBy) {
-            case 'oldest': return filtered.sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
-            case 'alphabetical': return filtered.sort((a, b) => a.heading.localeCompare(b.heading));
-            default: return filtered.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+            case 'oldest':
+                return filtered.sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
+            case 'alphabetical':
+                return filtered.sort((a, b) => a.heading.localeCompare(b.heading));
+            default: // newest
+                return filtered.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
         }
     }, [blogPosts, searchTerm, sortBy]);
 
+    const handleSearchChange = (e) => {
+        setSearchTerm(e.target.value);
+    };
+
+    const handleSortChange = (e) => {
+        setSortBy(e.target.value);
+    };
+
+    const clearSearch = () => {
+        setSearchTerm('');
+    };
 
     return (
         <>
             <title>News</title>
             <NavigationBar />
-            <main className="bg-gray-50 min-h-screen">
-                <HeroSection title="News" theme="news" previousPath={location.state?.from} />
+            <main>
+                {/* Hero Section with Transition */}
+                <header className="banner" style={{ 
+                    height: bannerHeight, 
+                    transition: comingFromHeroPage ? 'none' : 'height 0.8s ease-in-out' 
+                }}>
 
-                <section className="py-24 px-4 max-w-7xl mx-auto" ref={contentRef} data-aos="fade-up">
-                    <div className="flex flex-col md:flex-row justify-between items-center mb-16 gap-6">
-                        <h2 className="text-4xl md:text-5xl font-bold font-google-sans text-gray-900">Latest Updates</h2>
+                    {/* Conditional Banner Circles - Only show initial circles when coming from non-hero pages */}
+                    {!comingFromHeroPage && (
+                        <motion.div 
+                            variants={bannerContentVariants}
+                            initial="visible"
+                            animate="hidden"
+                            style={{ position: 'absolute', inset: 0, zIndex: 0 }}
+                        >
+                            <div className="circle circle1"></div>
+                            <div className="circle circle3"></div>
+                            <div className="circle circle4"></div>
 
-                        <div className="flex gap-4 w-full md:w-auto">
-                            <select value={sortBy} onChange={(e) => setSortBy(e.target.value)} className="px-6 py-3 rounded-full border border-gray-200 bg-white font-google-sans text-gray-700 outline-none focus:ring-2 focus:ring-red-500">
-                                <option value="newest">Newest First</option>
-                                <option value="oldest">Oldest First</option>
-                                <option value="alphabetical">A-Z</option>
-                            </select>
-                            <input
-                                type="text"
-                                placeholder="Search..."
-                                value={searchTerm}
-                                onChange={(e) => setSearchTerm(e.target.value)}
-                                className="px-6 py-3 rounded-full border border-gray-200 bg-white font-google-sans w-full md:w-64 outline-none focus:ring-2 focus:ring-red-500"
-                            />
+                            {/* Gray accent circles */}
+                            <div className="gray-circle gray-circle1"></div>
+                            <div className="gray-circle gray-circle2"></div>
+                            <div className="gray-circle gray-circle3"></div>
+                        </motion.div>
+                    )}
+
+                    {/* Hero Circles - Always present for news page */}
+                    <motion.div 
+                        className="hero-circles" 
+                        variants={heroElementsVariants}
+                        initial="hidden"
+                        animate="visible"
+                        style={{ position: 'absolute', inset: 0, zIndex: 0 }}
+                    >
+                        <div className="circle circle-1"></div>
+                        <div className="circle circle-2"></div>
+                        <div className="circle circle-3"></div>
+                        <div className="circle circle-4"></div>
+                        <div className="circle circle-5"></div>
+                        <div className="circle circle-6"></div>
+                        {/* circle-8 (green circle) */}
+                        <div
+                            className="circle circle-8"
+                            style={{
+                                background: 'linear-gradient(135deg, #4EA865 0%, #1C793A 100%)'
+                            }}
+                        ></div>
+                    </motion.div>
+
+                    {/* Red Circle (circle-7 - Main transitioning circle) */}
+                    <motion.div 
+                        variants={circleVariants}
+                        initial={getInitialVariant()}
+                        animate="final"
+                        transition={{ 
+                            duration: 1.2, 
+                            ease: [0.25, 0.46, 0.45, 0.94], // Custom easing for smooth motion
+                            type: "tween" 
+                        }}
+                        style={{
+                            position: 'absolute',
+                            borderRadius: '50%',
+                            background: 'linear-gradient(135deg, #EB483B 0%, #B41F19 100%)',
+                            zIndex: 2,
+                            transform: 'translate(-50%, -50%)' // Center the circle on its position
+                        }}
+                    ></motion.div>
+
+                    {/* New Hero Title "News" */}
+                    <motion.div 
+                        variants={heroElementsVariants}
+                        initial="hidden"
+                        animate="visible"
+                        style={{ position: 'absolute', zIndex: 10 }}
+                    >
+                        <h1 style={{ color: 'white', fontSize: '5rem', fontWeight: '700', margin: 0 }}>News</h1>
+                    </motion.div>
+                </header>
+
+                <section className="news-container" ref={contentRef}>
+                    <div className="whats-new-section">
+                        <h2>What's New</h2>
+
+                        {/* Search and Filter Controls */}
+                        <div className="news-controls">
+                            <div className="news-search-container">
+                                <div className="news-search-input-wrapper">
+                                    <svg className="news-search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M21 21L16.514 16.506L21 21ZM19 10.5C19 15.194 15.194 19 10.5 19C5.806 19 2 15.194 2 10.5C2 5.806 5.806 2 10.5 2C15.194 2 19 5.806 19 10.5Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                    </svg>
+                                    <input
+                                        type="text"
+                                        placeholder="Search articles..."
+                                        value={searchTerm}
+                                        onChange={handleSearchChange}
+                                        className="news-search-input"
+                                    />
+                                    {searchTerm && (
+                                        <button onClick={clearSearch} className="news-clear-search" aria-label="Clear search">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                            </svg>
+                                        </button>
+                                    )}
+                                </div>
+                            </div>
+
+                            <div className="news-sort-container">
+                                <select value={sortBy} onChange={handleSortChange} className="news-sort-select">
+                                    <option value="newest">Newest First</option>
+                                    <option value="oldest">Oldest First</option>
+                                    <option value="alphabetical">A-Z</option>
+                                </select>
+                            </div>
                         </div>
-                    </div>
 
-                    {loading ? (
-                        <div className="flex items-center justify-center p-20">
-                            <div className="w-16 h-16 border-4 border-red-200 border-t-red-600 rounded-full animate-spin"></div>
-                        </div>
-                    ) : filteredAndSortedPosts.length > 0 ? (
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                            {filteredAndSortedPosts.map((post, index) => {
-                                const isFeatured = index === 0 && !searchTerm;
-                                return (
-                                    <div key={post.id}
-                                        className={`bg-white rounded-[2.5rem] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group flex flex-col border border-gray-100 ${isFeatured ? 'lg:col-span-2 lg:flex-row lg:items-center p-0' : 'flex-col'}`}
-                                        data-aos="fade-up" data-aos-delay={index * 100}
-                                    >
-                                        <div className={`overflow-hidden relative ${isFeatured ? 'h-full w-full lg:w-1/2 min-h-[400px]' : 'h-64'}`}>
+                        {/* Results Summary */}
+                        {searchTerm && (
+                            <div className="news-search-results-summary">
+                                <p>
+                                    {filteredAndSortedPosts.length} result{filteredAndSortedPosts.length !== 1 ? 's' : ''}
+                                    {searchTerm && ` for "${searchTerm}"`}
+                                </p>
+                            </div>
+                        )}
+
+                        <div className="blog-posts">
+                            {loading ? (
+                                <div className="loading-container">
+                                    <div className="loading-spinner"></div>
+                                    <p>Loading posts...</p>
+                                </div>
+                            ) : error ? (
+                                <div className="error-container">
+                                    <div className="error-icon">
+                                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#ef4444" strokeWidth="2">
+                                            <circle cx="12" cy="12" r="10" />
+                                            <line x1="15" y1="9" x2="9" y2="15" />
+                                            <line x1="9" y1="9" x2="15" y2="15" />
+                                        </svg>
+                                    </div>
+                                    <h3>Oops! Something went wrong</h3>
+                                    <p>We couldn't load the articles. Please check your connection and try again.</p>
+                                    <button onClick={fetchBlogPosts} className="retry-button">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                            <path d="M1 4v6h6M23 20v-6h-6" />
+                                            <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15" />
+                                        </svg>
+                                        Try Again
+                                    </button>
+                                </div>
+                            ) : filteredAndSortedPosts.length > 0 ? (
+                                filteredAndSortedPosts.map((post, index) => (
+                                    <div key={post.id} className="blog-post" data-aos="fade-up" data-aos-delay={index * 100}>
+                                        <div className="post-image">
                                             <img
                                                 src={getImageUrl(post.image_url)}
                                                 alt={post.heading}
-                                                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                                             />
-                                            <div className="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors"></div>
                                         </div>
-
-                                        <div className={`p-8 flex flex-col ${isFeatured ? 'w-full lg:w-1/2 justify-center py-12 px-10' : 'flex-grow'}`}>
-                                            <div className="flex items-center gap-3 mb-4">
-                                                <span className="px-3 py-1 bg-red-100 text-red-600 rounded-full text-xs font-bold uppercase tracking-wider">
-                                                    News
-                                                </span>
-                                                <span className="text-gray-400 text-sm font-medium">{formatDate(post.created_at)}</span>
+                                        <div className="post-content">
+                                            <div className="post-header">
+                                                <h3>{post.heading}</h3>
+                                                <p className="post-date">{formatDate(post.created_at)}</p>
                                             </div>
-
-                                            <h3 className={`font-bold text-gray-900 font-google-sans mb-4 group-hover:text-red-600 transition-colors ${isFeatured ? 'text-3xl md:text-4xl leading-tight' : 'text-xl md:text-2xl line-clamp-2'}`}>
-                                                {post.heading}
-                                            </h3>
-
-                                            <p className={`text-gray-600 mb-6 font-google-sans leading-relaxed ${isFeatured ? 'text-lg line-clamp-4' : 'text-base line-clamp-3'}`}>
-                                                {post.tagline || stripHtml(post.description)}
+                                            <p className="post-description">
+                                                {post.tagline || truncateText(stripHtml(post.description), 300)}
                                             </p>
-
-                                            <div className="mt-auto">
-                                                <Link to={`/news/article/${post.id}`} className="inline-flex items-center text-red-600 font-bold hover:gap-2 transition-all">
-                                                    Read Article <span className="ml-1 text-xl">→</span>
-                                                </Link>
-                                            </div>
+                                            <Link to={`/news/article/${post.id}`} className="read-button">
+                                                Read
+                                            </Link>
                                         </div>
                                     </div>
-                                );
-                            })}
+                                ))
+                            ) : (
+                                <div className="no-posts">
+                                    <p>
+                                        {searchTerm
+                                            ? `No articles found matching "${searchTerm}". Try adjusting your search terms.`
+                                            : "No blog posts found. Check back soon for updates!"
+                                        }
+                                    </p>
+                                    {searchTerm && (
+                                        <button onClick={clearSearch} className="news-clear-search-button">
+                                            Clear Search
+                                        </button>
+                                    )}
+                                </div>
+                            )}
                         </div>
-                    ) : (
-                        <div className="text-center py-20 bg-white rounded-[2.5rem] border border-gray-100">
-                            <h3 className="text-2xl font-bold text-gray-900 mb-2">No articles found</h3>
-                            <p className="text-gray-500">Try adjusting your search terms.</p>
-                            <button onClick={() => setSearchTerm('')} className="mt-6 px-6 py-2 bg-red-600 text-white rounded-full font-bold hover:bg-red-700 transition">Clear Search</button>
-                        </div>
-                    )}
 
-                    {hasMore && !loading && !searchTerm && (
-                        <div className="flex justify-center mt-16">
-                            <button onClick={loadMore} className="px-8 py-4 bg-white border-2 border-red-500 text-red-600 font-bold rounded-full hover:bg-red-600 hover:text-white transition-all shadow-sm hover:shadow-lg">
-                                Load More Articles
-                            </button>
-                        </div>
-                    )}
+                        {hasMore && blogPosts.length > 0 && !loading && !searchTerm && (
+                            <div className="load-more-container">
+                                <button
+                                    onClick={loadMore}
+                                    className="load-more-button"
+                                    disabled={loading}
+                                >
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                        <path d="M12 5v14M5 12l7 7 7-7" />
+                                    </svg>
+                                    Load More Articles
+                                </button>
+                                <p className="posts-count">
+                                    Showing {blogPosts.length} articles
+                                </p>
+                            </div>
+                        )}
+
+                        {/* Pagination info when searching */}
+                        {searchTerm && filteredAndSortedPosts.length > 0 && (
+                            <div className="pagination-info">
+                                <p>
+                                    Showing {filteredAndSortedPosts.length} of {blogPosts.length} articles
+                                </p>
+                            </div>
+                        )}
+                    </div>
                 </section>
-            </main>
+            </main >
             <Footer />
         </>
     );
