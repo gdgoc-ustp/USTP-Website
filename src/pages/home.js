@@ -10,7 +10,7 @@ import About from '../assets/sample.png';
 import { Link } from "react-router-dom";
 import { useSpring, animated, config } from 'react-spring';
 import Marquee from '../components/Marquee';
-import { SiReact, SiFirebase, SiFlutter, SiAndroid, SiTensorflow, SiPython, SiGithub, SiGooglecloud, SiGoogle } from 'react-icons/si';
+import { SiGithub, SiGoogle } from 'react-icons/si';
 
 import { AnimatePresence, motion } from 'framer-motion';
 import AOS from 'aos';
