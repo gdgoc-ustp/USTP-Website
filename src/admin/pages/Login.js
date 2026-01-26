@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { checkFirstTimeSetup } from '../../lib/supabase';
-import Logo from '../../assets/logo.svg';
+import Logo from '../../assets/logo.png';
 import './Login.css';
 
 export default function Login() {
@@ -21,18 +21,18 @@ export default function Login() {
                 console.log('Checking first-time setup...');
                 const { isFirstTime, error } = await checkFirstTimeSetup();
                 console.log('Setup check result:', { isFirstTime, error });
-                
+
                 if (error) {
                     console.error('Error checking setup:', error);
                     return;
                 }
-                
+
                 if (isFirstTime) {
                     console.log('Redirecting to setup...');
                     navigate('/admin/setup');
                     return;
                 }
-                
+
                 console.log('Not first time setup, staying on login page');
             } catch (error) {
                 console.error('Error during setup check:', error);
@@ -82,13 +82,13 @@ export default function Login() {
             <div className="admin-login-card">
                 <img src={Logo} alt="Logo" className="admin-logo" />
                 <h2 className="admin-title">Admin Login</h2>
-                
+
                 {error && (
                     <div className="admin-error-message">
                         {error}
                     </div>
                 )}
-                
+
                 <form onSubmit={handleSubmit} className="admin-login-form">
                     <div className="admin-form-group">
                         <input
@@ -100,7 +100,7 @@ export default function Login() {
                             required
                         />
                     </div>
-                    
+
                     <div className="admin-form-group">
                         <input
                             type="password"
@@ -111,7 +111,7 @@ export default function Login() {
                             required
                         />
                     </div>
-                    
+
                     <div className="admin-remember-me">
                         <label className="admin-checkbox-label">
                             <input
@@ -123,9 +123,9 @@ export default function Login() {
                             <span>Remember me</span>
                         </label>
                     </div>
-                    
-                    <button 
-                        type="submit" 
+
+                    <button
+                        type="submit"
                         className="admin-login-button"
                         disabled={loading}
                     >

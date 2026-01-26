@@ -28,6 +28,15 @@
     opacity: 1 !important;
 }
 
+#overhaul-v2-root .roadmap-container {
+    perspective: 2000px !important;
+    transform-style: preserve-3d !important;
+}
+
+#overhaul-v2-root .roadmap-item-card {
+    transform-style: preserve-3d !important;
+}
+
 /* target specific headings and paragraphs if they look off in prod */
 #overhaul-v2-root h1,
 #overhaul-v2-root h2,

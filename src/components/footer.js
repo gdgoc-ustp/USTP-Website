@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import './footer.css';
-import Logo from '../assets/logo.svg';
+import Logo from '../assets/logo.png';
 import { FaFacebookF, FaInstagram, FaLinkedinIn, FaGithub, FaDiscord } from 'react-icons/fa';
 
 export default function Footer() {
