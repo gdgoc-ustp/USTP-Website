@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { motion, useScroll, useSpring } from 'framer-motion';
+import { motion, useScroll, useSpring, useTransform } from 'framer-motion';
 import { LuSettings, LuCpu, LuMegaphone, LuUsers } from "react-icons/lu";
 import { useLocation } from 'react-router-dom';
 import NavigationBar from "../components/navBar";
@@ -10,6 +10,8 @@ import storyImage from '../assets/story.png';
 import sampleImage1 from '../assets/sample.png';
 import sampleImage2 from '../assets/sample.png';
 import { getFeaturedMembers, getGroupColor } from '../data/team';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 import './aboutUs.css';
 
 
@@ -53,43 +55,58 @@ const HeroCard = ({ title, description, image, theme = "light", reverse = false 
 // I will include RoadmapItem briefly or assume the user wants me to replace the bottom part primarily if I target it.
 // Actually, I can just replace the definition of HeroCard and the main AboutUs body content.
 
-const RoadmapItem = ({ year, title, description, image, index, label }) => {
+const RoadmapItem = ({ year, title, description, image, index, label, rotateX, rotateY }) => {
     const isEven = index % 2 === 0;
+    const itemRef = useRef(null);
 
-    // Google Brand Colors for the nodes
+    // google brand colors for the nodes
     const colors = ["bg-blue-600", "bg-red-600", "bg-yellow-600", "bg-green-600"];
     const nodeColor = colors[index % colors.length];
 
-    return (
-        <div className={`flex flex-col md:flex-row items-center justify-center w-full mb-24 relative z-10`}>
-            {/* Desktop Connector Line */}
-            <div className={`hidden md:block absolute top-[50%] h-0.5 w-[45%] bg-gray-200 -z-10 ${isEven ? 'right-[50%] origin-right' : 'left-[50%] origin-left'}`}></div>
+    // local scroll for connector filling
+    const { scrollYProgress: itemScroll } = useScroll({
+        target: itemRef,
+        offset: ["start 85%", "center center"]
+    });
+    const connectorScale = useSpring(itemScroll, { stiffness: 100, damping: 30 });
 
-            {/* Left Side */}
+    return (
+        <div ref={itemRef} className={`flex flex-col md:flex-row items-center justify-center w-full mb-24 relative z-10`}>
+            {/* desktop connector line - static background */}
+            <div className={`hidden md:block absolute top-[50%] h-0.5 w-[45%] bg-gray-100 -z-10 ${isEven ? 'right-[50%]' : 'left-[50%]'}`}></div>
+
+            {/* desktop connector line - animated fill */}
+            <motion.div
+                style={{ scaleX: connectorScale }}
+                className={`hidden md:block absolute top-[50%] h-0.5 w-[45%] ${nodeColor} -z-10 ${isEven ? 'right-[50%] origin-right' : 'left-[50%] origin-left'}`}
+            ></motion.div>
+
+            {/* left side */}
             <div className={`w-full md:w-[45%] flex justify-end px-6 ${isEven ? 'order-2 md:order-1' : 'order-2 md:order-3 md:justify-start'}`}>
                 <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: "-100px" }}
-                    transition={{ duration: 0.5, ease: "easeOut" }}
-                    whileHover={{ y: -5 }}
-                    className={`w-full max-w-xl bg-white rounded-[2rem] p-8 shadow-lg border border-gray-100 relative group transition-all duration-300 hover:shadow-xl`}
+                    initial={{ opacity: 0, x: isEven ? -50 : 50, rotate: isEven ? -2 : 2 }}
+                    whileInView={{ opacity: 1, x: 0, rotate: 0 }}
+                    viewport={{ margin: "-10% 0px" }}
+                    transition={{ duration: 0.6, ease: "easeOut" }}
+                    whileHover={{ y: -5, scale: 1.02 }}
+                    style={{ rotateX, rotateY, transformStyle: 'preserve-3d' }}
+                    className={`w-full max-w-xl bg-white rounded-[2rem] p-8 shadow-lg border border-gray-100 relative group transition-all duration-300 hover:shadow-xl roadmap-item-card`}
                 >
-                    {/* Floating Label Badge */}
+                    {/* floating label badge */}
                     <div className={`absolute top-6 right-6 ${isEven ? 'md:left-6 md:right-auto' : ''}`}>
                         <span className={`inline-block px-4 py-1.5 rounded-full ${nodeColor.replace('bg-', 'bg-').replace('600', '50')} ${nodeColor.replace('bg-', 'text-')} text-xs font-bold tracking-wider uppercase`}>
                             {label}
                         </span>
                     </div>
 
-                    {/* Content Container */}
+                    {/* content container */}
                     <div className="mt-8">
-                        {/* Image Header */}
-                        <div className="h-56 w-full rounded-2xl overflow-hidden mb-6 relative bg-gray-100">
+                        <div className="h-56 w-full rounded-2xl overflow-hidden mb-6 relative bg-gray-100 shadow-inner" style={{ transform: 'translateZ(20px)' }}>
                             <img
                                 src={image}
                                 alt={title}
                                 className="w-full h-full object-cover transform transition-transform duration-500 group-hover:scale-105"
+                                style={{ transform: 'translateZ(10px)' }}
                             />
                         </div>
 
@@ -104,18 +121,24 @@ const RoadmapItem = ({ year, title, description, image, index, label }) => {
                 </motion.div>
             </div>
 
-            {/* Center Node (Spine Marker) - Clean Colored Dot */}
+            {/* center node (spine marker) - clean colored dot */}
             <div className={`order-1 md:order-2 flex-shrink-0 relative z-20 mb-8 md:mb-0`}>
                 <motion.div
-                    initial={{ scale: 0 }}
-                    whileInView={{ scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ type: "spring", stiffness: 300, delay: 0.1 }}
+                    initial={{ scale: 0, opacity: 0 }}
+                    whileInView={{ scale: 1, opacity: 1 }}
+                    viewport={{ margin: "-10% 0px" }}
+                    transition={{ type: "spring", stiffness: 300, damping: 20, delay: 0.1 }}
                     className={`w-5 h-5 rounded-full ${nodeColor} ring-4 ring-white shadow-md z-20 relative`}
-                ></motion.div>
+                >
+                    {/* pulsing glow when active */}
+                    <motion.div
+                        style={{ scale: connectorScale }}
+                        className={`absolute inset-0 rounded-full ${nodeColor} opacity-20`}
+                    ></motion.div>
+                </motion.div>
             </div>
 
-            {/* Right Side Spacer */}
+            {/* right side spacer */}
             <div className={`w-full md:w-[45%] hidden md:block ${isEven ? 'order-3' : 'order-1'}`}></div>
         </div>
     );
@@ -126,10 +149,27 @@ export default function AboutUs() {
     const featuredMembers = getFeaturedMembers(3);
 
     const journeyContainerRef = useRef(null);
+
+    // progress tracking for the whole roadmap
     const { scrollYProgress } = useScroll({
         target: journeyContainerRef,
-        offset: ["start center", "end center"]
+        offset: ["start 80%", "end center"]
     });
+
+    const rotateX = useTransform(scrollYProgress, [0, 1], [15, -15]);
+    const rotateY = useTransform(scrollYProgress, [0, 1], [-10, 10]);
+    const floatingY = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
+    const orbRotate = useTransform(scrollYProgress, [0, 1], [0, 1080]);
+    const orbScale = useTransform(scrollYProgress, [0, 0.2, 0.5, 0.8, 1], [0.5, 1.2, 1.5, 1.2, 0.5]);
+    const orbBlur = useTransform(scrollYProgress, [0, 0.5, 1], ["2px", "0px", "2px"]);
+
+    useEffect(() => {
+        AOS.init({
+            duration: 1000,
+            once: true,
+            easing: 'ease-out-cubic'
+        });
+    }, []);
 
     // Smooth drawing of the line
     const scaleY = useSpring(scrollYProgress, {
@@ -139,7 +179,7 @@ export default function AboutUs() {
     });
 
     return (
-        <div id="overhaul-v2-root">
+        <div id="overhaul-v2-root" >
             <title>About Us</title>
             <NavigationBar />
 
@@ -163,8 +203,7 @@ export default function AboutUs() {
                     />
                 </section>
 
-                {/* 2. History - Roadmap Style */}
-                <section ref={journeyContainerRef} className="py-24 px-4 bg-white relative overflow-hidden">
+                <section ref={journeyContainerRef} className="py-24 px-4 bg-white relative overflow-hidden roadmap-container">
                     {/* Background Grid Pattern */}
                     <div className="absolute inset-0 z-0 opacity-[0.03]"
                         style={{ backgroundImage: 'radial-gradient(#000 1px, transparent 1px)', backgroundSize: '40px 40px' }}
@@ -184,6 +223,27 @@ export default function AboutUs() {
                         </div>
 
                         <div className="relative">
+                            {/* 3D floating orb that follows the scroll */}
+                            <motion.div
+                                style={{
+                                    top: floatingY,
+                                    left: '50%',
+                                    x: '-50%',
+                                    y: '-50%',
+                                    rotateZ: orbRotate,
+                                    scale: orbScale,
+                                    filter: `blur(${orbBlur})`,
+                                }}
+                                className="hidden md:block absolute z-30 pointer-events-none"
+                            >
+                                <div className="relative w-16 h-16">
+                                    {/* generic 3d-ish sphere using gradients or layers */}
+                                    <div className="absolute inset-0 rounded-full bg-gradient-to-br from-blue-400 via-red-400 to-yellow-400 opacity-80 blur-[2px] shadow-[0_0_30px_rgba(66,133,244,0.4)]"></div>
+                                    <div className="absolute inset-2 rounded-full bg-white/20 backdrop-blur-sm border border-white/30"></div>
+                                    <div className="absolute top-2 left-2 w-4 h-4 rounded-full bg-white/40 blur-[1px]"></div>
+                                </div>
+                            </motion.div>
+
                             {/* SVG Connector Path for perfectly smooth connections */}
                             <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-full -translate-x-1/2 h-full z-0 overflow-visible pointer-events-none">
                                 <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
@@ -199,6 +259,7 @@ export default function AboutUs() {
                                         stroke="url(#gradient-line)"
                                         strokeWidth="4"
                                         vectorEffect="non-scaling-stroke"
+                                        className="roadmap-line"
                                         fill="none"
                                         style={{ pathLength: scaleY }}
                                     />
@@ -219,6 +280,8 @@ export default function AboutUs() {
                                     title="Planting the Seed (2020)"
                                     description="GDG started as a small initiative founded by Hannah Mae Hormiguera to bring Google technologies to campus."
                                     image={storyImage}
+                                    rotateX={rotateX}
+                                    rotateY={rotateY}
                                 />
                                 <RoadmapItem
                                     index={1}
@@ -226,6 +289,8 @@ export default function AboutUs() {
                                     title="Building Momentum (2020 - 2023)"
                                     description="We expanded our reach, hosting our first major hackathon and establishing partnerships with local tech companies."
                                     image={sampleImage1}
+                                    rotateX={rotateX}
+                                    rotateY={rotateY}
                                 />
                                 <RoadmapItem
                                     index={2}
@@ -233,6 +298,8 @@ export default function AboutUs() {
                                     title="A Thriving Ecosystem"
                                     description="Now, we continue to foster innovation with regular workshops on AI, Cloud, and Mobile development."
                                     image={sampleImage2}
+                                    rotateX={rotateX}
+                                    rotateY={rotateY}
                                 />
                             </div>
                         </div>
@@ -322,6 +389,6 @@ export default function AboutUs() {
                 </section>
             </main >
             <Footer />
-        </div>
+        </div >
     );
 }

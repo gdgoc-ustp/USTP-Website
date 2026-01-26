@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../../lib/supabase';
-import Logo from '../../assets/logo.svg';
+import Logo from '../../assets/logo.png';
 import './Setup.css';
 
 export default function Setup() {
@@ -26,15 +26,15 @@ export default function Setup() {
                 const { count, error } = await supabase
                     .from('users')
                     .select('*', { count: 'exact', head: true });
-                
+
                 console.log('Users count:', count);
-                
+
                 if (error) {
                     console.error('Error checking users:', error);
                     setError('Error checking setup status');
                     return;
                 }
-                
+
                 if (count > 0) {
                     console.log('Setup already completed, redirecting to login...');
                     navigate('/admin/login');
@@ -46,7 +46,7 @@ export default function Setup() {
                 setLoading(false);
             }
         };
-        
+
         checkSetup();
     }, [navigate]);
 
@@ -142,7 +142,7 @@ export default function Setup() {
             }
 
             console.log('System admin profile created');
-            
+
             // Show success message and redirect
             alert('Setup completed! Please check your email to verify your account before logging in.');
             navigate('/admin/login');
