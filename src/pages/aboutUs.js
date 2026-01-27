@@ -6,7 +6,6 @@ import NavigationBar from "../components/navBar";
 import Footer from "../components/footer";
 import HeroSection from "../components/HeroSection";
 import { Link } from "react-router-dom";
-import storyImage from '../assets/story.png';
 import sampleImage1 from '../assets/sample.png';
 import sampleImage2 from '../assets/sample.png';
 import { getFeaturedMembers, getGroupColor } from '../data/team';
@@ -188,8 +187,8 @@ export default function AboutUs() {
                                 viewport={{ once: true }}
                             >
                                 <span className="inline-block py-1 px-3 rounded-full bg-blue-50 text-blue-600 font-bold text-xs tracking-widest uppercase mb-4 border border-blue-100">Our Timeline</span>
-                                <h2 className="text-4xl md:text-6xl font-bold font-google-sans text-gray-900 mb-6">Roadmap</h2>
-                                <p className="text-gray-500 text-xl max-w-2xl mx-auto">From humble beginnings to a campus revolution. Here is how we did it.</p>
+                                <h2 className="text-4xl md:text-6xl font-bold font-google-sans text-gray-900 mb-6">Milestones</h2>
+                                <p className="text-gray-500 text-xl max-w-2xl mx-auto">The launch and growth of our chapter.</p>
                             </motion.div>
                         </div>
 
@@ -228,15 +227,15 @@ export default function AboutUs() {
                             <div className="flex flex-col">
                                 <RoadmapItem
                                     index={0}
-                                    label="The Beginning"
-                                    title="Planting the Seed (2020)"
+                                    label="2020"
+                                    title="Planting the Seed"
                                     description="GDG started as a small initiative founded by Hannah Mae Hormiguera to bring Google technologies to campus."
-                                    image={storyImage}
+                                    image={sampleImage1}
                                 />
                                 <RoadmapItem
                                     index={1}
-                                    label="Growth Phase"
-                                    title="Building Momentum (2020 - 2023)"
+                                    label="2020 - 2023"
+                                    title="Building Momentum"
                                     description="We expanded our reach, hosting our first major hackathon and establishing partnerships with local tech companies."
                                     image={sampleImage1}
                                 />

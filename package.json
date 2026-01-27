@@ -34,13 +34,11 @@
     "web-vitals": "^4.2.3"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "server": "node --max-http-header-size=32768 server.js",
     "dev": "react-scripts start",
-    "start:prod": "npm run build && npm run server",
+    "build": "react-scripts build",
+    "build:bun": "bun build ./src/index.ts --outdir ./dist --minify",
+    "serve:prod": "bun run server.js",
+    "test": "react-scripts test",
     "vercel-build": "npm run build:vercel",
     "build:vercel": "cross-env CI=false DISABLE_ESLINT_PLUGIN=true react-scripts build"
   },
