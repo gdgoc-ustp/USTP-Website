@@ -5,7 +5,8 @@ import Footer from "../components/footer";
 import "./eventDetails.css";
 import Sample from '../assets/sample.png';
 import { FiLink, FiArrowLeft, FiClock, FiCalendar, FiMapPin, FiExternalLink } from 'react-icons/fi';
-import { FaFacebook, FaTwitter, FaLinkedin } from 'react-icons/fa';
+import { FaFacebook, FaLinkedin } from 'react-icons/fa';
+import { FaXTwitter } from 'react-icons/fa6';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
@@ -254,8 +255,8 @@ export default function EventDetails() {
                                     <div className="bg-white rounded-[2rem] p-8 shadow-sm border border-gray-100" data-aos="fade-left" data-aos-delay="100">
                                         <h3 className="text-lg font-bold text-gray-900 mb-4 font-google-sans">Share Event</h3>
                                         <div className="flex gap-3">
-                                            <button onClick={() => shareEvent('twitter')} className="w-12 h-12 rounded-xl bg-gray-50 flex items-center justify-center hover:bg-blue-50 transition-colors group">
-                                                <FaTwitter size={20} className="text-gray-400 group-hover:text-blue-400" />
+                                            <button onClick={() => shareEvent('twitter')} className="w-12 h-12 rounded-xl bg-gray-50 flex items-center justify-center hover:bg-black transition-colors group">
+                                                <FaXTwitter size={20} className="text-gray-400 group-hover:text-white" />
                                             </button>
                                             <button onClick={() => shareEvent('facebook')} className="w-12 h-12 rounded-xl bg-gray-50 flex items-center justify-center hover:bg-blue-900 transition-colors group">
                                                 <FaFacebook size={20} className="text-gray-400 group-hover:text-white" />

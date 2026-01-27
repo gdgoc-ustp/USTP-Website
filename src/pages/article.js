@@ -5,7 +5,8 @@ import Footer from "../components/footer";
 import "./article.css";
 import Sample from '../assets/sample.png';
 import { FiLink, FiArrowLeft, FiClock, FiCalendar, FiUser } from 'react-icons/fi';
-import { FaFacebook, FaTwitter, FaLinkedin } from 'react-icons/fa';
+import { FaFacebook, FaLinkedin } from 'react-icons/fa';
+import { FaXTwitter } from 'react-icons/fa6';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
@@ -206,20 +207,14 @@ export default function Article() {
                             {/* Social Share Sidebar (Desktop) */}
                             <div className="hidden lg:block lg:col-span-1">
                                 <div className="sticky top-32 flex flex-col gap-4">
-                                    <button onClick={() => shareArticle('twitter')} className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center transition-all shadow-sm hover:scale-110" style={{ backgroundColor: '#f3f4f6' }} title="Share on Twitter">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="#1DA1F2">
-                                            <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z" />
-                                        </svg>
+                                    <button onClick={() => shareArticle('twitter')} className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center transition-all shadow-sm hover:scale-110" style={{ backgroundColor: '#f3f4f6' }} title="Share on X">
+                                        <FaXTwitter size={20} color="#000000" />
                                     </button>
                                     <button onClick={() => shareArticle('facebook')} className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center transition-all shadow-sm hover:scale-110" style={{ backgroundColor: '#f3f4f6' }} title="Share on Facebook">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="#4267B2">
-                                            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
-                                        </svg>
+                                        <FaFacebook size={20} color="#4267B2" />
                                     </button>
                                     <button onClick={() => shareArticle('linkedin')} className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center transition-all shadow-sm hover:scale-110" style={{ backgroundColor: '#f3f4f6' }} title="Share on LinkedIn">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="#0077B5">
-                                            <path d="M4.98 3.5c0 1.381-1.11 2.5-2.48 2.5s-2.48-1.119-2.48-2.5c0-1.38 1.11-2.5 2.48-2.5s2.48 1.12 2.48 2.5zm.02 4.5h-5v16h5v-16zm7.982 0h-4.968v16h5v-8.306c0-4.613 2.332-8.515 7.961-6.105v-1.559c-3.56-1.1-5.717-.03-7.993 1.953v-1.983z" />
-                                        </svg>
+                                        <FaLinkedin size={20} color="#0077B5" />
                                     </button>
                                     <button onClick={() => shareArticle('copy')} className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center transition-all shadow-sm hover:scale-110" style={{ backgroundColor: '#f3f4f6' }} title="Copy Link">
                                         <FiLink size={20} color="#374151" />
@@ -244,8 +239,8 @@ export default function Article() {
                                         <div className="flex items-center gap-4 lg:hidden">
                                             <span className="text-gray-500 font-bold">Share:</span>
                                             <div className="flex gap-3">
-                                                <button onClick={() => shareArticle('twitter')} className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center transition-colors" style={{ width: '40px', height: '40px', backgroundColor: '#f3f4f6', display: 'flex', alignItems: 'center', justifyContent: 'center' }} title="Share on Twitter">
-                                                    <FaTwitter size={20} color="#1DA1F2" />
+                                                <button onClick={() => shareArticle('twitter')} className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center transition-colors" style={{ width: '40px', height: '40px', backgroundColor: '#f3f4f6', display: 'flex', alignItems: 'center', justifyContent: 'center' }} title="Share on X">
+                                                    <FaXTwitter size={20} color="#000000" />
                                                 </button>
                                                 <button onClick={() => shareArticle('facebook')} className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center transition-colors" style={{ width: '40px', height: '40px', backgroundColor: '#f3f4f6', display: 'flex', alignItems: 'center', justifyContent: 'center' }} title="Share on Facebook">
                                                     <FaFacebook size={20} color="#4267B2" />
