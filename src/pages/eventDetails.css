@@ -4,12 +4,14 @@
     line-height: 1.6 !important;
 }
 
-.event-details-main {
+#overhaul-v2-root main.event-details-main {
     width: 100% !important;
     max-width: none !important;
     padding-left: 0 !important;
     padding-right: 0 !important;
     margin: 0 !important;
+    padding-top: 12rem !important;
+    /* override global padding: 0 !important in main.css */
 }
 
 .event-description-content {
@@ -48,7 +50,7 @@
 }
 
 @media (max-width: 768px) {
-    .event-details-main {
-        padding-top: 8rem;
+    #overhaul-v2-root main.event-details-main {
+        padding-top: 8rem !important;
     }
 }
