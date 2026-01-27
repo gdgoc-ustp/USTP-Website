@@ -42,13 +42,13 @@ export const teamMembers = [
     {
         id: 'exec-4',
         name: 'John Derek Antillon',
-        role: 'Executive',
-        title: 'Executive',
+        role: 'Chief Operations Officer',
+        title: 'Executives',
         image: '/output/Operations/john-antillon.webp',
         group: 'Executives',
         order: 4,
         featured: false,
-        alt: 'John Derek Antillon - Executive'
+        alt: 'John Derek Antillon - Chief Operations Officer'
     },
     {
         id: 'exec-5',
@@ -659,12 +659,12 @@ export const getTeamByGroup = () => {
         }
         groups[member.group].push(member);
     });
-    
+
     // Sort members within each group by order
     Object.keys(groups).forEach(group => {
         groups[group].sort((a, b) => a.order - b.order);
     });
-    
+
     return groups;
 };
 
