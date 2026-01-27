@@ -237,6 +237,151 @@ export default function Home() {
         immediate: hasSeenHeroOnMount
     });
 
+    // Animation for gray circles
+    const circle1SizeHero = windowSize.width * 0.04;
+    const circle2SizeHero = windowSize.width * 0.077;
+    const circle3SizeHero = windowSize.width * 0.042;
+    const circle4SizeHero = windowSize.width * 0.063;
+    const circle5SizeHero = windowSize.width * 0.126;
+    const circle6SizeHero = windowSize.width * 0.09;
+
+    const gray1Spring = useSpring({
+        to: isHeroVisible ? {
+            top: '23%',
+            right: '0%',
+            left: 'auto',
+            width: `${circle5SizeHero}px`,
+            height: `${circle5SizeHero}px`,
+            opacity: 0.8,
+            animation: 'none'
+        } : {
+            top: '15%',
+            right: '25%',
+            left: 'auto',
+            width: '120px',
+            height: '120px',
+            opacity: 0.6,
+            animation: 'float5 15s infinite ease-in-out'
+        },
+        config: config.molasses,
+        immediate: hasSeenHeroOnMount
+    });
+
+    const gray2Spring = useSpring({
+        to: isHeroVisible ? {
+            top: '23%',
+            left: '16%',
+            right: 'auto',
+            width: `${circle4SizeHero}px`,
+            height: `${circle4SizeHero}px`,
+            opacity: 0.6,
+            animation: 'none'
+        } : {
+            top: '40%',
+            left: '20%',
+            right: 'auto',
+            width: '80px',
+            height: '80px',
+            opacity: 0.6,
+            animation: 'float6 15s infinite ease-in-out'
+        },
+        config: config.molasses,
+        immediate: hasSeenHeroOnMount
+    });
+
+    const gray3Spring = useSpring({
+        to: isHeroVisible ? {
+            top: '61%',
+            left: '38%',
+            bottom: 'auto',
+            right: 'auto',
+            width: `${circle3SizeHero}px`,
+            height: `${circle3SizeHero}px`,
+            opacity: 0.6,
+            animation: 'none'
+        } : {
+            top: 'auto',
+            left: 'auto',
+            bottom: '30%',
+            right: '40%',
+            width: '100px',
+            height: '100px',
+            opacity: 0.6,
+            animation: 'float7 15s infinite ease-in-out'
+        },
+        config: config.molasses,
+        immediate: hasSeenHeroOnMount
+    });
+
+    const gray4Spring = useSpring({
+        to: isHeroVisible ? {
+            top: '90%',
+            left: '17%',
+            right: 'auto',
+            width: `${circle1SizeHero}px`,
+            height: `${circle1SizeHero}px`,
+            opacity: 0.6,
+            animation: 'none'
+        } : {
+            top: '60%',
+            left: '10%',
+            right: 'auto',
+            width: '90px',
+            height: '90px',
+            opacity: 0.5,
+            animation: 'float4 18s infinite ease-in-out'
+        },
+        config: config.molasses,
+        immediate: hasSeenHeroOnMount
+    });
+
+    const gray5Spring = useSpring({
+        to: isHeroVisible ? {
+            top: '78%',
+            left: '0%',
+            right: 'auto',
+            width: `${circle2SizeHero}px`,
+            height: `${circle2SizeHero}px`,
+            opacity: 0.7,
+            animation: 'none'
+        } : {
+            top: '20%',
+            left: '50%',
+            right: 'auto',
+            width: '110px',
+            height: '110px',
+            opacity: 0.4,
+            animation: 'float2 20s infinite ease-in-out'
+        },
+        config: config.molasses,
+        immediate: hasSeenHeroOnMount
+    });
+
+    const gray6Spring = useSpring({
+        to: isHeroVisible ? {
+            top: '8%',
+            left: '45.5%',
+            right: 'auto',
+            width: `${circle6SizeHero}px`,
+            height: `${circle6SizeHero}px`,
+            opacity: 0.7,
+            animation: 'none'
+        } : {
+            top: '80%',
+            right: '20%',
+            left: 'auto',
+            width: '130px',
+            height: '130px',
+            opacity: 0.5,
+            animation: 'float1 22s infinite ease-in-out'
+        },
+        config: config.molasses,
+        immediate: hasSeenHeroOnMount
+    });
+
+
+
+
     // Add delay for circle-2 appearance if duplicate
     useEffect(() => {
         if (isSequentialLeft && isHeroVisible) {
@@ -344,22 +489,25 @@ export default function Home() {
                         <div className="circle circle3"></div>
                         <div className="circle circle4"></div>
 
-                        {/* Gray accent circles */}
-                        <div className="gray-circle gray-circle1"></div>
-                        <div className="gray-circle gray-circle2"></div>
-                        <div className="gray-circle gray-circle3"></div>
+                        {/* Gray accent circles (handled globally for animation) */}
                     </animated.div>
+
+                    {/* Globally handled gray circles for transition */}
+                    <animated.div style={gray1Spring} className="gray-circle" />
+                    <animated.div style={gray2Spring} className="gray-circle" />
+                    <animated.div style={gray3Spring} className="gray-circle" />
+                    <animated.div style={gray4Spring} className="gray-circle" />
+                    <animated.div style={gray5Spring} className="gray-circle" />
+                    <animated.div style={gray6Spring} className="gray-circle" />
+
+
 
                     {/* New Hero Circles (Fade in) - Placed before circle1 so circle1 is on top */}
                     <animated.div className="hero-circles" style={{ ...heroCirclesSpring, position: 'absolute', inset: 0, zIndex: 0 }}>
-                        <div className="circle circle-1"></div>
-                        {/* circle-2 removed, handled globally as circle2 */}
-                        <div className="circle circle-3"></div>
-                        <div className="circle circle-4"></div>
-                        <div className="circle circle-5"></div>
-                        <div className="circle circle-6"></div>
-                        {/* circle-8 removed, handled globally as circle2 (which becomes circle-8) */}
+                        {/* all circles 1-6 removed here, handled globally via gray springs for smooth transition */}
                     </animated.div>
+
+
 
                     {/* Old circle-8 exit animation (animates DOWN and fades out when navigating left to home) */}
                     {hasSeenHeroOnMount && previousPath && PATH_TO_THEME[previousPath] && (() => {
