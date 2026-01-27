@@ -108,8 +108,9 @@ const HeroSection = ({ title, theme, previousPath }) => {
         {/* when navigating LEFT sequential: old circle shrinks TO circle-8 position, new comes from left */}
         {/* when navigating LEFT skip: old circle exits RIGHT, old circle-8 fades down, new circle-8 animates up */}
 
-        {/* old circle-8 exit animation (animates DOWN and fades out when navigating left) */}
-        {hasValidTransition && navigatingLeft && oldCircle8Colors && (
+        {/* old circle-8 exit animation (animates diagonally and fades out when skipping or navigating left) */}
+        {hasValidTransition && (navigatingLeft || (navigatingRight && isSkipRight)) && oldCircle8Colors && (
+
           <motion.div
             className="circle"
             initial={{
