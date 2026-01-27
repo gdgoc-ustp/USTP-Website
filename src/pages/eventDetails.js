@@ -220,7 +220,7 @@ export default function EventDetails() {
                                                 </div>
                                                 <div>
                                                     <p className="text-sm text-gray-500 font-bold uppercase mb-1">Time</p>
-                                                    <p className="font-bold text-gray-900">{formatDate(event.event_date, true).split('at')[1] || 'TBA'}</p>
+                                                    <p className="font-bold text-gray-900">{event.event_date ? new Date(event.event_date).toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' }) : 'TBA'}</p>
                                                 </div>
                                             </div>
 
