@@ -120,13 +120,14 @@ const HeroSection = ({ title, theme, previousPath }) => {
               opacity: 1
             }}
             animate={{
-              left: `calc(98% - ${circle8Size}px)`,
+              left: `calc(105% - ${circle8Size}px)`,
               top: '120%',
               width: circle8Size,
               height: circle8Size,
               opacity: 0,
               transition: { duration: 0.9, ease: [0.25, 0.46, 0.45, 0.94] }
             }}
+
             style={{
               position: 'absolute',
               borderRadius: '50%',
@@ -253,20 +254,13 @@ const HeroSection = ({ title, theme, previousPath }) => {
         {nextRightColors && (
           <motion.div
             key={isSkipLeft ? 'skip-circle8' : isSequentialLeft ? 'seq-circle8' : 'static-circle8'}
-            initial={isSkipLeft ? {
+            initial={hasValidTransition ? {
               position: 'absolute',
               left: `calc(98% - ${circle8Size}px)`,
               top: '120%',
               width: circle8Size,
               height: circle8Size,
               opacity: 0
-            } : isSequentialLeft ? {
-              position: 'absolute',
-              left: `calc(98% - ${circle8Size}px)`,
-              top: '86%',
-              width: circle8Size,
-              height: circle8Size,
-              opacity: 0 // Start hidden to avoid duplicate with incoming circle
             } : {
               position: 'absolute',
               left: `calc(98% - ${circle8Size}px)`,
@@ -275,23 +269,20 @@ const HeroSection = ({ title, theme, previousPath }) => {
               height: circle8Size,
               opacity: 1
             }}
-            animate={isSequentialLeft ? {
+            animate={{
               position: 'absolute',
               left: `calc(98% - ${circle8Size}px)`,
               top: '86%',
               width: circle8Size,
               height: circle8Size,
               opacity: 1,
-              transition: { duration: 0.1, delay: 0.8 } // Fade in after transition
-            } : {
-              position: 'absolute',
-              left: `calc(98% - ${circle8Size}px)`,
-              top: '86%',
-              width: circle8Size,
-              height: circle8Size,
-              opacity: 1,
-              transition: { duration: 0.9, ease: [0.25, 0.46, 0.45, 0.94] }
+              transition: {
+                duration: 0.9,
+                ease: [0.25, 0.46, 0.45, 0.94],
+                delay: isSequentialLeft ? 0.8 : 0 // Keep delay for sequential left to avoid duplicate
+              }
             }}
+
             style={{
               borderRadius: '50%',
               background: `linear-gradient(135deg, ${nextRightColors.primary} 0%, ${nextRightColors.secondary} 100%)`
