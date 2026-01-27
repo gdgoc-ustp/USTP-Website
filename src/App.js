@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Home from './pages/home';
 import Events from './pages/events';
+import EventDetails from './pages/eventDetails';
 import News from './pages/news';
 import AboutUs from './pages/aboutUs';
 import MeetTheTeam from './pages/meetTheTeam';
@@ -13,7 +14,7 @@ import PersonalityTest from "./pages/personalityTest";
 import PersonalityQuestionnaire from "./pages/personalityQuestionnaire";
 import PersonalityCodeInput from "./pages/personalityCodeInput";
 import AdminRoutes from './admin/routes/AdminRoutes';
-import Policy  from './pages/policy';
+import Policy from './pages/policy';
 import Terms from './pages/terms';
 import Sitemap from './pages/sitemap';
 import LoadingScreen from './components/LoadingScreen';
@@ -38,21 +39,22 @@ function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={<Home/>} />
-        <Route path="/events" element={<Events/>} />
-        <Route path="/faqs" element={<FaQs/>} />
-        <Route path="/news" element={<News/>} />
-        <Route path="/about-us" element={<AboutUs/>} />
-        <Route path="/team" element={<MeetTheTeam/>} />
+        <Route path="/" element={<Home />} />
+        <Route path="/events" element={<Events />} />
+        <Route path="/events/:id" element={<EventDetails />} />
+        <Route path="/faqs" element={<FaQs />} />
+        <Route path="/news" element={<News />} />
+        <Route path="/about-us" element={<AboutUs />} />
+        <Route path="/team" element={<MeetTheTeam />} />
         <Route path="/news/article/:id" element={<Article />} />
         <Route path="/policy" element={<Policy />} />
         <Route path="/terms" element={<Terms />} />
         <Route path="/sitemap" element={<Sitemap />} />
         <Route path="/register" element={<Register />} />
-        
-      
 
-        {/* Personality Test Routes */} 
+
+
+        {/* Personality Test Routes */}
         <Route path="/personality-test" element={<PersonalityQuestionnaire />} />
         <Route path="/personality-test/code" element={<PersonalityCodeInput />} />
         <Route path="/personality-test/:id" element={<PersonalityTest />} />
@@ -61,7 +63,7 @@ function App() {
         <Route path="/admin/*" element={<AdminRoutes />} />
 
         {/* 404 Route */}
-        <Route path='*' element={<Error/>}/>
+        <Route path='*' element={<Error />} />
       </Routes>
     </div>
   );

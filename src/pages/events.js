@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 import NavigationBar from "../components/navBar";
 import Footer from "../components/footer";
 import HeroSection from "../components/HeroSection";
@@ -82,11 +82,13 @@ export default function Events() {
                 {eventList.map((event, index) => (
                     <div key={event.id} className="bg-white rounded-[2.5rem] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group flex flex-col border border-gray-100 h-full hover:-translate-y-2" data-aos="fade-up" data-aos-delay={index * 100}>
                         <div className="h-60 overflow-hidden relative">
-                            <img
-                                src={getImageUrl(event.image_url)}
-                                alt={event.heading}
-                                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                            />
+                            <Link to={`/events/${event.id}`} className="block h-full w-full">
+                                <img
+                                    src={getImageUrl(event.image_url)}
+                                    alt={event.heading}
+                                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                                />
+                            </Link>
                             <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-bold shadow-sm text-green-700">
                                 {event.status}
                             </div>
@@ -98,25 +100,28 @@ export default function Events() {
                                 {event.event_date && <span>• {formatDate(event.event_date, true)}</span>}
                             </div>
 
-                            <h3 className="font-bold text-2xl text-gray-900 font-google-sans mb-3 line-clamp-2 leading-tight group-hover:text-green-600 transition-colors">
-                                {event.heading}
-                            </h3>
+                            <Link to={`/events/${event.id}`}>
+                                <h3 className="font-bold text-2xl text-gray-900 font-google-sans mb-3 line-clamp-2 leading-tight group-hover:text-green-600 transition-colors">
+                                    {event.heading}
+                                </h3>
+                            </Link>
 
                             <p className="text-gray-600 mb-6 font-google-sans line-clamp-3 leading-relaxed flex-grow">
                                 {event.tagline || stripHtml(event.description)}
                             </p>
 
-                            <div className="mt-auto pt-6 border-t border-gray-100">
-                                {status === "Upcoming" && event.rsvp_link ? (
+                            <div className="mt-auto pt-6 border-t border-gray-100 flex flex-col gap-3">
+                                {status === "Upcoming" && event.rsvp_link && (
                                     <a href={event.rsvp_link} target="_blank" rel="noopener noreferrer" className="block w-full text-center py-3 bg-green-600 hover:bg-green-700 text-white rounded-xl font-bold transition-colors shadow-lg shadow-green-200">
                                         RSVP Now
                                     </a>
-                                ) : (
-                                    <div className="text-gray-400 font-medium text-center py-2 flex items-center justify-center gap-2">
-                                        <span>View Details</span>
-                                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path></svg>
-                                    </div>
                                 )}
+                                <Link to={`/events/${event.id}`} className="text-gray-400 hover:text-green-600 font-medium text-center py-2 flex items-center justify-center gap-2 transition-colors">
+                                    <span>View Details</span>
+                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path>
+                                    </svg>
+                                </Link>
                             </div>
                         </div>
                     </div>
