@@ -642,6 +642,8 @@ export default function Events() {
         setEditMode('fullpage');
     };
 
+    const isMobile = window.innerWidth <= 768;
+
     if (loading && !events.length) {
         return (
             <div className="events-loading">
@@ -740,9 +742,9 @@ export default function Events() {
                                     >
                                         Date {sortField === 'event_date' && (sortDirection === 'asc' ? '↑' : '↓')}
                                     </th>
-                                    <th>Status</th>
+                                    <th className="status-column">Status</th>
                                     <th
-                                        className={`sortable-column ${sortField === 'created_at' ? 'active' : ''}`}
+                                        className={`sortable-column created-column ${sortField === 'created_at' ? 'active' : ''}`}
                                         onClick={() => handleSort('created_at')}
                                     >
                                         Created {sortField === 'created_at' && (sortDirection === 'asc' ? '↑' : '↓')}
@@ -753,7 +755,7 @@ export default function Events() {
                             <tbody>
                                 {currentEvents.map(event => (
                                     <tr key={event.id} className="event-row">
-                                        <td className="image-cell">
+                                        <td className="image-cell" data-label="Image">
                                             {event.image_url ? (
                                                 <div className="thumbnail-container">
                                                     <img
@@ -766,32 +768,34 @@ export default function Events() {
                                                 <div className="no-image">No image</div>
                                             )}
                                         </td>
-                                        <td className="title-cell">
+                                        <td className="title-cell" data-label="Title">
                                             <div className="event-title">{event.heading}</div>
                                             {event.tagline && <div className="event-subtitle">{event.tagline}</div>}
                                         </td>
-                                        <td>{event.event_date ? formatDate(event.event_date) : 'N/A'}</td>
-                                        <td>
+                                        <td data-label="Date">{event.event_date ? formatDate(event.event_date) : 'N/A'}</td>
+                                        <td data-label="Status">
                                             <span className={`event-status status-${event.status.toLowerCase()}`}>
                                                 {event.status}
                                             </span>
                                         </td>
-                                        <td>{formatDate(event.created_at)}</td>
-                                        <td className="actions-cell">
-                                            <button
-                                                onClick={() => handleEdit(event)}
-                                                className="event-edit-button"
-                                                title="Edit event"
-                                            >
-                                                Edit
-                                            </button>
-                                            <button
-                                                onClick={() => handleDelete(event.id)}
-                                                className="event-delete-button"
-                                                title="Delete event"
-                                            >
-                                                Delete
-                                            </button>
+                                        <td className="created-cell" data-label="Created">{formatDate(event.created_at)}</td>
+                                        <td className="actions-cell" data-label="Actions">
+                                            <div className="event-action-buttons">
+                                                <button
+                                                    onClick={() => handleEdit(event)}
+                                                    className="event-edit-button"
+                                                    title="Edit event"
+                                                >
+                                                    Edit
+                                                </button>
+                                                <button
+                                                    onClick={() => handleDelete(event.id)}
+                                                    className="event-delete-button"
+                                                    title="Delete event"
+                                                >
+                                                    Delete
+                                                </button>
+                                            </div>
                                         </td>
                                     </tr>
                                 ))}

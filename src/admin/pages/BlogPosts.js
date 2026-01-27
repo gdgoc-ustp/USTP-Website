@@ -11,20 +11,20 @@ const BlogPostEditor = ({ formData, setFormData, handleSubmit, handleCloseModal,
         <div className="full-page-editor">
             <div className="full-page-editor-header">
                 <h1>{selectedPost ? 'Edit Blog Post' : 'Create New Blog Post'}</h1>
-                <button 
+                <button
                     onClick={handleCloseModal}
                     className="back-to-list-button"
                 >
                     ← Back to Posts
                 </button>
             </div>
-            
+
             {error && (
                 <div className="events-error full-page-error">
                     {error}
                 </div>
             )}
-            
+
             <form onSubmit={handleSubmit} className="blog-post-form full-page-form">
                 <div className="editor-content">
                     <div className="editor-main-content">
@@ -52,7 +52,7 @@ const BlogPostEditor = ({ formData, setFormData, handleSubmit, handleCloseModal,
                                 className="full-width-input"
                             />
                         </div>
-                        
+
                         <div className="form-group description-group">
                             <label htmlFor="description">Content</label>
                             <Editor
@@ -63,11 +63,11 @@ const BlogPostEditor = ({ formData, setFormData, handleSubmit, handleCloseModal,
                             />
                         </div>
                     </div>
-                    
+
                     <div className="editor-sidebar">
                         <div className="sidebar-section">
                             <h3>Featured Image</h3>
-                            <div 
+                            <div
                                 className={`image-drop-zone ${isDragging ? 'dragging' : ''}`}
                                 onDragEnter={handleDragEnter}
                                 onDragLeave={handleDragLeave}
@@ -78,7 +78,7 @@ const BlogPostEditor = ({ formData, setFormData, handleSubmit, handleCloseModal,
                                 {formData.image_url ? (
                                     <div className="image-preview">
                                         <img src={formData.image_url} alt="Preview" />
-                                        <button 
+                                        <button
                                             type="button"
                                             className="remove-image"
                                             onClick={(e) => {
@@ -94,7 +94,7 @@ const BlogPostEditor = ({ formData, setFormData, handleSubmit, handleCloseModal,
                                         <p>Drag & drop an image here or click to select</p>
                                         {uploadProgress > 0 && (
                                             <div className="upload-progress">
-                                                <div 
+                                                <div
                                                     className="progress-bar"
                                                     style={{ width: `${uploadProgress}%` }}
                                                 />
@@ -111,17 +111,17 @@ const BlogPostEditor = ({ formData, setFormData, handleSubmit, handleCloseModal,
                                 />
                             </div>
                         </div>
-                        
+
                         <div className="form-actions">
-                            <button 
+                            <button
                                 type="submit"
                                 className="save-button"
                                 disabled={loading}
                             >
                                 {loading ? 'Saving...' : (selectedPost ? 'Update Post' : 'Create Post')}
                             </button>
-                            <button 
-                                type="button" 
+                            <button
+                                type="button"
                                 onClick={handleCloseModal}
                                 className="cancel-button"
                             >
@@ -157,7 +157,7 @@ export default function BlogPosts() {
     const [sortDirection, setSortDirection] = useState('desc');
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage] = useState(6);
-    
+
     // Edit mode state (modal or full-page)
     const [editMode, setEditMode] = useState('modal'); // 'modal' or 'fullpage'
 
@@ -191,40 +191,40 @@ export default function BlogPosts() {
     const filteredPosts = posts
         .filter(post => {
             // Apply search filter to heading and tagline
-            if (searchTerm && !post.heading.toLowerCase().includes(searchTerm.toLowerCase()) && 
+            if (searchTerm && !post.heading.toLowerCase().includes(searchTerm.toLowerCase()) &&
                 !post.tagline?.toLowerCase().includes(searchTerm.toLowerCase())) {
                 return false;
             }
-            
+
             return true;
         })
         .sort((a, b) => {
             // Apply sorting
             const aValue = a[sortField];
             const bValue = b[sortField];
-            
+
             if (sortDirection === 'asc') {
                 return aValue > bValue ? 1 : -1;
             } else {
                 return aValue < bValue ? 1 : -1;
             }
         });
-    
+
     // Calculate pagination
     const indexOfLastPost = currentPage * itemsPerPage;
     const indexOfFirstPost = indexOfLastPost - itemsPerPage;
     const currentPosts = filteredPosts.slice(indexOfFirstPost, indexOfLastPost);
     const totalPages = Math.ceil(filteredPosts.length / itemsPerPage);
-    
+
     // Generate pagination controls
     const renderPagination = () => {
         if (totalPages <= 1) return null;
-        
+
         const pageNumbers = [];
         for (let i = 1; i <= totalPages; i++) {
             pageNumbers.push(
-                <button 
-                    key={i} 
+                <button
+                    key={i}
                     className={`pagination-button ${currentPage === i ? 'active' : ''}`}
                     onClick={() => setCurrentPage(i)}
                 >
@@ -232,10 +232,10 @@ export default function BlogPosts() {
                 </button>
             );
         }
-        
+
         return (
             <div className="pagination-controls">
-                <button 
+                <button
                     className="pagination-button"
                     onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
                     disabled={currentPage === 1}
@@ -243,7 +243,7 @@ export default function BlogPosts() {
                     &lt;
                 </button>
                 {pageNumbers}
-                <button 
+                <button
                     className="pagination-button"
                     onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
                     disabled={currentPage === totalPages}
@@ -253,7 +253,7 @@ export default function BlogPosts() {
             </div>
         );
     };
-    
+
     // Handle sort toggle
     const handleSort = (field) => {
         if (sortField === field) {
@@ -317,18 +317,18 @@ export default function BlogPosts() {
     const uploadImage = async (file) => {
         try {
             // Security checks
-        const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
-        const maxSize = 5 * 1024 * 1024; // 5MB
+            const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+            const maxSize = 5 * 1024 * 1024; // 5MB
 
             // Validate file type
-        if (!allowedTypes.includes(file.type)) {
+            if (!allowedTypes.includes(file.type)) {
                 throw new Error('Invalid file type. Only JPEG, PNG, GIF, and WebP images are allowed.');
-        }
+            }
 
             // Validate file size
-        if (file.size > maxSize) {
+            if (file.size > maxSize) {
                 throw new Error('File is too large. Maximum size is 5MB.');
-        }
+            }
 
             setLoading(true);
             setError('');
@@ -382,7 +382,7 @@ export default function BlogPosts() {
 
             // Get user ID if available (for authenticated users)
             const { data: { user } } = await supabase.auth.getUser();
-            
+
             const postData = {
                 heading: formData.heading,
                 tagline: formData.tagline,
@@ -430,21 +430,21 @@ export default function BlogPosts() {
     const handleDelete = async (id) => {
         if (!window.confirm('Are you sure you want to delete this post?')) return;
 
-            try {
+        try {
             setLoading(true);
             setError('');
 
-                const { error } = await supabase
-                    .from('blog_posts')
-                    .delete()
-                    .eq('id', id);
+            const { error } = await supabase
+                .from('blog_posts')
+                .delete()
+                .eq('id', id);
 
-                if (error) throw error;
+            if (error) throw error;
 
-                await fetchPosts();
-            } catch (error) {
+            await fetchPosts();
+        } catch (error) {
             console.error('Error deleting post:', error);
-                setError('Failed to delete blog post');
+            setError('Failed to delete blog post');
         } finally {
             setLoading(false);
         }
@@ -489,7 +489,7 @@ export default function BlogPosts() {
     const handleEditorImageUpload = async (blobInfo) => {
         try {
             const file = blobInfo.blob();
-            
+
             // Security checks
             const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
             const maxSize = 5 * 1024 * 1024; // 5MB
@@ -529,16 +529,16 @@ export default function BlogPosts() {
             throw error;
         }
     };
-    
+
     // Format date for display
     const formatDate = (dateString) => {
         if (!dateString) return 'N/A';
-        
+
         try {
             const date = new Date(dateString);
             return date.toLocaleDateString('en-US', {
-            year: 'numeric',
-            month: 'short',
+                year: 'numeric',
+                month: 'short',
                 day: 'numeric'
             });
         } catch (e) {
@@ -563,7 +563,7 @@ export default function BlogPosts() {
     // If in full-page edit mode, render the editor component
     if (editMode === 'fullpage' && isModalOpen) {
         return (
-            <BlogPostEditor 
+            <BlogPostEditor
                 formData={formData}
                 setFormData={setFormData}
                 handleSubmit={handleSubmit}
@@ -590,7 +590,7 @@ export default function BlogPosts() {
         <div className="events-container">
             <div className="events-header">
                 <h1>Blog Posts Management</h1>
-                <button 
+                <button
                     className="event-add-button"
                     onClick={handleAddNew}
                 >
@@ -613,13 +613,13 @@ export default function BlogPosts() {
                         onChange={(e) => setSearchTerm(e.target.value)}
                         className="admin-search-input"
                     />
-                                </div>
-                            </div>
+                </div>
+            </div>
 
             {filteredPosts.length === 0 ? (
                 <div className="no-events-message">
                     <p>No blog posts found matching your criteria.</p>
-                            </div>
+                </div>
             ) : (
                 <>
                     <div className="events-table-container">
@@ -627,20 +627,20 @@ export default function BlogPosts() {
                             <thead>
                                 <tr>
                                     <th className="image-column">Image</th>
-                                    <th 
+                                    <th
                                         className={`sortable-column ${sortField === 'heading' ? 'active' : ''}`}
                                         onClick={() => handleSort('heading')}
                                     >
                                         Title {sortField === 'heading' && (sortDirection === 'asc' ? '↑' : '↓')}
                                     </th>
-                                    <th 
-                                        className={`sortable-column ${sortField === 'created_at' ? 'active' : ''}`}
+                                    <th
+                                        className={`sortable-column created-column ${sortField === 'created_at' ? 'active' : ''}`}
                                         onClick={() => handleSort('created_at')}
                                     >
                                         Created {sortField === 'created_at' && (sortDirection === 'asc' ? '↑' : '↓')}
                                     </th>
-                                    <th 
-                                        className={`sortable-column ${sortField === 'updated_at' ? 'active' : ''}`}
+                                    <th
+                                        className={`sortable-column updated-column ${sortField === 'updated_at' ? 'active' : ''}`}
                                         onClick={() => handleSort('updated_at')}
                                     >
                                         Updated {sortField === 'updated_at' && (sortDirection === 'asc' ? '↑' : '↓')}
@@ -651,46 +651,48 @@ export default function BlogPosts() {
                             <tbody>
                                 {currentPosts.map(post => (
                                     <tr key={post.id} className="event-row">
-                                        <td className="image-cell">
+                                        <td className="image-cell" data-label="Image">
                                             {post.image_url ? (
                                                 <div className="thumbnail-container">
-                                                    <img 
-                                                        src={post.image_url} 
+                                                    <img
+                                                        src={post.image_url}
                                                         alt={post.heading}
                                                         className="event-thumbnail"
                                                     />
-                        </div>
+                                                </div>
                                             ) : (
                                                 <div className="no-image">No image</div>
                                             )}
                                         </td>
-                                        <td className="title-cell">
+                                        <td className="title-cell" data-label="Title">
                                             <div className="event-title">{post.heading}</div>
                                             {post.tagline && <div className="event-subtitle">{post.tagline}</div>}
                                         </td>
-                                        <td>{formatDate(post.created_at)}</td>
-                                        <td>{formatDate(post.updated_at)}</td>
-                                        <td className="actions-cell">
-                                            <button
-                                                onClick={() => handleEdit(post)}
-                                                className="event-edit-button"
-                                                title="Edit post"
-                                            >
-                                                Edit
-                                            </button>
-                                            <button
-                                                onClick={() => handleDelete(post.id)}
-                                                className="event-delete-button"
-                                                title="Delete post"
-                                            >
-                                                Delete
-                                            </button>
+                                        <td className="created-cell" data-label="Created">{formatDate(post.created_at)}</td>
+                                        <td className="updated-cell" data-label="Updated">{formatDate(post.updated_at)}</td>
+                                        <td className="actions-cell" data-label="Actions">
+                                            <div className="event-action-buttons">
+                                                <button
+                                                    onClick={() => handleEdit(post)}
+                                                    className="event-edit-button"
+                                                    title="Edit post"
+                                                >
+                                                    Edit
+                                                </button>
+                                                <button
+                                                    onClick={() => handleDelete(post.id)}
+                                                    className="event-delete-button"
+                                                    title="Delete post"
+                                                >
+                                                    Delete
+                                                </button>
+                                            </div>
                                         </td>
                                     </tr>
                                 ))}
                             </tbody>
                         </table>
-            </div>
+                    </div>
 
                     {renderPagination()}
                 </>
@@ -703,16 +705,16 @@ export default function BlogPosts() {
                         <div className="modal-header">
                             <h2>{selectedPost ? 'Edit Blog Post' : 'Add New Blog Post'}</h2>
                             <div className="modal-controls">
-                                <button 
-                                    type="button" 
+                                <button
+                                    type="button"
                                     className="fullscreen-button"
                                     onClick={switchToFullPage}
                                     title="Edit in full screen"
                                 >
                                     <span className="fullscreen-icon">⛶</span>
                                 </button>
-                                <button 
-                                    type="button" 
+                                <button
+                                    type="button"
                                     className="close-button"
                                     onClick={handleCloseModal}
                                     title="Close"
@@ -721,7 +723,7 @@ export default function BlogPosts() {
                                 </button>
                             </div>
                         </div>
-                        
+
                         <form onSubmit={handleSubmit} className="event-form">
                             <div className="form-group">
                                 <label htmlFor="heading">Title</label>
@@ -785,7 +787,7 @@ export default function BlogPosts() {
                                             <p>Drag & drop an image here or click to select</p>
                                             {uploadProgress > 0 && (
                                                 <div className="upload-progress">
-                                                    <div 
+                                                    <div
                                                         className="progress-bar"
                                                         style={{ width: `${uploadProgress}%` }}
                                                     />
@@ -804,14 +806,14 @@ export default function BlogPosts() {
                             </div>
 
                             <div className="modal-actions">
-                                <button 
-                                    type="button" 
+                                <button
+                                    type="button"
                                     onClick={handleCloseModal}
                                     className="modal-cancel-button"
                                 >
                                     Cancel
                                 </button>
-                                <button 
+                                <button
                                     type="submit"
                                     className="modal-save-button"
                                     disabled={loading}
@@ -820,7 +822,7 @@ export default function BlogPosts() {
                                 </button>
                             </div>
                         </form>
-                        
+
                         {/* Resize handle */}
                         <div className="resize-handle"></div>
                     </div>

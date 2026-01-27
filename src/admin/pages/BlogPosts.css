@@ -94,8 +94,13 @@
 }
 
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 .events-error {
@@ -294,9 +299,12 @@
     padding: 24px;
     border-radius: 16px;
     width: 90%;
-    max-width: 1200px; /* Increased from 900px */
-    height: 85vh; /* Fixed height for resizing */
-    overflow: hidden; /* Hide overflow */
+    max-width: 1200px;
+    /* Increased from 900px */
+    height: 85vh;
+    /* Fixed height for resizing */
+    overflow: hidden;
+    /* Hide overflow */
     margin: 0;
     position: relative;
     display: flex;
@@ -304,7 +312,8 @@
 }
 
 .modal-content.resizable {
-    resize: both; /* Allow resizing */
+    resize: both;
+    /* Allow resizing */
     min-width: 600px;
     min-height: 400px;
 }
@@ -369,7 +378,8 @@
     display: flex;
     flex-direction: column;
     gap: 24px;
-    overflow-y: auto; /* Allow scrolling within the form */
+    overflow-y: auto;
+    /* Allow scrolling within the form */
     flex: 1;
 }
 
@@ -515,7 +525,7 @@
     .editor-content {
         flex-direction: column;
     }
-    
+
     .editor-sidebar {
         width: 100%;
     }
@@ -733,6 +743,95 @@
         margin-bottom: 24px;
     }
 
+    .events-table-container {
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+    .events-table,
+    .events-table thead,
+    .events-table tbody,
+    .events-table th,
+    .events-table td,
+    .events-table tr {
+        display: block;
+    }
+
+    .events-table thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+
+    .events-table tr {
+        border: 1px solid #e0e0e0;
+        margin-bottom: 16px;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    .events-table td {
+        border: none;
+        position: relative;
+        padding-left: 40%;
+        display: flex;
+        align-items: center;
+        min-height: 30px;
+    }
+
+    .events-table td:before {
+        position: absolute;
+        left: 16px;
+        width: 35%;
+        padding-right: 10px;
+        white-space: nowrap;
+        font-weight: 600;
+        color: #666;
+        content: attr(data-label);
+    }
+
+    .image-cell {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .thumbnail-container,
+    .no-image {
+        margin-left: auto;
+    }
+
+    .title-cell {
+        max-width: none;
+        flex-direction: column;
+        align-items: flex-start !important;
+        gap: 4px;
+    }
+
+    .event-title,
+    .event-subtitle {
+        white-space: normal;
+        overflow: visible;
+        text-overflow: clip;
+    }
+
+    .actions-cell {
+        justify-content: flex-end;
+    }
+
+    .event-action-buttons {
+        display: flex;
+        gap: 8px;
+        width: 100%;
+        justify-content: flex-end;
+    }
+
+    .event-edit-button,
+    .event-delete-button {
+        padding: 8px 16px;
+        font-size: 13px;
+        flex: 1;
+    }
+
     .modal-content {
         width: 95%;
         padding: 16px;
@@ -747,4 +846,11 @@
     .modal-save-button {
         width: 100%;
     }
-} 
+
+    .created-column,
+    .updated-column,
+    .created-cell,
+    .updated-cell {
+        display: flex;
+    }
+}
