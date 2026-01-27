@@ -254,7 +254,7 @@ export default function Article() {
                                 </div>
 
                                 {/* Navigation Footer */}
-                                <div className="mt-32 flex justify-center" data-aos="fade-up">
+                                <div className="mt-32 mb-24 flex justify-center" data-aos="fade-up">
                                     <Link to="/news" className="group flex items-center gap-3 px-8 py-4 bg-white text-gray-900 font-bold rounded-full text-lg border-2 border-gray-100 hover:border-red-600 hover:text-red-600 transition-all shadow-sm hover:shadow-lg">
                                         <FiArrowLeft className="group-hover:-translate-x-1 transition-transform" />
                                         Back to News
