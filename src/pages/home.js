@@ -233,9 +233,14 @@ export default function Home() {
             height: landingC2.height,
             opacity: 1
         },
+        from: (previousPath && hasSeenHeroOnMount) ? {
+            top: bannerHeightHero * 1.2, // Start from below if arriving from another page
+            opacity: 0
+        } : {},
         config: config.molasses,
-        immediate: hasSeenHeroOnMount
+        immediate: hasSeenHeroOnMount && !previousPath // Only immediate if not a transition
     });
+
 
     // Animation for gray circles
     const circle1SizeHero = windowSize.width * 0.04;
@@ -529,7 +534,7 @@ export default function Home() {
                             <motion.div
                                 className="transition-circle"
                                 initial={{ left: `calc(98% - ${circle8Size}px)`, top: '86%', width: circle8Size, height: circle8Size, opacity: 1 }}
-                                animate={{ left: `calc(98% - ${circle8Size}px)`, top: '120%', width: circle8Size, height: circle8Size, opacity: 0 }}
+                                animate={{ left: `calc(105% - ${circle8Size}px)`, top: '120%', width: circle8Size, height: circle8Size, opacity: 0 }}
                                 transition={{ duration: 0.9, ease: [0.25, 0.46, 0.45, 0.94] }}
                                 style={{
                                     position: 'absolute',
@@ -539,6 +544,7 @@ export default function Home() {
                                 }}
                             />
                         );
+
                     })()}
 
                     {/* Exiting circle when navigating TO home from another hero page */}
