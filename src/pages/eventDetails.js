@@ -9,6 +9,7 @@ import { FaFacebook, FaLinkedin } from 'react-icons/fa';
 import { FaXTwitter } from 'react-icons/fa6';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import DOMPurify from 'dompurify';
 
 export default function EventDetails() {
     const { id } = useParams();
@@ -89,6 +90,15 @@ export default function EventDetails() {
             ? { year: "numeric", month: "long", day: "numeric", hour: "2-digit", minute: "2-digit" }
             : { year: "numeric", month: "long", day: "numeric" };
         return new Date(dateString).toLocaleDateString(undefined, options);
+    };
+
+    const isValidUrl = (string) => {
+        try {
+            const url = new URL(string);
+            return url.protocol === "http:" || url.protocol === "https:";
+        } catch (_) {
+            return false;
+        }
     };
 
     const shareEvent = (platform) => {
@@ -184,11 +194,11 @@ export default function EventDetails() {
                                     <div
                                         className="event-description-content text-lg text-gray-700 leading-relaxed font-google-sans"
                                         ref={contentRef}
-                                        dangerouslySetInnerHTML={{ __html: event.description }}
+                                        dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(event.description) }}
                                     />
                                 </div>
 
-                                <div className="flex justify-center" data-aos="fade-up">
+                                <div className="flex justify-center mb-24" data-aos="fade-up">
                                     <Link to="/events" className="group flex items-center gap-3 px-8 py-4 bg-white text-gray-900 font-bold rounded-full text-lg border-2 border-gray-100 hover:border-green-600 hover:text-green-600 transition-all shadow-sm hover:shadow-lg">
                                         <FiArrowLeft className="group-hover:-translate-x-1 transition-transform" />
                                         Back to Events
@@ -235,7 +245,7 @@ export default function EventDetails() {
                                             </div>
                                         </div>
 
-                                        {event.status === 'Upcoming' && event.rsvp_link && (
+                                        {event.status === 'Upcoming' && event.rsvp_link && isValidUrl(event.rsvp_link) && (
                                             <div className="mt-10">
                                                 <a
                                                     href={event.rsvp_link}
