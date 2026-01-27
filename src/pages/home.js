@@ -586,11 +586,16 @@ export default function Home() {
                                 </div>
 
                                 {/* 4. Social/Action Tile (Spans 1x1) */}
-                                <div className="md:col-span-1 bg-gray-900 rounded-[2.5rem] p-8 flex flex-col justify-center items-center text-center shadow-lg group hover:bg-gray-800 transition-colors cursor-pointer">
+                                <a
+                                    href="https://github.com/gdgoc-ustp/"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="md:col-span-1 bg-gray-900 rounded-[2.5rem] p-8 flex flex-col justify-center items-center text-center shadow-lg group hover:bg-gray-800 transition-colors cursor-pointer decoration-none"
+                                >
                                     <SiGithub className="text-5xl text-white mb-4 group-hover:scale-110 transition-transform" />
                                     <p className="text-white font-bold text-lg">Open Source</p>
                                     <p className="text-gray-400 text-sm">Contribute</p>
-                                </div>
+                                </a>
 
                                 {/* 5. Mission Card (Spans 2x1 Wide) */}
                                 <div className="md:col-span-2 bg-blue-600 rounded-[2.5rem] p-8 text-white shadow-xl relative overflow-hidden group flex flex-col md:flex-row items-center justify-between gap-6">

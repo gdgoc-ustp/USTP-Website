@@ -134,7 +134,7 @@ export default function Article() {
                 />
             </div>
 
-            <main className="min-h-screen bg-gray-50 pt-28 pb-20">
+            <main className="article-main-container min-h-screen bg-gray-50 pt-32 pb-32">
                 {loading ? (
                     <div className="flex flex-col items-center justify-center min-h-[60vh]">
                         <div className="w-16 h-16 border-4 border-red-200 border-t-red-600 rounded-full animate-spin mb-4"></div>
@@ -259,7 +259,7 @@ export default function Article() {
                                 </div>
 
                                 {/* Navigation Footer */}
-                                <div className="mt-16 flex justify-center" data-aos="fade-up">
+                                <div className="mt-32 flex justify-center" data-aos="fade-up">
                                     <Link to="/news" className="group flex items-center gap-3 px-8 py-4 bg-white text-gray-900 font-bold rounded-full text-lg border-2 border-gray-100 hover:border-red-600 hover:text-red-600 transition-all shadow-sm hover:shadow-lg">
                                         <FiArrowLeft className="group-hover:-translate-x-1 transition-transform" />
                                         Back to News

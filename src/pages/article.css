@@ -8,17 +8,19 @@
 }
 
 /* high specificity overrides for layout squeezing */
-#overhaul-v2-root main {
+#overhaul-v2-root main.article-main-container {
   width: 100% !important;
   max-width: none !important;
   padding-left: 0 !important;
   padding-right: 0 !important;
   margin: 0 !important;
+  padding-top: 10rem !important;
+  /* override global padding: 0 !important */
 }
 
 #overhaul-v2-root .max-w-4xl {
-  max-width: 64rem !important;
-  /* give it a bit more room if needed, but keep readable */
+  max-width: 56rem !important;
+  /* constrained width to fix image size and improve readability */
 }
 
 #overhaul-v2-root section {
@@ -47,6 +49,6 @@
 /* kill the squeezed effect on wide screens */
 @media (min-width: 1280px) {
   #overhaul-v2-root .max-w-4xl {
-    max-width: 75rem !important;
+    max-width: 60rem !important;
   }
 }
