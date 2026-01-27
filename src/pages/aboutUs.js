@@ -64,14 +64,6 @@ const RoadmapItem = ({ year, title, description, image, index, label }) => {
 
     return (
         <div className={`flex flex-col md:flex-row items-center justify-center w-full mb-32 relative z-10`}>
-            {/* desktop connector line - tied to card animation to prevent overlap issues */}
-            <motion.div
-                initial={{ opacity: 0, scaleX: 0 }}
-                whileInView={{ opacity: 1, scaleX: 1 }}
-                viewport={{ margin: "-10% 0px" }}
-                transition={{ duration: 0.8, ease: "circOut", delay: 0.2 }}
-                className={`hidden md:block absolute top-[50%] h-0.5 w-[42%] ${nodeColor} opacity-20 -z-10 ${isEven ? 'right-[50%] origin-right' : 'left-[50%] origin-left'}`}
-            ></motion.div>
 
             {/* left side */}
             <div className={`w-full md:w-[45%] flex justify-end px-6 ${isEven ? 'order-2 md:order-1' : 'order-2 md:order-3 md:justify-start'}`}>
