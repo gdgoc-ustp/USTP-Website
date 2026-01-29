@@ -16,6 +16,8 @@
 
 .event-description-content {
     color: #4b5563;
+    overflow-wrap: anywhere;
+    word-break: break-word;
 }
 
 .event-description-content p {
