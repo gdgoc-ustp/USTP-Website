@@ -19,7 +19,20 @@ export default function MeetTheTeam() {
 
     const isSearching = searchQuery.trim().length > 0;
 
-    const filteredSearchResults = Object.values(teamByGroup).flat().filter(member =>
+    const allMembersInOrder = allGroups.flatMap(group => teamByGroup[group] || []);
+
+    // Deduplicate by name (keeping the first occurrence, which respects group priority)
+    const uniqueMembers = [];
+    const seenNames = new Set();
+
+    allMembersInOrder.forEach(member => {
+        if (!seenNames.has(member.name)) {
+            seenNames.add(member.name);
+            uniqueMembers.push(member);
+        }
+    });
+
+    const filteredSearchResults = uniqueMembers.filter(member =>
         member.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         member.role.toLowerCase().includes(searchQuery.toLowerCase())
     );
