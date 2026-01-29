@@ -233,13 +233,14 @@ export default function Home() {
             height: landingC2.height,
             opacity: 1
         },
-        from: (previousPath && hasSeenHeroOnMount) ? {
-            top: bannerHeightHero * 1.2, // Start from below if arriving from another page
+        from: (previousPath && hasSeenHeroOnMount && skipAmount > 1) ? {
+            top: bannerHeightHero * 1.2, // Start from below if arriving from another page via skip
             opacity: 0
         } : {},
         config: config.molasses,
         immediate: hasSeenHeroOnMount && !previousPath // Only immediate if not a transition
     });
+
 
 
     // Animation for gray circles
@@ -920,7 +921,14 @@ export default function Home() {
                                 Join our <span className="text-blue-600">Community</span>
                             </h1>
 
-                            <div className="bg-white/80 backdrop-blur-sm rounded-[3rem] p-8 md:p-16 border border-gray-100 shadow-2xl">
+                            <div className="bg-white/80 backdrop-blur-sm rounded-[3rem] p-8 md:p-16 border border-gray-100 shadow-2xl relative">
+                                {/* Mascot Image - Breaking the frame */}
+                                <img
+                                    src="/devy-whole.png"
+                                    alt="Devy Mascot"
+                                    className="absolute -bottom-12 -right-12 w-64 lg:w-80 z-20 pointer-events-none hidden lg:block drop-shadow-xl transform rotate-3"
+                                />
+
                                 <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gray-800">
                                     Ready to build the future?
                                 </h2>
