@@ -455,6 +455,12 @@ export default function Events() {
             }
 
             const eventData = { ...formData };
+
+
+            if (eventData.event_date) {
+                eventData.event_date = new Date(eventData.event_date).toISOString();
+            }
+
             let result;
 
             if (selectedEvent) {
