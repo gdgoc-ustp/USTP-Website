@@ -185,32 +185,103 @@
   .hero-section h1 {
     font-size: 4.5rem;
   }
-
-  .circle-1,
-  .circle-2,
-  .circle-3,
-  .circle-4,
-  .circle-8 {
-    display: none;
-  }
 }
+
 
 @media (max-width: 1200px) {
+  .hero-section {
+    min-height: clamp(300px, 50svh, 500px);
+  }
+
   .hero-section h1 {
     font-size: 3.5rem;
   }
+
+  /* Scale down circles for tablet to maintain proportion */
+  .circle-1 {
+    width: 3.2vw;
+    height: 3.2vw;
+  }
+
+  .circle-2 {
+    width: 6.2vw;
+    height: 6.2vw;
+  }
+
+  .circle-3 {
+    width: 3.4vw;
+    height: 3.4vw;
+  }
+
+  .circle-4 {
+    width: 5vw;
+    height: 5vw;
+  }
+
+  .circle-5 {
+    width: 10vw;
+    height: 10vw;
+  }
+
+  .circle-6 {
+    width: 7.2vw;
+    height: 7.2vw;
+  }
+
+  .circle-8 {
+    width: 6.5vw;
+    height: 6.5vw;
+  }
 }
+
 
 @media (max-width: 900px) {
-  .hero-section h1 {
-    font-size: 3.5rem;
+  .hero-section {
+    min-height: clamp(280px, 45svh, 450px);
   }
 
-  .circle-5,
+  .hero-section h1 {
+    font-size: 3rem;
+  }
+
+  /* Further scale down for smaller tablets */
+  .circle-1 {
+    width: 3vw;
+    height: 3vw;
+  }
+
+  .circle-2 {
+    width: 5.5vw;
+    height: 5.5vw;
+  }
+
+  .circle-3 {
+    width: 3vw;
+    height: 3vw;
+  }
+
+  .circle-4 {
+    width: 4.5vw;
+    height: 4.5vw;
+  }
+
+  .circle-5 {
+    width: 9vw;
+    height: 9vw;
+  }
+
   .circle-6 {
-    display: none;
+    width: 6.5vw;
+    height: 6.5vw;
+  }
+
+  .circle-8 {
+    width: 6vw;
+    height: 6vw;
   }
 }
+
+
 
 @media (max-width: 768px) {
   .hero-section {

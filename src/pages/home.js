@@ -218,7 +218,17 @@ export default function Home() {
     });
 
     // Animation for the red circle (circle2 -> circle-8 position)
-    const bannerHeightHero = Math.min(Math.max(360, windowSize.height * 0.6), 720);
+    const isTablet = windowSize.width <= 1200;
+    const isSmallLaptop = windowSize.width <= 1366;
+
+    // Adjust hero height logic: reduce multiplier for tablets
+    const heightMultiplier = isTablet ? 0.45 : 0.6; // 45vh equivalent vs 60svh
+    const minHeight = isTablet ? 300 : 360;
+    const maxHeight = isTablet ? 500 : 720;
+
+    // Calculate banner height matching CSS clamp logic
+    const bannerHeightHero = Math.min(Math.max(minHeight, windowSize.height * heightMultiplier), maxHeight);
+
     const circle2Spring = useSpring({
         to: isHeroVisible ? {
             left: windowSize.width * 0.98 - circle8Size,
@@ -244,12 +254,19 @@ export default function Home() {
 
 
     // Animation for gray circles
-    const circle1SizeHero = windowSize.width * 0.04;
-    const circle2SizeHero = windowSize.width * 0.077;
-    const circle3SizeHero = windowSize.width * 0.042;
-    const circle4SizeHero = windowSize.width * 0.063;
-    const circle5SizeHero = windowSize.width * 0.126;
-    const circle6SizeHero = windowSize.width * 0.09;
+    // Scale gray circles based on viewport width (matches CSS logic)
+    // Base multipliers (desktop)
+    const baseScale = isTablet ? 0.8 : 1.0; // 20% reduction for tablet
+    // If screen is small (but not mobile), maybe reduce more? 
+    // Let's stick to simple breakpoint logic matching CSS
+
+    const circle1SizeHero = windowSize.width * 0.04 * baseScale;
+    const circle2SizeHero = windowSize.width * 0.077 * baseScale;
+    const circle3SizeHero = windowSize.width * 0.042 * baseScale;
+    const circle4SizeHero = windowSize.width * 0.063 * baseScale;
+    const circle5SizeHero = windowSize.width * 0.126 * baseScale;
+    const circle6SizeHero = windowSize.width * 0.09 * baseScale;
+
 
     const gray1Spring = useSpring({
         to: isHeroVisible ? {
@@ -479,7 +496,8 @@ export default function Home() {
             <NavigationBar />
             <main>
                 {/* Hero Section (always visible) */}
-                <header className="banner" style={{ height: isHeroVisible ? 'clamp(360px, 60svh, 720px)' : '100vh', transition: 'height 0.8s ease-in-out' }}>
+                <header className="banner" style={{ height: isHeroVisible ? `clamp(${minHeight}px, ${isTablet ? '50svh' : '60svh'}, ${maxHeight}px)` : '100vh', transition: 'height 0.8s ease-in-out' }}>
+
 
                     {/* Mobile Mesh Background (Shared with HeroSection) - Moved outside animated wrapper to persist */}
                     <div className="mobile-hero-background">
