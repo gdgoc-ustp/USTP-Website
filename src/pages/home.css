@@ -58,8 +58,8 @@ html {
 /* Add specific styling for mobile view */
 @media screen and (max-width: 768px) {
     .banner {
-        height: auto !important;
-        min-height: 50vh !important;
+        /* height: auto !important; */
+        /* min-height: 50vh !important; */
         padding: 60px 0;
     }
 }
@@ -307,18 +307,10 @@ html {
         }
     }
 
-    .circle,
-    .transition-circle,
-    .circle1,
-    .circle2,
-    .circle3,
-    .circle4,
-    .gray-circle1,
-    .gray-circle2,
-    .gray-circle3,
-    .hero-circles {
-        display: none !important;
+    .banner p {
+        font-size: 22px;
     }
+
 
     .mobile-hero-background {
         display: block;
