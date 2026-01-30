@@ -1,29 +1,14 @@
-import './App.css';
-import { Route, Routes } from 'react-router-dom';
-import { useState, useEffect } from 'react';
-import Home from './pages/home';
-import Events from './pages/events';
-import EventDetails from './pages/eventDetails';
-import News from './pages/news';
-import AboutUs from './pages/aboutUs';
-import MeetTheTeam from './pages/meetTheTeam';
-import Error from './pages/error';
-import FaQs from './pages/faq';
-import Article from "./pages/article";
-import PersonalityTest from "./pages/personalityTest";
-import PersonalityQuestionnaire from "./pages/personalityQuestionnaire";
-import PersonalityCodeInput from "./pages/personalityCodeInput";
-import AdminRoutes from './admin/routes/AdminRoutes';
-import Policy from './pages/policy';
-import Terms from './pages/terms';
-import Sitemap from './pages/sitemap';
-import LoadingScreen from './components/LoadingScreen';
-import Register from './pages/register';
+import { initConsoleEasterEgg } from './lib/consoleEasterEgg';
+
+// ... imports
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    // Console Easter Egg
+    initConsoleEasterEgg();
+
     // Simulate loading time or wait for resources
     const timer = setTimeout(() => {
       setIsLoading(false);
