@@ -285,11 +285,14 @@
 
 @media (max-width: 768px) {
   .hero-section {
-    min-height: 50vh;
+    min-height: 30svh;
+    /* Reduced from 35vh to 30svh for tighter look */
     display: flex;
     align-items: center;
     justify-content: center;
   }
+
+
 
   .hero-section h1 {
     font-size: 3rem;
