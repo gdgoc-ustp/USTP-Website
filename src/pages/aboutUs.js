@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { motion, useScroll, useSpring, useTransform } from 'framer-motion';
 import { LuSettings, LuCpu, LuMegaphone, LuUsers } from "react-icons/lu";
 import { useLocation } from 'react-router-dom';
+import SEO from '../components/SEO';
 import NavigationBar from "../components/navBar";
 import Footer from "../components/footer";
 import HeroSection from "../components/HeroSection";
@@ -14,8 +15,6 @@ import 'aos/dist/aos.css';
 import './aboutUs.css';
 
 
-// Unifed Hero Card Component
-// Improved with alternating layout support and richer visual hierarchy
 const HeroCard = ({ title, description, image, theme = "light", reverse = false }) => (
     <div className="py-12 px-6">
         <div className={`max-w-7xl mx-auto rounded-[3rem] overflow-hidden shadow-lg border border-gray-100 ${theme === 'light' ? 'bg-white' : 'bg-gray-50'} group hover:shadow-2xl transition-all duration-500`}>
@@ -150,7 +149,7 @@ export default function AboutUs() {
 
     return (
         <div id="overhaul-v2-root" >
-            <title>About Us</title>
+            <SEO title="About Us" url="/about-us" />
             <NavigationBar />
 
             <main className="bg-gray-50 min-h-screen">

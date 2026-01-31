@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import * as Sentry from '@sentry/react';
 import { BrowserRouter } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
 import { AuthProvider } from './contexts/AuthContext';
 import './index.css';
 import App from './App';
@@ -17,11 +18,13 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <Sentry.ErrorBoundary fallback={<Error code="500" title="Something went wrong" message="We encountered an unexpected error. Devy is looking into it!" />}>
-        <AuthProvider>
-          <App />
-        </AuthProvider>
-      </Sentry.ErrorBoundary>
+      <HelmetProvider>
+        <Sentry.ErrorBoundary fallback={<Error code="500" title="Something went wrong" message="We encountered an unexpected error. Devy is looking into it!" />}>
+          <AuthProvider>
+            <App />
+          </AuthProvider>
+        </Sentry.ErrorBoundary>
+      </HelmetProvider>
     </BrowserRouter>
   </React.StrictMode>
 );

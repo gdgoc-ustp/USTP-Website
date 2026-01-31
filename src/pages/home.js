@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
+import SEO from '../components/SEO';
 import NavigationBar from "../components/navBar";
 import Footer from "../components/footer";
 import './home.css';
@@ -534,6 +535,7 @@ export default function Home() {
 
     return (
         <div id="overhaul-v2-root">
+            <SEO />
             <NavigationBar />
             <main>
                 {/* Hero Section (always visible) */}

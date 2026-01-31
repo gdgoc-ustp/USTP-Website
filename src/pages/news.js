@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useMemo, useRef } from 'react';
+import SEO from '../components/SEO';
 import NavigationBar from "../components/navBar";
 import Footer from "../components/footer";
 import HeroSection from "../components/HeroSection";
@@ -90,7 +91,7 @@ export default function News() {
 
     return (
         <div id="overhaul-v2-root">
-            <title>News</title>
+            <SEO title="News" url="/news" />
             <NavigationBar />
             <main className="bg-gray-50 min-h-screen">
                 <HeroSection title="News" theme="news" previousPath={location.state?.from} />

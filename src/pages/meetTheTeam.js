@@ -1,4 +1,5 @@
 import { useState, useRef } from 'react';
+import SEO from '../components/SEO';
 import NavigationBar from '../components/navBar';
 import Footer from '../components/footer';
 import HeroSection from '../components/HeroSection';
@@ -39,7 +40,7 @@ export default function MeetTheTeam() {
 
     return (
         <div id="overhaul-v2-root">
-            <title>Meet the Team</title>
+            <SEO title="Meet The Team" url="/team" />
             <NavigationBar />
 
             <HeroSection title="Meet The Team" theme="aboutus" />
