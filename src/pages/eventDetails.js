@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useParams, Link } from "react-router-dom";
+import SEO from '../components/SEO';
 import NavigationBar from "../components/navBar";
 import Footer from "../components/footer";
 import "./eventDetails.css";
@@ -121,9 +122,20 @@ export default function EventDetails() {
         }
     };
 
+    const stripHtml = (html) => {
+        if (!html) return '';
+        const doc = new DOMParser().parseFromString(html, 'text/html');
+        return doc.body.textContent || '';
+    };
+
     return (
         <div id="overhaul-v2-root">
-            <title>{event ? event.heading : "Loading Event..."}</title>
+            <SEO
+                title={event?.heading}
+                description={event?.tagline || (event?.description && stripHtml(event.description).substring(0, 160))}
+                image={event?.image_url}
+                url={`/events/${id}`}
+            />
             <NavigationBar />
 
             <div className="fixed top-0 left-0 w-full h-1 bg-gray-200 z-[9999]" style={{ display: readingProgress > 0 ? 'block' : 'none' }}>
