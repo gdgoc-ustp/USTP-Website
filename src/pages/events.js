@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, Link } from 'react-router-dom';
+import SEO from '../components/SEO';
 import NavigationBar from "../components/navBar";
 import Footer from "../components/footer";
 import HeroSection from "../components/HeroSection";
@@ -132,7 +133,7 @@ export default function Events() {
 
     return (
         <div id="overhaul-v2-root">
-            <title>Events</title>
+            <SEO title="Events" url="/events" />
             <NavigationBar />
             <main className="bg-gray-50 min-h-screen">
                 <HeroSection title="Events" theme="events" previousPath={location.state?.from} />
