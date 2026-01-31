@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useParams, Link } from "react-router-dom";
+import SEO from '../components/SEO';
 import NavigationBar from "../components/navBar";
 import Footer from "../components/footer";
 import "./article.css";
@@ -122,9 +123,21 @@ export default function Article() {
         }
     };
 
+    const getMetaDescription = () => {
+        if (!article) return undefined;
+        if (article.tagline) return article.tagline;
+        const text = article.description?.replace(/<[^>]*>/g, '') || '';
+        return text.substring(0, 160);
+    };
+
     return (
         <div id="overhaul-v2-root">
-            <title>{article ? article.heading : "Loading Article..."}</title>
+            <SEO
+                title={article?.heading}
+                description={getMetaDescription()}
+                image={article?.image_url ? getImageUrl(article.image_url) : undefined}
+                url={`/news/article/${id}`}
+            />
             <NavigationBar />
 
             {/* Reading Progress Bar */}
