@@ -15,9 +15,9 @@ export default function Error({
             <NavigationBar />
 
             <main className="flex-grow flex items-center justify-center p-6 relative overflow-hidden min-h-[80vh]">
-                {/* Decorative background elements */}
-                <div className="absolute top-0 right-0 w-96 h-96 bg-blue-100 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 opacity-50 pointer-events-none"></div>
-                <div className="absolute bottom-0 left-0 w-96 h-96 bg-red-100 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2 opacity-50 pointer-events-none"></div>
+                {/* Decorative background elements - Subtle solid shapes */}
+                <div className="absolute top-0 right-0 w-96 h-96 bg-gray-100/50 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 opacity-50 pointer-events-none"></div>
+                <div className="absolute bottom-0 left-0 w-96 h-96 bg-gray-100/50 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2 opacity-50 pointer-events-none"></div>
 
                 <div className="text-center w-full max-w-6xl mx-auto z-10 grid md:grid-cols-2 gap-8 items-center">
                     {/* Mascot Column */}
@@ -28,12 +28,12 @@ export default function Error({
                         className="order-first md:order-last flex justify-center items-center"
                     >
                         <div className="relative group">
-                            {/* Glow effect behind mascot */}
-                            <div className="absolute inset-0 bg-gradient-to-tr from-blue-400 to-green-400 rounded-full blur-2xl opacity-20 group-hover:opacity-30 transition-opacity duration-500"></div>
+                            {/* Simple glow/backdrop effect - Solid Color */}
+                            <div className="absolute inset-0 bg-blue-50/50 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                             <img
                                 src="/devy-whole.png"
                                 alt="Devy Mascot"
-                                className="relative w-full max-w-[280px] md:max-w-[400px] object-contain drop-shadow-2xl transition-transform duration-500 hover:scale-[1.02] hover:-rotate-1"
+                                className="relative w-full max-w-[280px] md:max-w-[400px] object-contain drop-shadow-2xl transition-transform duration-500 hover:-rotate-1"
                             />
                         </div>
                     </motion.div>
@@ -46,7 +46,7 @@ export default function Error({
                             transition={{ delay: 0.2, duration: 0.5 }}
                             className="space-y-2"
                         >
-                            <h1 className="text-8xl md:text-9xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-red-500 to-yellow-500 leading-tight select-none">
+                            <h1 className="text-8xl md:text-9xl font-black text-blue-600 leading-tight select-none tracking-tighter">
                                 {code}
                             </h1>
                             <h2 className="text-3xl md:text-5xl font-bold text-gray-900 tracking-tight">
