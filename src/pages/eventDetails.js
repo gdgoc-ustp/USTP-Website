@@ -11,7 +11,7 @@ import { FaXTwitter } from 'react-icons/fa6';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import DOMPurify from 'dompurify';
-import { events } from '../lib/api';
+import { events as eventsApi } from '../lib/api';
 
 export default function EventDetails() {
     const { id } = useParams();
@@ -52,7 +52,7 @@ export default function EventDetails() {
             setLoading(true);
             setError(null);
 
-            const data = await events.getById(id);
+            const data = await eventsApi.getById(id);
 
             if (!data) {
                 throw new Error("Event not found");

@@ -1,9 +1,25 @@
 import { createClient } from '@supabase/supabase-js';
+import dotenv from 'dotenv';
 
-const supabaseUrl = process.env.SUPABASE_URL;
-const supabaseAnonKey = process.env.SUPABASE_ANON_KEY;
+// load env vars for local dev
+dotenv.config();
 
-const supabase = createClient(supabaseUrl, supabaseAnonKey);
+let supabase = null;
+
+function getSupabase() {
+    if (!supabase) {
+        const url = process.env.SUPABASE_URL || process.env.REACT_APP_SUPABASE_URL;
+        const key = process.env.SUPABASE_ANON_KEY || process.env.REACT_APP_SUPABASE_ANON_KEY;
+
+        if (!url || !key) {
+            console.error('Missing SUPABASE_URL or SUPABASE_ANON_KEY');
+            return null;
+        }
+
+        supabase = createClient(url, key);
+    }
+    return supabase;
+}
 
 export default async function handler(req, res) {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -18,12 +34,17 @@ export default async function handler(req, res) {
         return res.status(405).json({ error: 'Method not allowed' });
     }
 
+    const client = getSupabase();
+    if (!client) {
+        return res.status(500).json({ error: 'Database configuration error' });
+    }
+
     try {
         const { id, status } = req.query;
 
         // single event by id
         if (id) {
-            const { data, error } = await supabase
+            const { data, error } = await client
                 .from('events')
                 .select('*')
                 .eq('id', id)
@@ -40,7 +61,7 @@ export default async function handler(req, res) {
         }
 
         // list events with optional status filter
-        let query = supabase
+        let query = client
             .from('events')
             .select('*')
             .order('created_at', { ascending: false });
@@ -57,6 +78,6 @@ export default async function handler(req, res) {
 
     } catch (error) {
         console.error('Events API error:', error);
-        return res.status(500).json({ error: 'Failed to fetch events' });
+        return res.status(500).json({ error: 'Failed to fetch events', details: error.message });
     }
 }
