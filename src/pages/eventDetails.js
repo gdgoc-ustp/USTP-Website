@@ -11,6 +11,7 @@ import { FaXTwitter } from 'react-icons/fa6';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import DOMPurify from 'dompurify';
+import { events } from '../lib/api';
 
 export default function EventDetails() {
     const { id } = useParams();
@@ -51,27 +52,13 @@ export default function EventDetails() {
             setLoading(true);
             setError(null);
 
-            const response = await fetch(
-                `${process.env.REACT_APP_SUPABASE_URL}/rest/v1/events?id=eq.${id}&select=*`,
-                {
-                    headers: {
-                        "apikey": `${process.env.REACT_APP_SUPABASE_ANON_KEY}`,
-                        "Content-Type": "application/json"
-                    }
-                }
-            );
+            const data = await events.getById(id);
 
-            if (!response.ok) {
-                throw new Error(`Error fetching event: ${response.statusText}`);
-            }
-
-            const data = await response.json();
-
-            if (data.length === 0) {
+            if (!data) {
                 throw new Error("Event not found");
             }
 
-            setEvent(data[0]);
+            setEvent(data);
         } catch (err) {
             console.error("Error fetching event:", err);
             setError(err.message);

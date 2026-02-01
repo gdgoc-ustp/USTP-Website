@@ -8,6 +8,7 @@ import Sample from '../assets/sample.png';
 import { Link, useLocation } from "react-router-dom";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import { posts, storage } from '../lib/api';
 
 export default function News() {
     const location = useLocation();
@@ -32,14 +33,8 @@ export default function News() {
             setLoading(true);
             setError(null);
             const offset = pageNumber * postsPerPage;
-            const response = await fetch(
-                `${process.env.REACT_APP_SUPABASE_URL}/rest/v1/blog_posts?select=*&limit=${postsPerPage}&offset=${offset}&order=created_at.desc`,
-                { headers: { "apikey": `${process.env.REACT_APP_SUPABASE_ANON_KEY}`, "Content-Type": "application/json" } }
-            );
+            const data = await posts.list({ limit: postsPerPage, offset });
 
-            if (!response.ok) throw new Error(`Error fetching blog posts: ${response.statusText}`);
-
-            const data = await response.json();
             if (data.length < postsPerPage) setHasMore(false);
 
             if (pageNumber === 0) setBlogPosts(data);
@@ -55,7 +50,7 @@ export default function News() {
     const getImageUrl = (url) => {
         if (!url) return Sample;
         if (url.startsWith('http')) return url;
-        return `https://yrvykwljzajfkraytbgr.supabase.co/storage/v1/object/public/blog-images/${url}`;
+        return storage.getImageUrl(url, 'blog-images') || Sample;
     };
 
     const formatDate = (dateString) => {

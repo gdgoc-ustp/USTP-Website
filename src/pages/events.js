@@ -8,6 +8,7 @@ import './events.css';
 import Sample from '../assets/sample.png';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import { events } from '../lib/api';
 
 export default function Events() {
     const location = useLocation();
@@ -28,13 +29,7 @@ export default function Events() {
     const fetchEvents = async () => {
         try {
             setLoading(true);
-            const response = await fetch(
-                `${process.env.REACT_APP_SUPABASE_URL}/rest/v1/events?select=*`,
-                { headers: { 'apikey': process.env.REACT_APP_SUPABASE_ANON_KEY, 'Content-Type': 'application/json' } }
-            );
-
-            if (!response.ok) throw new Error('Failed to fetch events');
-            const data = await response.json();
+            const data = await events.list();
 
             setEvents({
                 upcomingEvents: data.filter(e => e.status === "Upcoming"),
