@@ -46,6 +46,27 @@ app.get('/api/tinymce-config', async (req, res) => {
     }
 });
 
+// Public API routes
+app.get('/api/posts', async (req, res) => {
+    try {
+        const { default: handler } = await import('./api/posts.js');
+        await handler(req, res);
+    } catch (error) {
+        console.error('Error loading posts handler:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+app.get('/api/events', async (req, res) => {
+    try {
+        const { default: handler } = await import('./api/events.js');
+        await handler(req, res);
+    } catch (error) {
+        console.error('Error loading events handler:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
 // Check for admin API routes
 app.all('/api/admin/supabase-admin', async (req, res) => {
     try {

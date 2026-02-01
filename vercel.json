@@ -3,6 +3,12 @@
   "functions": {
     "api/analyze-personality.js": {
       "maxDuration": 30
+    },
+    "api/posts.js": {
+      "maxDuration": 10
+    },
+    "api/events.js": {
+      "maxDuration": 10
     }
   },
   "headers": [

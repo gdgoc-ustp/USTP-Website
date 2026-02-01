@@ -10,6 +10,7 @@ import { FaFacebook, FaLinkedin } from 'react-icons/fa';
 import { FaXTwitter } from 'react-icons/fa6';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import { posts, storage } from '../lib/api';
 
 export default function Article() {
     const { id } = useParams();
@@ -53,27 +54,13 @@ export default function Article() {
             setLoading(true);
             setError(null);
 
-            const response = await fetch(
-                `${process.env.REACT_APP_SUPABASE_URL}/rest/v1/blog_posts?id=eq.${id}&select=*`,
-                {
-                    headers: {
-                        "apikey": `${process.env.REACT_APP_SUPABASE_ANON_KEY}`,
-                        "Content-Type": "application/json"
-                    }
-                }
-            );
+            const data = await posts.getById(id);
 
-            if (!response.ok) {
-                throw new Error(`Error fetching article: ${response.statusText}`);
-            }
-
-            const data = await response.json();
-
-            if (data.length === 0) {
+            if (!data) {
                 throw new Error("Article not found");
             }
 
-            setArticle(data[0]);
+            setArticle(data);
         } catch (err) {
             console.error("Error fetching article:", err);
             setError(err.message);
@@ -86,7 +73,7 @@ export default function Article() {
     const getImageUrl = (url) => {
         if (!url) return Sample;
         if (url.startsWith('http')) return url;
-        return `${process.env.REACT_APP_SUPABASE_URL}/storage/v1/object/public/blog-images/${url}`;
+        return storage.getImageUrl(url, 'blog-images') || Sample;
     };
 
     // Function to format date nicely
@@ -98,7 +85,7 @@ export default function Article() {
     const estimateReadingTime = (content) => {
         if (!content) return 0;
         const wordsPerMinute = 200;
-        const textContent = content.replace(/<[^>]*>/g, ''); // Strip HTML
+        const textContent = content.replace(/<[^>]*>/g, ''); // Strip HTML regex
         const wordCount = textContent.split(/\s+/).length;
         return Math.ceil(wordCount / wordsPerMinute);
     };

@@ -12,6 +12,7 @@ import { Link } from "react-router-dom";
 import { useSpring, animated, config } from 'react-spring';
 import Marquee from '../components/Marquee';
 import { SiGithub, SiGoogle } from 'react-icons/si';
+import { posts } from '../lib/api';
 
 import { AnimatePresence, motion } from 'framer-motion';
 import AOS from 'aos';
@@ -129,20 +130,8 @@ export default function Home() {
         const fetchLatestNews = async () => {
             try {
                 setNewsLoading(true);
-                const response = await fetch(
-                    `${process.env.REACT_APP_SUPABASE_URL}/rest/v1/blog_posts?select=*&limit=3&order=created_at.desc`,
-                    {
-                        headers: {
-                            "apikey": `${process.env.REACT_APP_SUPABASE_ANON_KEY}`,
-                            "Content-Type": "application/json"
-                        }
-                    }
-                );
-
-                if (response.ok) {
-                    const data = await response.json();
-                    setLatestNews(data);
-                }
+                const data = await posts.list({ limit: 3 });
+                setLatestNews(data);
             } catch (err) {
                 console.error("Error fetching latest news:", err);
             } finally {
