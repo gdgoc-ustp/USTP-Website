@@ -27,6 +27,7 @@
   top: 90%;
   background: linear-gradient(135deg, #D9D9D9 0%, #B0B0B0 100%);
   opacity: 0.6;
+  z-index: 1;
 }
 
 .circle-2 {
@@ -37,6 +38,7 @@
   top: 78%;
   background: linear-gradient(135deg, #D9D9D9 0%, #B0B0B0 100%);
   opacity: 0.7;
+  z-index: 1;
 }
 
 .circle-3 {
@@ -47,6 +49,7 @@
   top: 61%;
   background: linear-gradient(135deg, #D9D9D9 0%, #B0B0B0 100%);
   opacity: 0.6;
+  z-index: 1;
 }
 
 .circle-4 {
@@ -57,6 +60,7 @@
   top: 23%;
   background: linear-gradient(135deg, #D9D9D9 0%, #B0B0B0 100%);
   opacity: 0.6;
+  z-index: 1;
 }
 
 .circle-5 {
@@ -67,6 +71,7 @@
   top: 23%;
   background: linear-gradient(135deg, #D9D9D9 0%, #B0B0B0 100%);
   opacity: 0.8;
+  z-index: 1;
 }
 
 .circle-6 {
@@ -77,6 +82,7 @@
   top: 8%;
   background: linear-gradient(135deg, #D9D9D9 0%, #B0B0B0 100%);
   opacity: 0.7;
+  z-index: 1;
 }
 
 .circle-7 {
