@@ -252,11 +252,15 @@ export default function Home() {
     // Calculate banner height matching CSS clamp logic
     const bannerHeightHero = Math.min(Math.max(minHeight, windowSize.height * heightMultiplier), maxHeight);
 
+    // calculate circle-8 target position in pixels for consistent animation
+    const circle8Left = windowSize.width * 0.98 - circle8Size;
+    const circle8Top = bannerHeightHero * 0.86;
+
     const circle2Spring = useSpring({
         to: isHeroVisible ? {
-            // match HeroSection circle-8 position (bottom right corner)
-            left: `calc(98% - ${circle8Size}px)`,
-            top: '86%',
+            // circle-8 position (bottom right corner) in pixels
+            left: `${circle8Left}px`,
+            top: `${circle8Top}px`,
             width: `${circle8Size}px`,
             height: `${circle8Size}px`,
             // hide on mobile only when NOT transitioning from another page, or if duplicate (News -> Home)
@@ -271,9 +275,9 @@ export default function Home() {
             background: 'linear-gradient(135deg, #EB483B 0%, #B41F19 100%)'
         },
         from: (previousPath && hasSeenHeroOnMount && skipAmount > 1) ? {
-            // start from below visible area (matching HeroSection circle-8 initial position)
-            left: `calc(98% - ${circle8Size}px)`,
-            top: '120%',
+            // start from below visible area
+            left: `${circle8Left}px`,
+            top: `${bannerHeightHero * 1.2}px`,
             width: `${circle8Size}px`,
             height: `${circle8Size}px`,
             opacity: 0,
