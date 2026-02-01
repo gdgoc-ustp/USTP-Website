@@ -13,7 +13,6 @@ import { useSpring, animated, config } from 'react-spring';
 import Marquee from '../components/Marquee';
 import { SiGithub, SiGoogle } from 'react-icons/si';
 import { posts } from '../lib/api';
-
 import { AnimatePresence, motion } from 'framer-motion';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
@@ -313,17 +312,19 @@ export default function Home() {
     const circle6SizeHero = isMobile ? windowSize.width * 0.18 : windowSize.width * 0.09 * baseScale;
 
 
+    // gray1Spring -> circle-5: right: 0, top: 23%, width: 12.6vw
+    // calculate left position equivalent to right: 0 (100% - circleWidth)
     const gray1Spring = useSpring({
         to: isHeroVisible ? {
             top: '23%',
-            left: '100%',
+            left: `${windowSize.width - circle5SizeHero}px`,
             width: `${circle5SizeHero}px`,
             height: `${circle5SizeHero}px`,
             opacity: 0.8,
             animation: 'none'
         } : {
             top: '15%',
-            left: '75%',
+            left: `${windowSize.width * 0.75}px`,
             width: '120px',
             height: '120px',
             opacity: 0.6,
@@ -448,39 +449,42 @@ export default function Home() {
         }
     }, [isSequentialLeft, isHeroVisible]);
 
-    // Better approach for delayed fade-in: separate spring or animated value?
-    // Since we are using useSpring declarative, we can use a delay prop in the config?
-    // But opacity depends on 'isSequentialLeft' which is constant.
-    // 'isSequentialLeft' is true for the whole duration.
-    // So "opacity: 0" remains 0!
-    // We need "opacity: 1" eventually.
-    // We can use the 'delay' prop in useSpring?
-    // "delay: isSequentialLeft ? 800 : 0".
-    // And "opacity: 1" always?
-    // If we set opacity: 1 and delay: 800.
-    // Then on mount, it waits 800s before applying opacity: 1?
-    // Initial state is applied immediately?
-    // If loading from News, we mount fresh.
-    // immediate: hasSeenHeroOnMount is true.
-    // So it jumps to "to" state.
-    // We need to override "immediate" for opacity?
+    /*
+    Better approach for delayed fade-in: separate spring or animated value?
+    Since we are using useSpring declarative, we can use a delay prop in the config?
+    But opacity depends on 'isSequentialLeft' which is constant.
+    'isSequentialLeft' is true for the whole duration.
+    So "opacity: 0" remains 0!
+    We need "opacity: 1" eventually.
+    We can use the 'delay' prop in useSpring?
+    "delay: isSequentialLeft ? 800 : 0".
+    And "opacity: 1" always?
+    If we set opacity: 1 and delay: 800.
+    Then on mount, it waits 800s before applying opacity: 1?
+    Initial state is applied immediately?
+    If loading from News, we mount fresh.
+    immediate: hasSeenHeroOnMount is true.
+    So it jumps to "to" state.
+    We need to override "immediate" for opacity?
 
-    // Let's stick thereto:
-    // If isSequentialLeft, we want opacity 0 -> 1 over time.
-    // This is handled by spring interpolation if we change values.
-    // But value is constant 1?
-    // Correct fix: use a ref or state for 'delayedOpacity'.
+    Let's stick thereto:
+    If isSequentialLeft, we want opacity 0 -> 1 over time.
+    This is handled by spring interpolation if we change values.
+    But value is constant 1?
+    Correct fix: use a ref or state for 'delayedOpacity'.
 
-    // Simplification: We will trust that removing the 'motion.div' logic we had needs to be replaced.
-    // My previous 'motion.div' logic had `initial: 0, animate: 1, delay: 0.8`.
-    // I can replicate that with useSpring using 'from' and 'to'?
-    // On mount (News->Home):
-    // from: { opacity: isSequentialLeft ? 0 : 1 }
-    // to: { opacity: 1 }
-    // delay: isSequentialLeft ? 800 : 0.
+    to simplify: we will trust that removing the 'motion.div' logic we had needs to be replaced.
+    i used previously 'motion.div' logic had `initial: 0, animate: 1, delay: 0.8`.
+    i can replicate that with useSpring using 'from' and 'to'?
+    On mount (News->Home):
+    from: { opacity: isSequentialLeft ? 0 : 1 }
+    to: { opacity: 1 }
+    delay: isSequentialLeft ? 800 : 0.
 
-    // But useSpring handles updates.
-    // Let's refine the spring definition in the code block.
+    But useSpring handles updates.
+    Let's refine the spring definition in the code block.
+    */
+
 
     // Animation for fading out initial banner content
     const bannerContentSpring = useSpring({
@@ -550,13 +554,13 @@ export default function Home() {
                         {/* Gray accent circles (handled globally for animation) */}
                     </animated.div>
 
-                    {/* Globally handled gray circles for transition */}
-                    <animated.div style={gray1Spring} className="gray-circle" />
-                    <animated.div style={gray2Spring} className="gray-circle" />
-                    <animated.div style={gray3Spring} className="gray-circle" />
-                    <animated.div style={gray4Spring} className="gray-circle" />
-                    <animated.div style={gray5Spring} className="gray-circle" />
-                    <animated.div style={gray6Spring} className="gray-circle" />
+                    {/* Globally handled gray circles for transition - animate from initial to final positions */}
+                    <animated.div style={{ ...gray1Spring, zIndex: 1 }} className="gray-circle" />
+                    <animated.div style={{ ...gray2Spring, zIndex: 1 }} className="gray-circle" />
+                    <animated.div style={{ ...gray3Spring, zIndex: 1 }} className="gray-circle" />
+                    <animated.div style={{ ...gray4Spring, zIndex: 1 }} className="gray-circle" />
+                    <animated.div style={{ ...gray5Spring, zIndex: 1 }} className="gray-circle" />
+                    <animated.div style={{ ...gray6Spring, zIndex: 1 }} className="gray-circle" />
 
 
 
@@ -704,14 +708,14 @@ export default function Home() {
                             ...circle2Spring,
                             borderRadius: '50%',
                             position: 'absolute',
-                            zIndex: isHeroVisible ? 1 : 0,
+                            zIndex: isHeroVisible ? 2 : 3,
                             animation: isHeroVisible ? 'none' : 'float2 15s infinite ease-in-out'
                         }}
                     />
 
                     {/* Banner Content (Text/Button) - Hidden on Mobile */}
                     {!isMobile && (
-                        <animated.div style={{ ...bannerContentSpring, zIndex: 2, position: 'relative' }}>
+                        <animated.div style={{ ...bannerContentSpring, zIndex: 4, position: 'relative' }}>
                             <div className="banner-content">
                                 <h1 className="banner-title">
                                     Building Good Things, <span className="color-text">Together!</span>
@@ -762,7 +766,7 @@ export default function Home() {
                                             Fostering <span className="text-blue-600">Innovation</span>, <br className="hidden lg:block" /> Building Community
                                         </h2>
                                         <p className="text-lg text-gray-600 mb-8 leading-relaxed max-w-xl">
-                                            A platform for students to grow skills, connect with peers, and build solutions using Google technologies.
+                                            This organization envisions itself as a community to be for men, women and for others, a community of developers that are passionate about uplifting communities and solving problems through science, technology, and innovation.
                                         </p>
                                         <Link to="/about-us">
                                             <button className="px-8 py-3 bg-gray-900 text-white rounded-full font-bold hover:bg-gray-800 transition-all hover:shadow-lg hover:-translate-y-1 flex items-center gap-2">
@@ -821,7 +825,7 @@ export default function Home() {
                                 {/* 6. Wide Image Tile (Spans 2x1) */}
                                 <div className="md:col-span-2 rounded-[2.5rem] overflow-hidden shadow-sm relative h-[240px] group">
                                     <img
-                                        src="/photos/2.jpg"
+                                        src="/photos/hands-on.jpg"
                                         alt="Workshops"
                                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                                     />
