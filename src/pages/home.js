@@ -162,8 +162,8 @@ export default function Home() {
 
     let calculatedSize;
     if (isMobileWidth) {
-        // Mobile: 85% of width to ensure it's slightly larger than the reduced banner height, creating a "cropped" look
-        calculatedSize = Math.max(windowSize.width * 0.85, 280);
+        // mobile: 70% of width for a more balanced look
+        calculatedSize = Math.max(windowSize.width * 0.70, 220);
     } else if (isTabletWidth) {
         calculatedSize = vmin * 0.6;
     } else {
@@ -245,20 +245,22 @@ export default function Home() {
     const isSmallLaptop = windowSize.width <= 1366;
 
     // Adjust hero height logic: reduce multiplier for tablets and mobile
-    const heightMultiplier = isMobile ? 0.3 : (isTablet ? 0.45 : 0.6); // 30vh (mobile) vs 45vh (tablet) vs 60svh
-    const minHeight = isMobile ? 200 : (isTablet ? 300 : 360);
-    const maxHeight = isMobile ? 450 : (isTablet ? 500 : 720);
+    const heightMultiplier = isMobile ? 0.25 : (isTablet ? 0.45 : 0.6); // 25vh (mobile) vs 45vh (tablet) vs 60svh
+    const minHeight = isMobile ? 150 : (isTablet ? 300 : 360);
+    const maxHeight = isMobile ? 350 : (isTablet ? 500 : 720);
 
     // Calculate banner height matching CSS clamp logic
     const bannerHeightHero = Math.min(Math.max(minHeight, windowSize.height * heightMultiplier), maxHeight);
 
     const circle2Spring = useSpring({
         to: isHeroVisible ? {
-            left: isMobile ? '10%' : `${windowSize.width * 0.98 - circle8Size}px`,
-            top: isMobile ? '70%' : `${bannerHeightHero * 0.86}px`,
-            width: isMobile ? '20vw' : `${circle8Size}px`,
-            height: isMobile ? '20vw' : `${circle8Size}px`,
-            opacity: (isMobile || isSequentialLeft) ? 0 : 1 // Hide on mobile, or if duplicate (News -> Home) until delay
+            // match HeroSection circle-8 position (bottom right corner)
+            left: `calc(98% - ${circle8Size}px)`,
+            top: '86%',
+            width: `${circle8Size}px`,
+            height: `${circle8Size}px`,
+            // hide on mobile only when NOT transitioning from another page, or if duplicate (News -> Home)
+            opacity: (isMobile && !previousPath) || isSequentialLeft ? 0 : 1
         } : {
             left: `${landingC2.left}px`,
             top: `${landingC2.top}px`,
@@ -266,10 +268,14 @@ export default function Home() {
             height: `${landingC2.height}px`,
             opacity: 1,
             zIndex: 5,
-            background: 'linear-gradient(135deg, #EB483B 0%, #B41F19 100%)' // Force background
+            background: 'linear-gradient(135deg, #EB483B 0%, #B41F19 100%)'
         },
         from: (previousPath && hasSeenHeroOnMount && skipAmount > 1) ? {
-            top: `${bannerHeightHero * 1.2}px`,
+            // start from below visible area (matching HeroSection circle-8 initial position)
+            left: `calc(98% - ${circle8Size}px)`,
+            top: '120%',
+            width: `${circle8Size}px`,
+            height: `${circle8Size}px`,
             opacity: 0,
             zIndex: 5,
             background: 'linear-gradient(135deg, #EB483B 0%, #B41F19 100%)'
@@ -284,34 +290,36 @@ export default function Home() {
 
 
     // Animation for gray circles
-    // Scale gray circles based on viewport width (matches CSS logic)
-    // Base multipliers (desktop)
+    // Scale gray circles based on viewport width (matches CSS logic from HeroSection.css)
+    // Desktop: 4vw, 7.7vw, 4.2vw, 6.3vw, 12.6vw, 9vw
+    // Mobile: 8vw, 8vw, 12vw, 24vw, 18vw (from CSS @media max-width: 768px)
     const baseScale = isTablet ? 0.8 : 1.0;
 
-    // For mobile, maintain full composition but scaled (approx 2.5x desktop relative scale)
-    const mobileScale = 2.5;
-
-    const circle1SizeHero = isMobile ? windowSize.width * 0.04 * mobileScale : windowSize.width * 0.04 * baseScale;
-    const circle2SizeHero = isMobile ? windowSize.width * 0.077 * mobileScale : windowSize.width * 0.077 * baseScale;
-    const circle3SizeHero = isMobile ? windowSize.width * 0.042 * mobileScale : windowSize.width * 0.042 * baseScale;
-    const circle4SizeHero = isMobile ? windowSize.width * 0.063 * mobileScale : windowSize.width * 0.063 * baseScale;
-    const circle5SizeHero = isMobile ? windowSize.width * 0.126 * mobileScale : windowSize.width * 0.126 * baseScale;
-    const circle6SizeHero = isMobile ? windowSize.width * 0.09 * mobileScale : windowSize.width * 0.09 * baseScale;
+    // circle-1 = 4vw desktop, 8vw mobile
+    const circle1SizeHero = isMobile ? windowSize.width * 0.08 : windowSize.width * 0.04 * baseScale;
+    // circle-2 = 7.7vw desktop, 15vw mobile
+    const circle2SizeHero = isMobile ? windowSize.width * 0.15 : windowSize.width * 0.077 * baseScale;
+    // circle-3 = 4.2vw desktop, 8vw mobile
+    const circle3SizeHero = isMobile ? windowSize.width * 0.08 : windowSize.width * 0.042 * baseScale;
+    // circle-4 = 6.3vw desktop, 12vw mobile
+    const circle4SizeHero = isMobile ? windowSize.width * 0.12 : windowSize.width * 0.063 * baseScale;
+    // circle-5 = 12.6vw desktop, 24vw mobile
+    const circle5SizeHero = isMobile ? windowSize.width * 0.24 : windowSize.width * 0.126 * baseScale;
+    // circle-6 = 9vw desktop, 18vw mobile
+    const circle6SizeHero = isMobile ? windowSize.width * 0.18 : windowSize.width * 0.09 * baseScale;
 
 
     const gray1Spring = useSpring({
         to: isHeroVisible ? {
             top: '23%',
-            right: '0%',
-            left: 'auto',
+            left: '100%',
             width: `${circle5SizeHero}px`,
             height: `${circle5SizeHero}px`,
             opacity: 0.8,
             animation: 'none'
         } : {
             top: '15%',
-            right: '25%',
-            left: 'auto',
+            left: '75%',
             width: '120px',
             height: '120px',
             opacity: 0.6,
@@ -325,7 +333,6 @@ export default function Home() {
         to: isHeroVisible ? {
             top: '23%',
             left: '16%',
-            right: 'auto',
             width: `${circle4SizeHero}px`,
             height: `${circle4SizeHero}px`,
             opacity: 0.6,
@@ -333,7 +340,6 @@ export default function Home() {
         } : {
             top: '40%',
             left: '20%',
-            right: 'auto',
             width: '80px',
             height: '80px',
             opacity: 0.6,
@@ -347,17 +353,13 @@ export default function Home() {
         to: isHeroVisible ? {
             top: '61%',
             left: '38%',
-            bottom: 'auto',
-            right: 'auto',
             width: `${circle3SizeHero}px`,
             height: `${circle3SizeHero}px`,
             opacity: 0.6,
             animation: 'none'
         } : {
-            top: 'auto',
-            left: 'auto',
-            bottom: '30%',
-            right: '40%',
+            top: '70%',
+            left: '60%',
             width: '100px',
             height: '100px',
             opacity: 0.6,
@@ -371,7 +373,6 @@ export default function Home() {
         to: isHeroVisible ? {
             top: '90%',
             left: '17%',
-            right: 'auto',
             width: `${circle1SizeHero}px`,
             height: `${circle1SizeHero}px`,
             opacity: 0.6,
@@ -379,7 +380,6 @@ export default function Home() {
         } : {
             top: '60%',
             left: '10%',
-            right: 'auto',
             width: '90px',
             height: '90px',
             opacity: 0.5,
@@ -393,7 +393,6 @@ export default function Home() {
         to: isHeroVisible ? {
             top: '78%',
             left: '0%',
-            right: 'auto',
             width: `${circle2SizeHero}px`,
             height: `${circle2SizeHero}px`,
             opacity: 0.7,
@@ -401,7 +400,6 @@ export default function Home() {
         } : {
             top: '20%',
             left: '50%',
-            right: 'auto',
             width: '110px',
             height: '110px',
             opacity: 0.4,
@@ -415,15 +413,13 @@ export default function Home() {
         to: isHeroVisible ? {
             top: '8%',
             left: '45.5%',
-            right: 'auto',
             width: `${circle6SizeHero}px`,
             height: `${circle6SizeHero}px`,
             opacity: 0.7,
             animation: 'none'
         } : {
             top: '80%',
-            right: '20%',
-            left: 'auto',
+            left: '80%',
             width: '130px',
             height: '130px',
             opacity: 0.5,
@@ -528,7 +524,7 @@ export default function Home() {
             <NavigationBar />
             <main>
                 {/* Hero Section (always visible) */}
-                <header className="banner" style={{ height: isHeroVisible ? `clamp(${minHeight}px, ${isMobile ? '30svh' : (isTablet ? '50svh' : '60svh')}, ${maxHeight}px)` : '100vh', transition: 'height 0.8s ease-in-out' }}>
+                <header className="banner" style={{ height: isHeroVisible ? `clamp(${minHeight}px, ${isMobile ? '25svh' : (isTablet ? '50svh' : '60svh')}, ${maxHeight}px)` : '100vh', transition: 'height 0.8s ease-in-out' }}>
 
 
 
