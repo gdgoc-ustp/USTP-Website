@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { motion, useScroll, useSpring, useTransform } from 'framer-motion';
-import { LuSettings, LuCpu, LuMegaphone, LuUsers } from "react-icons/lu";
+import { LuSettings, LuCpu, LuMegaphone, LuUsers, LuChevronLeft, LuChevronRight } from "react-icons/lu";
 import { useLocation } from 'react-router-dom';
 import SEO from '../components/SEO';
 import NavigationBar from "../components/navBar";
@@ -8,6 +8,9 @@ import Footer from "../components/footer";
 import HeroSection from "../components/HeroSection";
 import { Link } from "react-router-dom";
 import sampleImage1 from '../assets/sample.png';
+import missionImage1 from '../assets/mission.jpg'
+import visionImage1 from '../assets/vision.jpg'
+
 import sampleImage2 from '../assets/sample.png';
 import { getFeaturedMembers, getGroupColor } from '../data/team';
 import AOS from 'aos';
@@ -15,33 +18,41 @@ import 'aos/dist/aos.css';
 import './aboutUs.css';
 
 
-const HeroCard = ({ title, description, image, theme = "light", reverse = false }) => (
-    <div className="py-12 px-6">
-        <div className={`max-w-7xl mx-auto rounded-[3rem] overflow-hidden shadow-lg border border-gray-100 ${theme === 'light' ? 'bg-white' : 'bg-gray-50'} group hover:shadow-2xl transition-all duration-500`}>
-            <div className={`flex flex-col ${reverse ? 'lg:flex-row-reverse' : 'lg:flex-row'} items-center`}>
-                <div className="w-full lg:w-1/2 p-8 md:p-20 flex flex-col justify-center gap-8">
-                    <div className="flex flex-col gap-4">
-                        <span className={`text-sm font-bold tracking-widest uppercase ${reverse ? 'text-red-500' : 'text-blue-600'}`}>
-                            {reverse ? 'Our Mission' : 'Who We Are'}
-                        </span>
-                        <h2 className="text-4xl md:text-6xl font-bold font-google-sans leading-tight text-gray-900">
-                            {title}
-                        </h2>
-                    </div>
-                    <p className="text-xl text-gray-600 leading-relaxed font-google-sans font-light">
-                        {description}
-                    </p>
-                    {/* Decorative Element */}
-                    <div className={`w-24 h-2 rounded-full mt-4 ${reverse ? 'bg-red-500' : 'bg-blue-600'}`}></div>
-                </div>
-                <div className="w-full lg:w-1/2 h-[400px] lg:h-[600px] relative overflow-hidden">
-                    <img
-                        src={image}
-                        alt={title}
-                        className="absolute inset-0 w-full h-full object-cover transform transition-transform duration-1000 group-hover:scale-105"
-                    />
-                    <div className={`absolute inset-0 bg-gradient-to-t ${reverse ? 'from-red-900/40' : 'from-blue-900/40'} to-transparent opacity-60`}></div>
-                </div>
+const HeroCard = ({ title, description, image, color = "bg-blue-600", subtitle, delay = 0 }) => (
+    <div
+        className="relative w-full h-full min-h-[400px] md:min-h-[500px] rounded-[2rem] md:rounded-[2.5rem] overflow-hidden group hover:-translate-y-2 transition-all duration-500 shadow-xl flex flex-col"
+        data-aos="fade-up"
+        data-aos-delay={delay}
+    >
+        {/* Background Image */}
+        <div className="absolute inset-0">
+            <img
+                src={image}
+                alt={title}
+                className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+            />
+
+            {/* Neutral Dark Overlay for Readability */}
+            <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-black/80 opacity-80 group-hover:opacity-70 transition-opacity duration-500"></div>
+
+            {/* Extra darken layer for text contrast */}
+            <div className="absolute inset-0 bg-black/20"></div>
+        </div>
+
+        {/* Content */}
+        <div className="relative z-10 p-6 md:p-10 lg:p-12 flex flex-col h-full">
+            <div className="mb-6 md:mb-auto">
+                <span className="inline-block px-3 py-1 md:px-4 md:py-1.5 rounded-full bg-white/20 backdrop-blur-md text-white/95 text-[10px] md:text-xs font-bold tracking-widest uppercase border border-white/30 mb-4 md:mb-6">
+                    {subtitle}
+                </span>
+                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold font-google-sans text-white mb-4 leading-tight drop-shadow-md">
+                    {title}
+                </h2>
+                <div className="w-16 md:w-20 h-1 md:h-1.5 bg-white/40 rounded-full"></div>
+            </div>
+
+            <div className="text-base md:text-lg text-white font-google-sans font-medium leading-relaxed mt-4 drop-shadow-sm">
+                {description}
             </div>
         </div>
     </div>
@@ -156,21 +167,44 @@ export default function AboutUs() {
                 <HeroSection title="About Us" theme="aboutus" previousPath={location.state?.from} />
 
                 {/* 1. Who We Are - Clean Unified Cards with Alternating Layout */}
-                <section className="py-12 flex flex-col gap-12">
-                    <HeroCard
-                        title="Fostering Innovation"
-                        description="Google Developer Groups (GDG) is a community of passionate developers interested in Google's developer technologies. We help developers grow their skills and build innovative solutions through hands-on workshops and real-world projects."
-                        image={sampleImage1}
-                        theme="light"
-                    />
-                    <HeroCard
-                        title="Building Community"
-                        description="Our mission is to create a vibrant ecosystem where developers can connect, learn, and collaborate. We believe in the power of community-led learning, fostering an inclusive environment for everyone to thrive in technology."
-                        image={sampleImage2}
-                        theme="light"
-                        reverse={true}
-                    />
+                {/* 1. Vision & Mission - Side by Side Grid */}
+                {/* 1. Vision & Mission - Immersive Grid Layout */}
+                <section className="pt-16 md:pt-24 px-4 md:px-6">
+                    <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-12">
+                        <HeroCard
+                            title="Vision"
+                            subtitle="Article II, Section 1"
+                            description="This organization envisions itself as a community to be for men, women and for others, a community of developers that are passionate about uplifting communities and solving problems through science, technology, and innovation."
+                            image={visionImage1}
+                            color="bg-blue-600"
+                            delay={0}
+                        />
+                        <HeroCard
+                            title="Mission"
+                            subtitle="Article II, Section 2"
+                            description={
+                                <ul className="list-none space-y-3 md:space-y-4 mt-2">
+                                    {[
+                                        "Empower people through technology and programming education",
+                                        "Enlighten them to the power of innovation and problem-solving",
+                                        "Nurture them to create meaningful technological solutions for the community",
+                                        "Use technology in helping communities"
+                                    ].map((item, i) => (
+                                        <li key={i} className="flex gap-3 items-start">
+                                            <span className="mt-2 w-1.5 h-1.5 rounded-full bg-white/80 flex-shrink-0" />
+                                            <span>{item}</span>
+                                        </li>
+                                    ))}
+                                </ul>
+                            }
+                            image={missionImage1}
+                            color="bg-red-600"
+                            delay={100}
+                        />
+                    </div>
                 </section>
+
+
 
                 <section ref={journeyContainerRef} className="py-24 px-4 bg-white relative overflow-hidden roadmap-container">
                     {/* Background Grid Pattern */}
@@ -284,33 +318,92 @@ export default function AboutUs() {
                             <p className="text-gray-600 max-w-2xl mx-auto text-lg">The people making it all happen.</p>
                         </div>
 
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 justify-items-center mb-20">
-                            {featuredMembers.map((member, index) => {
-                                const groupColor = getGroupColor(member.group);
-                                return (
-                                    <div key={member.id} className="w-full max-w-sm rounded-[2rem] overflow-hidden shadow-lg bg-white flex flex-col group transition-all duration-300 hover:-translate-y-2" data-aos="fade-up" data-aos-delay={index * 100}>
-                                        <div className="h-80 w-full relative overflow-hidden bg-gray-200">
-                                            <img
-                                                src={encodeURI(member.image)}
-                                                alt={member.name}
-                                                className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
-                                            />
-                                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        {/* Draggable/Scrollable Team Carousel */}
+                        <div className="relative group/carousel mb-20">
+                            {/* Controls */}
+                            <div className="flex gap-4 justify-end mb-8 px-2">
+                                <button
+                                    onClick={() => document.getElementById('team-carousel').scrollBy({ left: -350, behavior: 'smooth' })}
+                                    className="p-4 rounded-full bg-white border border-gray-100 shadow-lg text-gray-700 hover:bg-gray-50 hover:scale-110 active:scale-95 transition-all duration-300 z-20"
+                                    aria-label="Scroll left"
+                                >
+                                    <LuChevronLeft className="w-6 h-6" />
+                                </button>
+                                <button
+                                    onClick={() => document.getElementById('team-carousel').scrollBy({ left: 350, behavior: 'smooth' })}
+                                    className="p-4 rounded-full bg-white border border-gray-100 shadow-lg text-gray-700 hover:bg-gray-50 hover:scale-110 active:scale-95 transition-all duration-300 z-20"
+                                    aria-label="Scroll right"
+                                >
+                                    <LuChevronRight className="w-6 h-6" />
+                                </button>
+                            </div>
+
+                            {/* Carousel Container */}
+                            <div
+                                id="team-carousel"
+                                className="flex gap-6 md:gap-8 overflow-x-auto pb-12 px-4 snap-x snap-mandatory cursor-grab active:cursor-grabbing scrollbar-hide"
+                                style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+                                onMouseDown={(e) => {
+                                    const slider = e.currentTarget;
+                                    let isDown = true;
+                                    let startX = e.pageX - slider.offsetLeft;
+                                    let scrollLeft = slider.scrollLeft;
+
+                                    const onMouseUp = () => {
+                                        isDown = false;
+                                        slider.classList.remove('cursor-grabbing');
+                                        slider.classList.add('cursor-grab');
+                                        window.removeEventListener('mouseup', onMouseUp);
+                                        window.removeEventListener('mousemove', onMouseMove);
+                                    };
+
+                                    const onMouseMove = (e) => {
+                                        if (!isDown) return;
+                                        e.preventDefault();
+                                        const x = e.pageX - slider.offsetLeft;
+                                        const walk = (x - startX) * 2; // scroll-fast
+                                        slider.scrollLeft = scrollLeft - walk;
+                                    };
+
+                                    slider.classList.add('cursor-grabbing');
+                                    slider.classList.remove('cursor-grab');
+                                    window.addEventListener('mouseup', onMouseUp);
+                                    window.addEventListener('mousemove', onMouseMove);
+                                }}
+                            >
+                                {featuredMembers.map((member, index) => {
+                                    const groupColor = getGroupColor(member.group);
+                                    return (
+                                        <div
+                                            key={member.id}
+                                            className="min-w-[300px] md:min-w-[350px] snap-start rounded-[2rem] overflow-hidden shadow-lg bg-white flex flex-col group transition-all duration-300 hover:-translate-y-2 select-none"
+                                            data-aos="fade-up"
+                                            data-aos-delay={index * 100}
+                                        >
+                                            <div className="h-72 md:h-80 w-full relative overflow-hidden bg-gray-200">
+                                                <img
+                                                    src={encodeURI(member.image)}
+                                                    alt={member.name}
+                                                    draggable="false"
+                                                    className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105 pointer-events-none"
+                                                />
+                                                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                            </div>
+                                            <div className="p-8 relative">
+                                                <div className="absolute top-0 left-0 w-full h-1.5" style={{ backgroundColor: groupColor }}></div>
+                                                <h3 className="text-2xl font-bold text-gray-900 font-google-sans mb-1">{member.name}</h3>
+                                                <p className="text-gray-500 font-medium font-google-sans">{member.role}</p>
+                                            </div>
                                         </div>
-                                        <div className="p-8 relative">
-                                            <div className="absolute top-0 left-0 w-full h-1.5" style={{ backgroundColor: groupColor }}></div>
-                                            <h3 className="text-2xl font-bold text-gray-900 font-google-sans mb-1">{member.name}</h3>
-                                            <p className="text-gray-500 font-medium font-google-sans">{member.role}</p>
-                                        </div>
-                                    </div>
-                                )
-                            })}
+                                    )
+                                })}
+                            </div>
                         </div>
 
                         {/* Redesigned View Team CTA - Full Width Card */}
-                        <div className="max-w-4xl mx-auto" data-aos="zoom-in">
+                        <div className="w-full" data-aos="zoom-in">
                             <Link to="/team" className="block group relative overflow-hidden rounded-[2.5rem] bg-gray-900 text-white shadow-2xl hover:shadow-3xl transition-all duration-300 transform hover:-translate-y-1">
-                                <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-600 opacity-90 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                <div className="absolute inset-0 bg-blue-600 transition-colors duration-300 group-hover:bg-blue-700"></div>
                                 {/* Decorative Blobs */}
                                 <div className="absolute top-0 right-0 w-64 h-64 bg-white opacity-10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 group-hover:scale-110 transition-transform duration-700"></div>
                                 <div className="absolute bottom-0 left-0 w-48 h-48 bg-yellow-400 opacity-20 rounded-full blur-2xl translate-y-1/3 -translate-x-1/3"></div>
