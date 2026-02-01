@@ -103,6 +103,9 @@ export default function MeetTheTeam() {
 // Individual Section Slider Component
 function TeamSectionSlider({ title, members, color }) {
     const scrollRef = useRef(null);
+    const isDragging = useRef(false);
+    const startX = useRef(0);
+    const initialScrollLeft = useRef(0);
 
     const scroll = (direction) => {
         if (scrollRef.current) {
@@ -115,6 +118,38 @@ function TeamSectionSlider({ title, members, color }) {
         }
     };
 
+    const handleMouseDown = (e) => {
+        isDragging.current = true;
+        startX.current = e.pageX - scrollRef.current.offsetLeft;
+        initialScrollLeft.current = scrollRef.current.scrollLeft;
+        scrollRef.current.style.cursor = 'grabbing';
+        scrollRef.current.style.scrollSnapType = 'none'; // Disable snap while dragging for smoothness
+    };
+
+    const handleMouseLeave = () => {
+        isDragging.current = false;
+        if (scrollRef.current) {
+            scrollRef.current.style.cursor = 'grab';
+            scrollRef.current.style.scrollSnapType = 'x mandatory'; // Re-enable snap
+        }
+    };
+
+    const handleMouseUp = () => {
+        isDragging.current = false;
+        if (scrollRef.current) {
+            scrollRef.current.style.cursor = 'grab';
+            scrollRef.current.style.scrollSnapType = 'x mandatory'; // Re-enable snap
+        }
+    };
+
+    const handleMouseMove = (e) => {
+        if (!isDragging.current) return;
+        e.preventDefault();
+        const x = e.pageX - scrollRef.current.offsetLeft;
+        const walk = (x - startX.current) * 1.5; // Scroll speed multiplier
+        scrollRef.current.scrollLeft = initialScrollLeft.current - walk;
+    };
+
     return (
         <div className="w-full relative group/section">
             <div className="max-w-7xl mx-auto px-6 mb-6 flex items-center justify-between">
@@ -124,8 +159,8 @@ function TeamSectionSlider({ title, members, color }) {
                     <span className="text-sm font-bold text-gray-500 bg-gray-200 px-3 py-1 rounded-full">{members.length}</span>
                 </div>
 
-                {/* Navigation Buttons (Desktop) */}
-                <div className="hidden md:flex gap-2 opacity-0 group-hover/section:opacity-100 transition-opacity duration-300">
+                {/* Navigation Buttons (Desktop) - Always visible */}
+                <div className="hidden md:flex gap-2">
                     <button
                         onClick={() => scroll('left')}
                         className="w-12 h-12 rounded-full bg-white shadow-md flex items-center justify-center hover:bg-gray-50 transition-colors border border-gray-100 z-10"
@@ -146,13 +181,23 @@ function TeamSectionSlider({ title, members, color }) {
             {/* Slider Container - Full Width with Padding for Center content */}
             <div
                 ref={scrollRef}
-                className="overflow-x-auto hide-scrollbar pb-12 pt-4 px-6 md:px-[max(1.5rem,calc((100vw-80rem)/2))]"
+                className="overflow-x-auto hide-scrollbar pb-12 pt-4 px-6 md:px-[max(1.5rem,calc((100vw-80rem)/2))] cursor-grab"
                 style={{ scrollSnapType: 'x mandatory' }}
+                onMouseDown={handleMouseDown}
+                onMouseLeave={handleMouseLeave}
+                onMouseUp={handleMouseUp}
+                onMouseMove={handleMouseMove}
             >
                 <div className="flex gap-6 w-max">
                     {members.map((member) => (
-                        <div key={member.id} className="snap-center">
-                            <TeamCard member={member} />
+                        <div key={member.id} className="snap-center pointer-events-none select-none md:pointer-events-auto md:select-auto">
+                            {/* Wrap card in a div that handles click vs drag appropriately if needed. 
+                                For now, pointer-events adjustment logic might be needed to allow clicking links inside cards if they existed. 
+                                Since cards are just display, we need to prevent image drag. 
+                            */}
+                            <div className="pointer-events-auto" onDragStart={(e) => e.preventDefault()}>
+                                <TeamCard member={member} />
+                            </div>
                         </div>
                     ))}
                     {/* Padding right spacer */}
