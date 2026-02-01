@@ -285,8 +285,7 @@
 
 @media (max-width: 768px) {
   .hero-section {
-    min-height: 30svh;
-    /* Reduced from 35vh to 30svh for tighter look */
+    min-height: 25svh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -306,47 +305,47 @@
   /* Scale up relative sizes for mobile so they populate the space nicely */
   .circle-1 {
     display: block;
-    width: 10vw;
-    height: 10vw;
+    width: 8vw;
+    height: 8vw;
   }
 
   .circle-3 {
     display: block;
-    width: 10vw;
-    height: 10vw;
+    width: 8vw;
+    height: 8vw;
   }
 
   .circle-4 {
     display: block;
-    width: 16vw;
-    height: 16vw;
+    width: 12vw;
+    height: 12vw;
   }
 
   .circle-5 {
     display: block;
-    width: 30vw;
-    height: 30vw;
+    width: 24vw;
+    height: 24vw;
   }
 
   .circle-6 {
     display: block;
-    width: 22vw;
-    height: 22vw;
+    width: 18vw;
+    height: 18vw;
   }
 
   /* Main transition circles */
   .circle-2 {
     display: block;
-    width: 20vw;
-    height: 20vw;
-    top: 70%;
-    left: 10%;
+    width: 15vw;
+    height: 15vw;
+    top: 78%;
+    left: 0%;
   }
 
   .circle-8 {
     display: block;
-    width: 20vw;
-    height: 20vw;
+    width: 15vw;
+    height: 15vw;
     top: 80%;
     right: 5%;
   }

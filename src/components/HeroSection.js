@@ -46,8 +46,19 @@ const HeroSection = ({ title, theme, previousPath }) => {
   }, []);
 
   const vmin = Math.min(windowSize.width, windowSize.height);
-  const targetSize = Math.min(Math.max(240, vmin * 0.9), 1100);
-  const circle8Size = vmin * 0.082; // matches CSS .circle-8 size
+  const isMobileWidth = windowSize.width <= 768;
+  const isTabletWidth = windowSize.width > 768 && windowSize.width <= 1200;
+
+  // mobile: 70% of width, tablet: 60% of vmin, desktop: 90% of vmin
+  let targetSize;
+  if (isMobileWidth) {
+    targetSize = Math.max(windowSize.width * 0.70, 220);
+  } else if (isTabletWidth) {
+    targetSize = vmin * 0.6;
+  } else {
+    targetSize = Math.min(Math.max(240, vmin * 0.9), 1100);
+  }
+  const circle8Size = vmin * 0.082;
 
   // current page index
   const currentPath = `/${theme === 'aboutus' ? 'about-us' : theme === 'home' ? '' : theme}`;
