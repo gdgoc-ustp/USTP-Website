@@ -10,6 +10,7 @@ import Login from '../pages/Login';
 import Setup from '../pages/Setup';
 import Users from '../pages/Users';
 import UrlShortener from '../pages/UrlShortener';
+import Registrations from '../pages/Registrations';
 
 // Protected route wrapper
 const ProtectedRoute = ({ children }) => {
@@ -83,6 +84,15 @@ export default function AdminRoutes() {
                 element={
                     <ProtectedRoute>
                         <UrlShortener />
+                    </ProtectedRoute>
+                }
+            />
+
+            <Route
+                path="registrations"
+                element={
+                    <ProtectedRoute>
+                        <Registrations />
                     </ProtectedRoute>
                 }
             />

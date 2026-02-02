@@ -78,6 +78,28 @@ app.all('/api/admin/supabase-admin', async (req, res) => {
     }
 });
 
+// Settings API
+app.all('/api/settings', async (req, res) => {
+    try {
+        const { default: handler } = await import('./api/settings.js');
+        await handler(req, res);
+    } catch (error) {
+        console.error('Error loading settings handler:', error);
+        res.status(500).json({ error: 'Settings API not available' });
+    }
+});
+
+// Registrations API
+app.all('/api/registrations', async (req, res) => {
+    try {
+        const { default: handler } = await import('./api/registrations.js');
+        await handler(req, res);
+    } catch (error) {
+        console.error('Error loading registrations handler:', error);
+        res.status(500).json({ error: 'Registrations API not available' });
+    }
+});
+
 // Serve React app for all other routes
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'build', 'index.html'));
