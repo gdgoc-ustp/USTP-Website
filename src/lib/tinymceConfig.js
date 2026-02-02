@@ -40,6 +40,100 @@ export const getTinyMCEApiKey = async () => {
     return config.apiKey;
 };
 
+// common emoji cdn patterns from various platforms
+const EMOJI_CDN_PATTERNS = [
+    'fbcdn',           // facebook
+    'twimg',           // twitter
+    'slack-edge',      // slack
+    'discord',         // discord
+    'emoji',           // generic emoji paths
+    'emojione',        // emojione cdn
+    'twemoji',         // twitter emoji lib
+    'joypixels',       // joypixels
+    'noto-emoji',      // google noto
+    'openmoji',        // openmoji
+    'fluent-emoji',    // microsoft fluent
+    'e.wpp.im',        // whatsapp web
+];
+
+// regex to detect emoji characters
+const EMOJI_REGEX = /^[\p{Emoji}\p{Emoji_Modifier}\p{Emoji_Component}\p{Emoji_Modifier_Base}\p{Emoji_Presentation}\u200d\ufe0f]+$/u;
+
+const isEmojiText = (text) => {
+    if (!text || text.length > 20) return false;
+    return EMOJI_REGEX.test(text.trim());
+};
+
+const isEmojiCdnUrl = (src) => {
+    const lowerSrc = src.toLowerCase();
+    return EMOJI_CDN_PATTERNS.some(pattern => lowerSrc.includes(pattern));
+};
+
+const hasEmojiDimensions = (img) => {
+    const width = parseInt(img.getAttribute('width') || img.style?.width) || 0;
+    const height = parseInt(img.getAttribute('height') || img.style?.height) || 0;
+    return (width > 0 && width <= 72) || (height > 0 && height <= 72);
+};
+
+/**
+ * sanitize pasted content - converts emoji images to unicode characters
+ * works on DOM node directly (for paste_postprocess)
+ */
+const sanitizePastedNode = (node) => {
+    // process all images
+    const images = node.querySelectorAll('img');
+    images.forEach(img => {
+        const src = img.getAttribute('src') || '';
+        const alt = img.getAttribute('alt') || '';
+        const title = img.getAttribute('title') || '';
+        const dataEmoji = img.getAttribute('data-emoji') || img.getAttribute('data-emoticon') || '';
+
+        const fromEmojiCdn = isEmojiCdnUrl(src);
+        const altIsEmoji = isEmojiText(alt);
+        const titleIsEmoji = isEmojiText(title);
+        const hasDataEmoji = isEmojiText(dataEmoji);
+        const smallImage = hasEmojiDimensions(img);
+
+        const style = img.getAttribute('style') || '';
+        const hasEmojiClass = (img.className || '').toLowerCase().includes('emoji');
+        const inlineSmall = /width:\s*(1[0-9]|[2-6][0-9]|7[0-2])px/i.test(style);
+
+        const isLikelyEmoji = (fromEmojiCdn || hasEmojiClass) ||
+            ((altIsEmoji || titleIsEmoji || hasDataEmoji) && (smallImage || inlineSmall)) ||
+            (fromEmojiCdn && smallImage);
+
+        if (isLikelyEmoji) {
+            const emojiChar = dataEmoji || (altIsEmoji ? alt : '') || (titleIsEmoji ? title : '');
+            if (emojiChar) {
+                img.replaceWith(document.createTextNode(emojiChar));
+            } else {
+                img.remove();
+            }
+        }
+    });
+
+    // remove empty anchor tags
+    node.querySelectorAll('a:empty').forEach(link => link.remove());
+
+    // unwrap emoji-only links (tracking links from social platforms)
+    node.querySelectorAll('a').forEach(link => {
+        const text = link.textContent?.trim() || '';
+        if (link.childNodes.length === 1 &&
+            link.childNodes[0].nodeType === Node.TEXT_NODE &&
+            isEmojiText(text)) {
+            link.replaceWith(text);
+        }
+    });
+
+    // strip google docs / ms word garbage spans around emoji
+    node.querySelectorAll('span[style*="font-family"]').forEach(span => {
+        const text = span.textContent?.trim() || '';
+        if (isEmojiText(text) && span.childNodes.length === 1) {
+            span.replaceWith(text);
+        }
+    });
+};
+
 /**
  * Basic editor configuration (without API key specific features)
  */
@@ -54,6 +148,10 @@ const getBasicEditorConfig = (height = 500, imageUploadHandler) => ({
     ],
     toolbar1: 'undo redo | styles | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent',
     toolbar2: 'forecolor backcolor | link image media | table emoticons | removeformat code fullscreen help',
+    paste_postprocess: (editor, args) => {
+        // sanitize emoji images on paste - works on the dom node directly
+        sanitizePastedNode(args.node);
+    },
     content_style: `
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
@@ -117,8 +215,9 @@ export const getEditorConfig = async (height = 500, imageUploadHandler) => {
     return {
         ...baseConfig,
         ...config.editorConfig,
-        height, // Override height
-        images_upload_handler: imageUploadHandler // Override upload handler
+        height,
+        images_upload_handler: imageUploadHandler,
+        paste_postprocess: baseConfig.paste_postprocess
     };
 };
 
