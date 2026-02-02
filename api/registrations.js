@@ -26,6 +26,9 @@ async function sendEmailNotification(registration) {
     const isCoreteam = registration.registration_type === 'core_team';
 
     const emailHtml = `
+        <div style="text-align: center; margin-bottom: 24px;">
+            <img src="https://gdgustp.com/devy-mail.png" alt="GDG USTP" style="max-width: 100%; height: auto; border-radius: 8px;" />
+        </div>
         <h2>New ${isCoreteam ? 'Core Team' : 'Member'} Registration</h2>
         <p><strong>Name:</strong> ${registration.full_name}</p>
         <p><strong>Email:</strong> ${registration.email}</p>
