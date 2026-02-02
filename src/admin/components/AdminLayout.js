@@ -76,6 +76,13 @@ export default function AdminLayout({ children }) {
                         URL Shortener
                     </Link>
                     <Link
+                        to="/admin/registrations"
+                        className={`admin-menu-item ${location.pathname === '/admin/registrations' ? 'active' : ''}`}
+                        onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                        Registrations
+                    </Link>
+                    <Link
                         to="/admin/profile"
                         className={`admin-menu-item ${location.pathname === '/admin/profile' ? 'active' : ''}`}
                         onClick={() => setIsMobileMenuOpen(false)}

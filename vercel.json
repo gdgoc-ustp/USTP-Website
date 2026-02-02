@@ -12,6 +12,12 @@
     },
     "api/short-urls.js": {
       "maxDuration": 10
+    },
+    "api/registrations.js": {
+      "maxDuration": 10
+    },
+    "api/settings.js": {
+      "maxDuration": 10
     }
   },
   "headers": [
