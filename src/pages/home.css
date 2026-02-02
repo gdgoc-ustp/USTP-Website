@@ -330,17 +330,6 @@ html {
     /* Circles are hidden by 768px query above */
 }
 
-/* Original banner styles to keep for the second section */
-.original-banner {
-    display: flex;
-    height: 102vh;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    background-image: url("../assets/hero-banner.png");
-    background-repeat: no-repeat;
-    background-size: cover;
-}
 
 .original-banner h1 {
     color: #383838;

@@ -323,8 +323,8 @@ export default function Home() {
             opacity: 0.8,
             animation: 'none'
         } : {
-            top: '15%',
-            left: `${windowSize.width * 0.75}px`,
+            top: '25%',
+            left: `${windowSize.width * 0.70}px`,
             width: '120px',
             height: '120px',
             opacity: 0.6,
@@ -532,7 +532,7 @@ export default function Home() {
             <NavigationBar />
             <main>
                 {/* Hero Section (always visible) */}
-                <header className="banner" style={{ height: isHeroVisible ? `clamp(${minHeight}px, ${isMobile ? '25svh' : (isTablet ? '50svh' : '60svh')}, ${maxHeight}px)` : '100vh', transition: 'height 0.8s ease-in-out' }}>
+                <header className="banner" style={{ height: isHeroVisible ? `clamp(${minHeight}px, ${isMobile ? '25svh' : (isTablet ? '50svh' : '60svh')}, ${maxHeight}px)` : '100svh', transition: 'height 0.8s ease-in-out' }}>
 
 
 
@@ -779,7 +779,7 @@ export default function Home() {
                                 {/* 2. Tall Image Tower (Spans 1x2 on LG) */}
                                 <div className="md:col-span-1 lg:row-span-2 rounded-[2.5rem] overflow-hidden shadow-sm relative min-h-[400px] h-full group order-2 lg:order-none">
                                     <img
-                                        src="/photos/1.jpg"
+                                        src="/photos/community2.jpg"
                                         alt="Community"
                                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                                     />
