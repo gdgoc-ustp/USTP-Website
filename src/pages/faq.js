@@ -1,10 +1,18 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import NavigationBar from "../components/navBar";
+import Footer from "../components/footer";
 import ContentRenderer from "../components/ContentRenderer";
+import HeroSection from "../components/HeroSection";
 import { faqs } from "../data/faqs";
+import { useLocation } from "react-router-dom";
 
 export default function FaQs() {
   const [openIndex, setOpenIndex] = useState(null);
+  const location = useLocation();
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "instant" });
+  }, []);
 
   const toggleFaq = (i) => {
     setOpenIndex(openIndex === i ? null : i);
@@ -15,10 +23,16 @@ export default function FaQs() {
       <title>FAQs</title>
       <NavigationBar />
 
-      <main className="max-w-4xl mx-auto px-6 py-16">
-        <h1 className="text-4xl font-bold text-center mb-12 font-sans">
+      <HeroSection
+        title="Frequently Asked Questions"
+        theme="aboutus"
+        previousPath={location.state?.from}
+      />
+
+      <main className="max-w-4xl mx-auto px-6 py-16 min-h-[50vh]">
+        <h2 className="text-3xl font-bold text-center mb-12 font-sans text-gray-800">
           Solution Challenge FAQs
-        </h1>
+        </h2>
 
         <div className="space-y-4">
           {faqs.map((faq, i) => {
@@ -59,6 +73,8 @@ export default function FaQs() {
           })}
         </div>
       </main>
+
+      <Footer />
     </div>
   );
 }
