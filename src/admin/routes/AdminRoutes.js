@@ -9,19 +9,20 @@ import AdminLayout from '../components/AdminLayout';
 import Login from '../pages/Login';
 import Setup from '../pages/Setup';
 import Users from '../pages/Users';
+import UrlShortener from '../pages/UrlShortener';
 
 // Protected route wrapper
 const ProtectedRoute = ({ children }) => {
     const { user, loading } = useAuth();
-    
+
     if (loading) {
         return <div>Loading...</div>;
     }
-    
+
     if (!user) {
         return <Navigate to="/admin/login" replace />;
     }
-    
+
     return <AdminLayout>{children}</AdminLayout>;
 };
 
@@ -30,7 +31,7 @@ export default function AdminRoutes() {
         <Routes>
             <Route path="login" element={<Login />} />
             <Route path="setup" element={<Setup />} />
-            
+
             {/* Protected routes */}
             <Route
                 path="dashboard"
@@ -40,7 +41,7 @@ export default function AdminRoutes() {
                     </ProtectedRoute>
                 }
             />
-            
+
             <Route
                 path="events"
                 element={
@@ -49,7 +50,7 @@ export default function AdminRoutes() {
                     </ProtectedRoute>
                 }
             />
-            
+
             <Route
                 path="blog-posts"
                 element={
@@ -67,7 +68,7 @@ export default function AdminRoutes() {
                     </ProtectedRoute>
                 }
             />
-            
+
             <Route
                 path="profile"
                 element={
@@ -76,7 +77,16 @@ export default function AdminRoutes() {
                     </ProtectedRoute>
                 }
             />
-            
+
+            <Route
+                path="url-shortener"
+                element={
+                    <ProtectedRoute>
+                        <UrlShortener />
+                    </ProtectedRoute>
+                }
+            />
+
             {/* Redirect /admin to /admin/dashboard */}
             <Route
                 path=""

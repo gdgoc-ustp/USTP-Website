@@ -20,6 +20,7 @@ import Terms from './pages/terms';
 import Sitemap from './pages/sitemap';
 import LoadingScreen from './components/LoadingScreen';
 import Register from './pages/register';
+import Redirect from './pages/redirect';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -55,6 +56,7 @@ function App() {
         <Route path="/terms" element={<Terms />} />
         <Route path="/sitemap" element={<Sitemap />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/go/:code" element={<Redirect />} />
 
 
 
