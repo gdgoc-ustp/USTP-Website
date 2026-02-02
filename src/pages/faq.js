@@ -24,7 +24,7 @@ export default function FaQs() {
       <NavigationBar />
 
       <HeroSection
-        title="Frequently Asked Questions"
+        title="FAQ"
         theme="aboutus"
         previousPath={location.state?.from}
       />
