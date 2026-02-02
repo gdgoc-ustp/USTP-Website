@@ -69,6 +69,13 @@ export default function AdminLayout({ children }) {
                         Blog Posts
                     </Link>
                     <Link
+                        to="/admin/url-shortener"
+                        className={`admin-menu-item ${location.pathname === '/admin/url-shortener' ? 'active' : ''}`}
+                        onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                        URL Shortener
+                    </Link>
+                    <Link
                         to="/admin/profile"
                         className={`admin-menu-item ${location.pathname === '/admin/profile' ? 'active' : ''}`}
                         onClick={() => setIsMobileMenuOpen(false)}

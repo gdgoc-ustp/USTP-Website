@@ -9,6 +9,9 @@
     },
     "api/events.js": {
       "maxDuration": 10
+    },
+    "api/short-urls.js": {
+      "maxDuration": 10
     }
   },
   "headers": [
