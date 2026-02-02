@@ -7,16 +7,15 @@ import NavigationBar from "../components/navBar";
 import Footer from "../components/footer";
 import HeroSection from "../components/HeroSection";
 import { Link } from "react-router-dom";
-import sampleImage1 from '../assets/sample.png';
+import startImg from '../assets/start.jpg'
 import missionImage1 from '../assets/mission.jpg'
 import visionImage1 from '../assets/vision.jpg'
-
-import sampleImage2 from '../assets/sample.png';
 import { getFeaturedMembers, getGroupColor } from '../data/team';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import './aboutUs.css';
-
+import growImg from '../assets/grow.jpg'
+import thriveImg from '../assets/thrive2.jpg'
 
 const HeroCard = ({ title, description, image, color = "bg-blue-600", subtitle, delay = 0 }) => (
     <div
@@ -79,7 +78,7 @@ const RoadmapItem = ({ year, title, description, image, index, label }) => {
                 <motion.div
                     initial={{ opacity: 0, y: 50 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ margin: "-10% 0px" }}
+                    viewport={{ once: true, margin: "-10% 0px" }}
                     transition={{ duration: 0.8, ease: "circOut" }}
                     className={`w-full max-w-xl bg-white rounded-[2.5rem] p-8 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.1)] border border-gray-100 relative group transition-all duration-300 hover:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.15)]`}
                 >
@@ -117,7 +116,7 @@ const RoadmapItem = ({ year, title, description, image, index, label }) => {
                     <motion.div
                         initial={{ scale: 0 }}
                         whileInView={{ scale: 1 }}
-                        viewport={{ margin: "-10% 0px" }}
+                        viewport={{ once: true, margin: "-10% 0px" }}
                         className={`w-8 h-8 rounded-full bg-white ring-2 ring-gray-100 shadow-sm z-20 flex items-center justify-center`}
                     >
                         <div className={`w-4 h-4 rounded-full ${nodeColor} shadow-inner`}></div>
@@ -174,7 +173,7 @@ export default function AboutUs() {
                         <HeroCard
                             title="Vision"
                             subtitle="Article II, Section 1"
-                            description="This organization envisions itself as a community to be for men, women and for others, a community of developers that are passionate about uplifting communities and solving problems through science, technology, and innovation."
+                            description="GDG - USTP envisions itself as a community to be for men, women and for others, a community of developers that are passionate about uplifting communities and solving problems through science, technology, and innovation."
                             image={visionImage1}
                             color="bg-blue-600"
                             delay={0}
@@ -263,21 +262,21 @@ export default function AboutUs() {
                                     label="2020"
                                     title="Planting the Seed"
                                     description="GDG started as a small initiative founded by Hannah Mae Hormiguera to bring Google technologies to campus."
-                                    image={sampleImage1}
+                                    image={startImg}
                                 />
                                 <RoadmapItem
                                     index={1}
                                     label="2020 - 2023"
                                     title="Building Momentum"
                                     description="We expanded our reach, hosting our first major hackathon and establishing partnerships with local tech companies."
-                                    image={sampleImage1}
+                                    image={growImg}
                                 />
                                 <RoadmapItem
                                     index={2}
-                                    label="2024 - Today"
+                                    label="Today"
                                     title="A Thriving Ecosystem"
-                                    description="Now, we continue to foster innovation with regular workshops on AI, Cloud, and Mobile development."
-                                    image={sampleImage2}
+                                    description="Now, we continue to foster innovation with regular workshops on AI, Cybersecurity, and Mobile development."
+                                    image={thriveImg}
                                 />
                             </div>
                         </div>
