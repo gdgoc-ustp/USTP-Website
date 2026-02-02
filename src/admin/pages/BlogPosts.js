@@ -5,6 +5,15 @@ import { supabase } from '../../lib/supabase';
 import { TINYMCE_API_KEY, getEditorConfig } from '../../lib/tinymceConfig';
 import './BlogPosts.css';
 
+// helper to format date for input[type="datetime-local"]
+const formatDateForInput = (dateString) => {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    const offset = date.getTimezoneOffset();
+    const local = new Date(date.getTime() - offset * 60000);
+    return local.toISOString().slice(0, 16);
+};
+
 // Full-page editor component
 const BlogPostEditor = ({ formData, setFormData, handleSubmit, handleCloseModal, handleInputChange, handleEditorChange, handleDragEnter, handleDragLeave, handleDragOver, handleDrop, fileInputRef, isDragging, uploadProgress, loading, selectedPost, error, handleEditorImageUpload, handleFileSelect }) => {
     return (
@@ -65,6 +74,19 @@ const BlogPostEditor = ({ formData, setFormData, handleSubmit, handleCloseModal,
                     </div>
 
                     <div className="editor-sidebar">
+                        <div className="sidebar-section">
+                            <h3>Publication Date</h3>
+                            <input
+                                type="datetime-local"
+                                id="created_at"
+                                name="created_at"
+                                value={formatDateForInput(formData.created_at)}
+                                onChange={handleInputChange}
+                                className="full-width-input"
+                            />
+                            <p className="field-hint">override this if you posted late</p>
+                        </div>
+
                         <div className="sidebar-section">
                             <h3>Featured Image</h3>
                             <div
@@ -145,7 +167,8 @@ export default function BlogPosts() {
         heading: '',
         tagline: '',
         description: '',
-        image_url: ''
+        image_url: '',
+        created_at: ''
     });
     const [isDragging, setIsDragging] = useState(false);
     const [uploadProgress, setUploadProgress] = useState(0);
@@ -388,8 +411,8 @@ export default function BlogPosts() {
                 tagline: formData.tagline,
                 description: formData.description,
                 image_url: formData.image_url,
-                // Only include author_id if there's a user - otherwise it will be NULL
-                // This works with the updated SQL schema that allows NULL values
+                // allow overriding creation date for backdated posts
+                ...(formData.created_at && { created_at: new Date(formData.created_at).toISOString() }),
                 ...(user?.id && { author_id: user.id })
             };
 
@@ -410,7 +433,7 @@ export default function BlogPosts() {
                     .from('blog_posts')
                     .insert([{
                         ...postData,
-                        created_at: new Date().toISOString(),
+                        created_at: formData.created_at ? new Date(formData.created_at).toISOString() : new Date().toISOString(),
                         updated_at: new Date().toISOString()
                     }]);
 
@@ -456,7 +479,8 @@ export default function BlogPosts() {
             heading: post.heading,
             tagline: post.tagline || '',
             description: post.description,
-            image_url: post.image_url || ''
+            image_url: post.image_url || '',
+            created_at: post.created_at || ''
         });
         setEditMode('modal');
         setIsModalOpen(true);
@@ -468,7 +492,8 @@ export default function BlogPosts() {
             heading: '',
             tagline: '',
             description: '',
-            image_url: ''
+            image_url: '',
+            created_at: ''
         });
         setEditMode('modal');
         setIsModalOpen(true);
@@ -482,7 +507,8 @@ export default function BlogPosts() {
             heading: '',
             tagline: '',
             description: '',
-            image_url: ''
+            image_url: '',
+            created_at: ''
         });
     };
 
@@ -735,6 +761,18 @@ export default function BlogPosts() {
                                     onChange={handleInputChange}
                                     required
                                 />
+                            </div>
+
+                            <div className="form-group">
+                                <label htmlFor="created_at">Publication Date</label>
+                                <input
+                                    type="datetime-local"
+                                    id="created_at"
+                                    name="created_at"
+                                    value={formatDateForInput(formData.created_at)}
+                                    onChange={handleInputChange}
+                                />
+                                <span className="field-hint">override this if you posted late</span>
                             </div>
 
                             <div className="form-group">
