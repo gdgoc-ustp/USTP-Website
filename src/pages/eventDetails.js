@@ -239,7 +239,7 @@ export default function EventDetails() {
                                                 </div>
                                                 <div>
                                                     <p className="text-sm text-gray-500 font-bold uppercase mb-1">Location</p>
-                                                    <p className="font-bold text-gray-900">Virtual or USTP Campus</p>
+                                                    <p className="font-bold text-gray-900">{event.location || 'TBA'}</p>
                                                 </div>
                                             </div>
                                         </div>
