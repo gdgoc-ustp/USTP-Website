@@ -110,6 +110,19 @@ const EventEditor = ({ formData, setFormData, handleSubmit, handleCloseModal, ha
                                     className="full-width-input"
                                 />
                             </div>
+
+                            <div className="form-group">
+                                <label htmlFor="location">Location (Optional)</label>
+                                <input
+                                    type="text"
+                                    id="location"
+                                    name="location"
+                                    value={formData.location || ''}
+                                    onChange={handleInputChange}
+                                    placeholder="e.g., Room 101, IT Building"
+                                    className="full-width-input"
+                                />
+                            </div>
                         </div>
 
                         <div className="sidebar-section">
@@ -195,7 +208,8 @@ export default function Events() {
         image_url: '',
         status: 'Upcoming',
         event_date: '',
-        rsvp_link: ''
+        rsvp_link: '',
+        location: ''
     });
     const [isDragging, setIsDragging] = useState(false);
     const [uploadProgress, setUploadProgress] = useState(0);
@@ -530,7 +544,8 @@ export default function Events() {
             image_url: event.image_url || '',
             status: event.status,
             event_date: event.event_date ? formatDateForInput(event.event_date) : '',
-            rsvp_link: event.rsvp_link || ''
+            rsvp_link: event.rsvp_link || '',
+            location: event.location || ''
         });
         setEditMode('modal');
         setIsModalOpen(true);
@@ -560,7 +575,8 @@ export default function Events() {
             image_url: '',
             status: 'Upcoming',
             event_date: '',
-            rsvp_link: ''
+            rsvp_link: '',
+            location: ''
         });
         setEditMode('modal');
         setIsModalOpen(true);
@@ -577,7 +593,8 @@ export default function Events() {
             image_url: '',
             status: 'Upcoming',
             event_date: '',
-            rsvp_link: ''
+            rsvp_link: '',
+            location: ''
         });
     };
 
@@ -956,6 +973,18 @@ export default function Events() {
                                     value={formData.rsvp_link || ''}
                                     onChange={handleInputChange}
                                     placeholder="https://example.com/rsvp"
+                                />
+                            </div>
+
+                            <div className="form-group">
+                                <label htmlFor="location">Location (Optional)</label>
+                                <input
+                                    type="text"
+                                    id="location"
+                                    name="location"
+                                    value={formData.location || ''}
+                                    onChange={handleInputChange}
+                                    placeholder="e.g., Room 101, IT Building"
                                 />
                             </div>
 
