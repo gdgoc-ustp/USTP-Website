@@ -33,6 +33,7 @@
     "react-spring": "^9.7.5",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1",
+    "underscore": "^1.13.8",
     "uuid": "^11.0.5",
     "web-vitals": "^4.2.3"
   },
