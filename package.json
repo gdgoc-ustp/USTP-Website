@@ -39,9 +39,9 @@
   },
   "proxy": "http://localhost:3001",
   "scripts": {
-    "tailwind": "@tailwindcss/cli -i ./src/index.css -o ./src/tailwind-output.css --minify",
+    "tailwind": "tailwindcss -i ./src/index.css -o ./src/tailwind-output.css --minify",
     "prebuild": "npm run tailwind",
-    "dev": "concurrently \"@tailwindcss/cli -i ./src/index.css -o ./src/tailwind-output.css --watch\" \"react-scripts start\"",
+    "dev": "concurrently \"tailwindcss -i ./src/index.css -o ./src/tailwind-output.css --watch\" \"react-scripts start\"",
     "server": "PORT=3001 bun run server.js",
     "dev:full": "concurrently \"npm run server\" \"npm run dev\"",
     "build": "react-scripts build",
