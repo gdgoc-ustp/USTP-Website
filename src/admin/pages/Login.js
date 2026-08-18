@@ -56,7 +56,7 @@ export default function Login() {
         try {
             setError('');
             setLoading(true);
-            const { data, error } = await signIn(email, password);
+            const { error } = await signIn(email, password);
             if (error) throw error;
             navigate('/admin/dashboard');
         } catch (error) {

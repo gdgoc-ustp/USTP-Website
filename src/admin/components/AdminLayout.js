@@ -13,11 +13,7 @@ export default function AdminLayout({ children }) {
         setIsMobileMenuOpen(!isMobileMenuOpen);
     };
 
-    // Close mobile menu when navigating
-    const handleNavigation = (to) => {
-        setIsMobileMenuOpen(false);
-        navigate(to);
-    };
+
 
     const handleLogout = async () => {
         try {

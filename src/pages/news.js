@@ -16,7 +16,7 @@ export default function News() {
 
     const [blogPosts, setBlogPosts] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+    const [, setError] = useState(null);
     const [page, setPage] = useState(0);
     const [hasMore, setHasMore] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');

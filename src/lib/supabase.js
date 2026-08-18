@@ -138,8 +138,8 @@ export const updateUserProfile = async (userId, updates) => {
 export const checkFirstTimeSetup = async () => {
     try {
         console.log('Checking users table...');
-        // Use admin client if available to bypass RLS for this check
-        const client = supabaseAdmin || supabase;
+        // Use regular client since the users table allows read access for all
+        const client = supabase;
         const { count, error } = await client
             .from('users')
             .select('*', { count: 'exact', head: true });

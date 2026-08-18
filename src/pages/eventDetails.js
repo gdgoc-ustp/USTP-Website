@@ -24,6 +24,7 @@ export default function EventDetails() {
     useEffect(() => {
         AOS.init({ duration: 800, easing: 'ease-in-out', once: true });
         fetchEvent();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [id]);
 
     useEffect(() => {

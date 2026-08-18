@@ -413,7 +413,7 @@ export default function Events() {
             const filePath = `event-images/${fileName}`;
 
             // Upload file to Supabase Storage
-            const { error: uploadError, data } = await supabase.storage
+            const { error: uploadError } = await supabase.storage
                 .from('images')
                 .upload(filePath, file, {
                     cacheControl: '3600',
@@ -475,25 +475,21 @@ export default function Events() {
                 eventData.event_date = new Date(eventData.event_date).toISOString();
             }
 
-            let result;
-
             if (selectedEvent) {
                 // Update existing event
-                const { data, error } = await supabase
+                const { error } = await supabase
                     .from('events')
                     .update(eventData)
                     .eq('id', selectedEvent.id);
 
                 if (error) throw error;
-                result = data;
             } else {
                 // Create new event
-                const { data, error } = await supabase
+                const { error } = await supabase
                     .from('events')
                     .insert([eventData]);
 
                 if (error) throw error;
-                result = data;
             }
 
             await fetchEvents();
@@ -665,7 +661,7 @@ export default function Events() {
         setEditMode('fullpage');
     };
 
-    const isMobile = window.innerWidth <= 768;
+
 
     if (loading && !events.length) {
         return (

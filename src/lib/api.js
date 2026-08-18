@@ -79,8 +79,10 @@ export const storage = {
     }
 };
 
-export default {
+const api = {
     posts,
     events,
     storage
 };
+
+export default api;

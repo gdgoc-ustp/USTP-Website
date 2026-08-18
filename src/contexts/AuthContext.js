@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { supabase, getCurrentUser, getUserProfile } from '../lib/supabase';
+import { supabase, getUserProfile } from '../lib/supabase';
 
 const AuthContext = createContext({});
 
@@ -34,6 +34,7 @@ export function AuthProvider({ children }) {
                     if (data) setUser(prev => ({ ...prev, profile: data }));
                 });
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [user?.id]);
 
     const value = {

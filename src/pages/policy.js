@@ -118,7 +118,7 @@ export default function Policy() {
                     <h2>12. Contact Us</h2>
                     <p>If you have any questions, concerns, or requests regarding this Privacy Policy, please contact us at:</p>
                     <p>Email us at: 📧<a href="https://mail.google.com/mail/u/0/#inbox/FMfcgzQcpnNNpJdSwmcmWjmkSSDCpvKj?compose=DmwnWslzDPBzQPcjwtQQTBMpLvkRGFRcgLGPtpwfxSCTxhDLpNJmNPKFTJNnCxxmrkzFQFmHmlglQFmHmlgl">gdsc@ustp.edu.ph</a></p>
-                    <p>Message us at: <a href="https://www.facebook.com/dscustp" target="_blank" rel="noopener">
+                    <p>Message us at: <a href="https://www.facebook.com/dscustp" target="_blank" rel="noopener noreferrer">
                         <i className="fab fa-facebook"></i> Facebook
                     </a></p>
                     <p>You may also visit us at our office located in <b>Building 5, Near Alumni Federation Office, USTP CDO</b></p>

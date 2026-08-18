@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import './navBar.css'
 import { NavLink, useLocation, useNavigate } from 'react-router-dom'
-import { FaHome, FaNewspaper, FaCalendarAlt, FaInfoCircle, FaUsers } from 'react-icons/fa'
+import { FaHome, FaNewspaper, FaCalendarAlt, FaInfoCircle } from 'react-icons/fa'
 import Logo from '../assets/logo.png'
 
 export default function NavigationBar() {

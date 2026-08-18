@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { motion, useScroll, useSpring, useTransform } from 'framer-motion';
+import React, { useEffect, useRef } from 'react';
+import { motion, useScroll, useSpring } from 'framer-motion';
 import { LuSettings, LuCpu, LuMegaphone, LuUsers, LuChevronLeft, LuChevronRight } from "react-icons/lu";
 import { useLocation } from 'react-router-dom';
 import SEO from '../components/SEO';
